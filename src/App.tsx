@@ -6,7 +6,7 @@ import Home from './components/Home/Home';
 export default function App() {
 
   useEffect(() => {
-    console.log("v0.0.1")
+    console.log("v0.0.2")
   }, [])
 
   return (
