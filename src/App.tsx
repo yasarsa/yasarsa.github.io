@@ -1,15 +1,15 @@
-import styles from './App.module.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DND from './components/DND/DND';
 import Home from './components/Home/Home';
 
 export default function App() {
 
   return (
-    <div className={styles.App}>
-      {window.location.pathname === "/" && <Home />}
-      {window.location.pathname === "/dnd" && <DND />}
-    </div>
-
-
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dnd" element={<DND />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
