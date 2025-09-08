@@ -6,6 +6,10 @@
     flex-direction: column;
 }
 
+.DND input {
+    width: 40px;
+}
+
 .Container {
     border: 1px solid black;
     margin: 10px;
