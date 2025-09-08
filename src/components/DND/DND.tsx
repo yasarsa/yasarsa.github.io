@@ -9,7 +9,6 @@ export default function DND() {
     const handleAttack = () => {
 
         const atkBonus = 10
-        console.debug("Attack!");
 
         const roll = Math.floor(Math.random() * 20) + 1;
         if (roll >= 19) {
@@ -30,7 +29,6 @@ export default function DND() {
         let dieCount = 4
         if (isDoubled) dieCount *= 2
         const dmgBonus = 5
-        console.debug("Damage!");
 
         let totalDamage = 0;
         for (let i = 0; i < dieCount; i++) {
