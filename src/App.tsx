@@ -5,7 +5,7 @@ import Home from './components/Home/Home';
 export default function App() {
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dnd" element={<DND />} />
