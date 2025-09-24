@@ -4,6 +4,7 @@
     min-height: 100dvh;
     justify-content: center;
     flex-direction: column;
+    position: relative;
 }
 
 .DND input {
