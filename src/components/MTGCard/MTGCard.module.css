@@ -1,0 +1,4 @@
+.MTGCard {
+    display: flex;
+    flex-direction: column;
+}

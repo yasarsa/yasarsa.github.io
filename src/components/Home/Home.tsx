@@ -1,9 +1,10 @@
+import MTGCard from '../MTGCard/MTGCard';
 import styles from './Home.module.css';
 
 export default function Home() {
     return (
         <div className={styles.Home}>
-            <p>Home COMPONENT</p>
+            <MTGCard />
         </div>
     )
 }  

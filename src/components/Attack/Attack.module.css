@@ -1,0 +1,27 @@
+.Attack {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.Container {
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.RadioContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.TitleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
