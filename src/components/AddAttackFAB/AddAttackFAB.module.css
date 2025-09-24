@@ -1,0 +1,11 @@
+.AddAttackFAB {
+    display: flex;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: black;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    cursor: pointer;
+}

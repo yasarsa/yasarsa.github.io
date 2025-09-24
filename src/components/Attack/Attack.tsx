@@ -100,7 +100,7 @@ export default function Attack({ name, attack }: Props) {
         <div className={styles.Attack}>
             <div className={styles.TitleContainer} onClick={() => setIsCollapsed((prev) => !prev)}>
                 <p>{name}</p>
-                <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} />
+                <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
             </div>
             {!isCollapsed && (<>
                 <div className={styles.Container}>
