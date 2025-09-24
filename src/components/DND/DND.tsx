@@ -1,169 +1,46 @@
-import { useState } from 'react';
+import type { IAttack } from '../../utils/types';
+import Attack from '../Attack/Attack';
 import styles from './DND.module.css';
 
 export default function DND() {
 
-    const [attackResult, setAttackResult] = useState<string | null>(null);
-    const [damageResult, setDamageResult] = useState<string | null>(null);
 
-    const [attackBonus, setAttackBonus] = useState(10);
-    const [damageDieCount, setDamageDieCount] = useState(4);
-    const [damageDieType, setDamageDieType] = useState(6);
-    const [damageBonus, setDamageBonus] = useState(5);
-    const [critRange, setCritRange] = useState(19);
-    const [rollType, setRollType] = useState<"normal" | "advantage" | "disadvantage">("normal");
-    const [isSavageAttacker, setSavageAttacker] = useState(true);
-    const [isGreatWeaponFighting, setGreatWeaponFighting] = useState(true);
-    const [isGreatWeaponMaster, setGreatWeaponMaster] = useState(true);
-    const [proficiencyBonus, setProficiencyBonus] = useState(5);
-
-    const handleAttack = () => {
-        let roll = Math.floor(Math.random() * 20) + 1;
-
-        if (rollType === "advantage") {
-            const roll2 = Math.floor(Math.random() * 20) + 1;
-            console.log(`Advantage Roll: ${roll2} vs ${roll}`);
-            if (roll2 > roll) {
-                roll = roll2;
+    const data: { attacks: IAttack[] } = {
+        attacks: [
+            {
+                name: 'Vicious Greatsword',
+                damageDieCount: 4,
+                damageDieType: 6,
+                damageBonus: 5,
+                attackBonus: 10,
+                critRange: 19,
+                isSavageAttacker: true,
+                isGreatWeaponFighting: true,
+                isGreatWeaponMaster: true,
+                proficiencyBonus: 5,
+            },
+            {
+                name: 'Returning Handaxe',
+                damageDieCount: 1,
+                damageDieType: 6,
+                damageBonus: 6,
+                attackBonus: 11,
+                critRange: 20,
+                isSavageAttacker: true,
+                isGreatWeaponFighting: false,
+                isGreatWeaponMaster: false,
+                proficiencyBonus: 5,
             }
-        } else if (rollType === "disadvantage") {
-            const roll2 = Math.floor(Math.random() * 20) + 1;
-            console.log(`Disadvantage Roll: ${roll2} vs ${roll}`);
-            if (roll2 < roll) {
-                roll = roll2;
-            }
-        }
-
-
-        if (roll >= critRange) {
-            handleDamage(true);
-            setAttackResult(`Critical Hit! (${roll} + ${attackBonus})`);
-            return
-        } else if (roll === 1) {
-            setAttackResult("Critical Miss!");
-            return;
-        } else {
-            handleDamage()
-        }
-
-        setAttackResult(`Result: ${roll + attackBonus} (${roll} + ${attackBonus})`);
+        ]
     }
 
-    const handleDamage = (isDoubled?: boolean) => {
-        let dieCount = damageDieCount
-        if (isDoubled) dieCount *= 2
-
-        let totalDamage = 0;
-        let dmgDieArray = []
-        for (let i = 0; i < dieCount; i++) {
-            let r = Math.floor(Math.random() * damageDieType) + 1;
-            if (isGreatWeaponFighting && r < 3) {
-                r = 3
-            }
-            dmgDieArray.push(r);
-            totalDamage += r;
-        }
-
-        if (isSavageAttacker) {
-            let totalDamage2 = 0;
-            const dmgDieArray2 = []
-            for (let i = 0; i < dieCount; i++) {
-                let r = Math.floor(Math.random() * damageDieType) + 1;
-                if (isGreatWeaponFighting && r < 3) {
-                    r = 3
-                }
-                dmgDieArray2.push(r);
-                totalDamage2 += r;
-            }
-            if (totalDamage2 > totalDamage) {
-                dmgDieArray = [...dmgDieArray2];
-            }
-            totalDamage = Math.max(totalDamage, totalDamage2);
-            console.log(`Savage Attacker Roll: ${totalDamage2} vs ${totalDamage}`);
-        }
-        totalDamage += damageBonus;
-        if (isGreatWeaponMaster) {
-            totalDamage += proficiencyBonus;
-        }
-
-        setDamageResult(`You dealt ${totalDamage} damage! ([${dmgDieArray.join(", ")}] + ${damageBonus}) ${isGreatWeaponMaster ? `+ ${proficiencyBonus}` : ""}`);
-    }
 
     return (
         <div className={styles.DND}>
-            <div className={styles.Container}>
-                <div className={styles.InputContainer}>
-                    <label>Attack Bonus: </label>
-                    <input type="number" value={attackBonus} onChange={(e) => setAttackBonus(parseInt(e.target.value))} />
-                </div>
-                <div className={styles.InputContainer}>
-                    <label>Crit range(starting value): </label>
-                    <input type="number" value={critRange} onChange={(e) => setCritRange(parseInt(e.target.value))} />
-                </div>
-                <div className={styles.RadioContainer}>
-                    <label>Roll Type: </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="rollType"
-                            value="normal"
-                            defaultChecked
-                            onChange={() => { setRollType("normal") }}
-                        />
-                        Normal
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="rollType"
-                            value="advantage"
-                            onChange={() => { setRollType("advantage") }}
-                        />
-                        Advantage
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="rollType"
-                            value="disadvantage"
-                            onChange={() => { setRollType("disadvantage") }}
-                        />
-                        Disadvantage
-                    </label>
-                </div>
-                <button onClick={handleAttack}>Attack!</button>
-                <p>{attackResult}</p>
-            </div>
-            <div className={styles.Container}>
-                <div className={styles.InputContainer}>
-                    <label>Damage: </label>
-                    <input type="number" value={damageDieCount} onChange={(e) => setDamageDieCount(parseInt(e.target.value))} />
-                    <span>d</span>
-                    <input type="number" value={damageDieType} onChange={(e) => setDamageDieType(parseInt(e.target.value))} />
-                    <span> + </span>
-                    <input type="number" value={damageBonus} onChange={(e) => setDamageBonus(parseInt(e.target.value))} />
-                </div>
-                <div className={styles.InputContainer}>
-                    <label>Savage Attacker:</label>
-                    <input type="checkbox" checked={isSavageAttacker} onChange={() => setSavageAttacker((prev) => !prev)} />
-                </div>
-                <div className={styles.InputContainer}>
-                    <label>Great Weapon Fighting:</label>
-                    <input type="checkbox" checked={isGreatWeaponFighting} onChange={() => setGreatWeaponFighting((prev) => !prev)} />
-                </div>
-                <div className={styles.InputContainer}>
-                    <label>Great Weapon Master:</label>
-                    <input type="checkbox" checked={isGreatWeaponMaster} onChange={() => setGreatWeaponMaster((prev) => !prev)} />
-                </div>
-                {isGreatWeaponMaster && (
-                    <div className={styles.InputContainer}>
-                        <label>Proficiency Bonus:</label>
-                        <input type="number" value={proficiencyBonus} onChange={(e) => setProficiencyBonus(parseInt(e.target.value))} />
-                    </div>
-                )}
-                <button onClick={() => handleDamage()}>Damage!</button>
-                <p>{damageResult}</p>
-            </div>
+            {data.attacks.map((attack, index) => (
+                <Attack key={index} name={attack.name} attack={attack} />
+            ))}
+
         </div>
     )
 }
