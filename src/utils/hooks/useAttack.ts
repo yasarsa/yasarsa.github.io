@@ -30,5 +30,15 @@ export default function useAttack() {
         }
     }, [setAllAttacks]);
 
-    return { addAttack, getAttacks, setAllAttacks, deleteAttack };
+    const updateAttack = useCallback((index: number, updatedAttack: IAttack) => {
+        const attacks = localStorage.getItem('attacks');
+        if (attacks) {
+            const attacksArray = JSON.parse(attacks) as IAttack[];
+            attacksArray[index] = updatedAttack;
+            setAllAttacks(attacksArray);
+        }
+    }, [setAllAttacks]);
+
+
+    return { addAttack, getAttacks, setAllAttacks, deleteAttack, updateAttack };
 }

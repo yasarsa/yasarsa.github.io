@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import chevron from '../../assets/chevron-down.svg';
+import useAttack from '../../utils/hooks/useAttack';
 import usePopup from '../../utils/hooks/usePopup';
 import type { IAttack } from '../../utils/types';
 import styles from './Attack.module.css';
@@ -12,6 +13,7 @@ interface Props {
 export default function Attack({ name, attack, index }: Props) {
 
     const { showDeleteConfirmPopup } = usePopup()
+    const { updateAttack } = useAttack()
 
     const [attackResult, setAttackResult] = useState<string | null>(null);
     const [damageResult, setDamageResult] = useState<string | null>(null);
@@ -104,6 +106,24 @@ export default function Attack({ name, attack, index }: Props) {
     const handleDelete = () => {
         showDeleteConfirmPopup(index)
     }
+
+    useEffect(() => {
+        const newAttack: IAttack = {
+            name,
+            attackBonus,
+            damageDieCount,
+            damageDieType,
+            damageBonus,
+            critRange,
+            isSavageAttacker,
+            isGreatWeaponFighting,
+            isGreatWeaponMaster,
+            proficiencyBonus
+        }
+
+        updateAttack(index, newAttack)
+    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, isSavageAttacker, isGreatWeaponFighting, isGreatWeaponMaster, proficiencyBonus, updateAttack, index])
+
     return (
         <div className={styles.Attack}>
             <div className={styles.TitleContainer} onClick={() => setIsCollapsed((prev) => !prev)}>
