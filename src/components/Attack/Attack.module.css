@@ -25,3 +25,18 @@
     align-items: center;
     cursor: pointer;
 }
+
+.Attack input {
+    width: 40px;
+}
+
+.ButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.ButtonContainer button {
+    height: 50px;
+    width: 100px;
+}

@@ -1,13 +1,25 @@
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { addAttackData } from "../../slices/dataSlice";
+import { addAttackData, setAttacks } from "../../slices/dataSlice";
 import type { IAttack } from "../types";
 
 export default function useAttack() {
     const dispatch = useDispatch();
 
-    const addAttack = (attack: IAttack) => {
+    const addAttack = useCallback((attack: IAttack) => {
         dispatch(addAttackData(attack));
-    }
+    }, [dispatch]);
 
-    return { addAttack };
+    const setAllAttacks = useCallback((attacks: IAttack[]) => {
+        dispatch(setAttacks(attacks));
+    }, [dispatch]);
+
+    const getAttacks = useCallback(() => {
+        const attacks = localStorage.getItem('attacks');
+        if (attacks) {
+            setAllAttacks(JSON.parse(attacks) as IAttack[]);
+        }
+    }, [setAllAttacks]);
+
+    return { addAttack, getAttacks, setAllAttacks };
 }

@@ -1,4 +1,4 @@
-.AddAttackPopup {
+.DeleteConfirmPopup {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -9,7 +9,6 @@
     top: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
-    min-height: 50%;
 }
 
 .TitleContainer {
@@ -35,8 +34,4 @@
     padding: 10px;
     align-items: center;
     gap: 10px;
-}
-
-.Container input {
-    width: 100%;
 }
