@@ -73,7 +73,7 @@ export const AddAttackPopup = () => {
                     <input type="number" placeholder='Damage Die Count' value={damageDieCount} onChange={(e) => setDamageDieCount(e.target.value)} />
                     <input type="number" placeholder='Damage Die Type' value={damageDieType} onChange={(e) => setDamageDieType(e.target.value)} />
                     <input type="number" placeholder='Damage Bonus' value={damageBonus} onChange={(e) => setDamageBonus(e.target.value)} />
-                    <button onClick={handleAddAttack}>Add Attack</button>
+                    <button className={styles.AddButton} onClick={handleAddAttack}>Add Attack</button>
                 </div>
             </div>
         </div>
