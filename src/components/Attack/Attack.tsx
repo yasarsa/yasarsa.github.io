@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import chevron from '../../assets/chevron-down.svg';
+import usePopup from '../../utils/hooks/usePopup';
 import type { IAttack } from '../../utils/types';
 import styles from './Attack.module.css';
 
@@ -8,6 +9,8 @@ interface Props {
     attack: IAttack
 }
 export default function Attack({ name, attack }: Props) {
+
+    const { showDeleteConfirmPopup } = usePopup()
 
     const [attackResult, setAttackResult] = useState<string | null>(null);
     const [damageResult, setDamageResult] = useState<string | null>(null);
@@ -96,6 +99,10 @@ export default function Attack({ name, attack }: Props) {
 
         setDamageResult(`You dealt ${totalDamage} damage! ([${dmgDieArray.join(", ")}] + ${damageBonus}) ${isGreatWeaponMaster ? `+ ${proficiencyBonus}` : ""}`);
     }
+
+    const handleDelete = () => {
+        showDeleteConfirmPopup()
+    }
     return (
         <div className={styles.Attack}>
             <div className={styles.TitleContainer} onClick={() => setIsCollapsed((prev) => !prev)}>
@@ -143,7 +150,9 @@ export default function Attack({ name, attack }: Props) {
                             Disadvantage
                         </label>
                     </div>
-                    <button onClick={handleAttack}>Attack!</button>
+                    <div className={styles.ButtonContainer}>
+                        <button onClick={handleAttack}>Attack!</button>
+                    </div>
                     <p>{attackResult}</p>
                 </div>
                 <div className={styles.Container}>
@@ -173,9 +182,13 @@ export default function Attack({ name, attack }: Props) {
                             <input type="number" value={proficiencyBonus} onChange={(e) => setProficiencyBonus(parseInt(e.target.value))} />
                         </div>
                     )}
-                    <button onClick={() => handleDamage()}>Damage!</button>
+                    <div className={styles.ButtonContainer}>
+                        <button onClick={() => handleDamage()}>Damage!</button>
+                    </div>
                     <p>{damageResult}</p>
-                </div></>)}
+                </div>
+                <button className={styles.DeleteButton} onClick={handleDelete}>Delete</button>
+            </>)}
         </div>
     )
 }

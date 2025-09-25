@@ -40,11 +40,13 @@ export const dataSlice = createSlice({
     initialState,
     reducers: {
         setAttacks: (state, action: PayloadAction<IAttack[]>) => {
-            state.attacks = action.payload
+            state.attacks = action.payload;
+            localStorage.setItem('attacks', JSON.stringify(action.payload));
         },
         addAttackData: (state, action: PayloadAction<IAttack>) => {
-            state.attacks.push(action.payload)
-        }
+            state.attacks.push(action.payload);
+            localStorage.setItem('attacks', JSON.stringify(state.attacks));
+        },
     },
 })
 
