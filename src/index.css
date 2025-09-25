@@ -4,6 +4,12 @@ body {
   margin: 0;
 }
 
+body.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
 button {
   -webkit-tap-highlight-color: transparent;
   outline: none;

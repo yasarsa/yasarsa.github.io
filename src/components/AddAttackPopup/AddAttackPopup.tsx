@@ -60,19 +60,21 @@ export const AddAttackPopup = () => {
     }
 
     return (
-        <div className={styles.AddAttackPopup}>
-            <div className={styles.TitleContainer}>
-                <p>Add a new Attack</p>
-                <img src={crossImg} alt="Close" onClick={handleClose} />
-            </div>
-            <div className={styles.Container}>
-                <input type="text" placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
-                <input type="number" placeholder='Attack Bonus' value={attackBonus} onChange={(e) => setAttackBonus(e.target.value)} />
-                <input type="number" placeholder='Crit Range' value={critRange} onChange={(e) => setCritRange(e.target.value)} />
-                <input type="number" placeholder='Damage Die Count' value={damageDieCount} onChange={(e) => setDamageDieCount(e.target.value)} />
-                <input type="number" placeholder='Damage Die Type' value={damageDieType} onChange={(e) => setDamageDieType(e.target.value)} />
-                <input type="number" placeholder='Damage Bonus' value={damageBonus} onChange={(e) => setDamageBonus(e.target.value)} />
-                <button onClick={handleAddAttack}>Add Attack</button>
+        <div className={styles.Overlay}>
+            <div className={styles.AddAttackPopup}>
+                <div className={styles.TitleContainer}>
+                    <p>Add a new Attack</p>
+                    <img src={crossImg} alt="Close" onClick={handleClose} />
+                </div>
+                <div className={styles.Container}>
+                    <input type="text" placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type="number" placeholder='Attack Bonus' value={attackBonus} onChange={(e) => setAttackBonus(e.target.value)} />
+                    <input type="number" placeholder='Crit Range' value={critRange} onChange={(e) => setCritRange(e.target.value)} />
+                    <input type="number" placeholder='Damage Die Count' value={damageDieCount} onChange={(e) => setDamageDieCount(e.target.value)} />
+                    <input type="number" placeholder='Damage Die Type' value={damageDieType} onChange={(e) => setDamageDieType(e.target.value)} />
+                    <input type="number" placeholder='Damage Bonus' value={damageBonus} onChange={(e) => setDamageBonus(e.target.value)} />
+                    <button onClick={handleAddAttack}>Add Attack</button>
+                </div>
             </div>
         </div>
     );
