@@ -75,3 +75,9 @@
     font-size: 0.8rem;
     text-align: center;
 }
+
+.IconButton {
+    height: 100%;
+    width: 30px;
+    margin-left: 10px;
+}

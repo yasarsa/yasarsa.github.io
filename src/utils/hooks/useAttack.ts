@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { addAttackData, setAttacks } from "../../slices/dataSlice";
+import { setDeleteAttackIndex } from "../../slices/popupSlice";
 import type { IAttack } from "../types";
 
 export default function useAttack() {
@@ -27,8 +28,9 @@ export default function useAttack() {
             const attacksArray = JSON.parse(attacks) as IAttack[];
             attacksArray.splice(index, 1);
             setAllAttacks(attacksArray);
+            dispatch(setDeleteAttackIndex(undefined));
         }
-    }, [setAllAttacks]);
+    }, [dispatch, setAllAttacks]);
 
     const updateAttack = useCallback((index: number, updatedAttack: IAttack) => {
         const attacks = localStorage.getItem('attacks');

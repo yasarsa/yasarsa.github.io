@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import chevron from '../../assets/chevron-down.svg';
+import cross from '../../assets/cross.svg';
+import trash from '../../assets/trash.svg';
 import useAttack from '../../utils/hooks/useAttack';
 import usePopup from '../../utils/hooks/usePopup';
 import type { IAttack } from '../../utils/types';
@@ -32,6 +34,30 @@ export default function Attack({ name, attack, index }: Props) {
     const [proficiencyBonus, setProficiencyBonus] = useState(attack.proficiencyBonus);
 
     const [isCollapsed, setIsCollapsed] = useState(true);
+    const [touchStart, setTouchStart] = useState<number | null>(null)
+    const [touchEnd, setTouchEnd] = useState<number | null>(null)
+    const [isLeftSwipe, setIsLeftSwipe] = useState(false)
+    const minSwipeDistance = 50
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+        setTouchStart(e.targetTouches[0].clientX)
+    }
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX)
+    }
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return
+        const distance = touchStart - touchEnd
+        const isLeftSwipe = distance > minSwipeDistance
+        const isRightSwipe = distance < -minSwipeDistance
+        if (isLeftSwipe || isRightSwipe) console.log('swipe', isLeftSwipe ? 'left' : 'right')
+        // add your conditional logic here
+        if (isRightSwipe) setIsLeftSwipe(false)
+        if (isLeftSwipe) setIsLeftSwipe(true)
+    }
 
     const handleAttack = () => {
         let roll = Math.floor(Math.random() * 20) + 1;
@@ -131,11 +157,24 @@ export default function Attack({ name, attack, index }: Props) {
         updateAttack(index, newAttack)
     }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, isSavageAttacker, isGreatWeaponFighting, isGreatWeaponMaster, proficiencyBonus, updateAttack, index])
 
+    const handleAccordionClick = () => {
+        if (!isLeftSwipe) {
+            setIsCollapsed((prev) => !prev)
+        }
+    }
+
     return (
         <div className={styles.Attack}>
-            <div className={styles.TitleContainer} onClick={() => setIsCollapsed((prev) => !prev)} >
+            <div className={styles.TitleContainer} onClick={handleAccordionClick} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
                 <p>{name}</p>
-                <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
+                {isLeftSwipe ? (
+                    <div className={styles.SwipeButtonContainer}>
+                        <img src={trash} className={styles.IconButton} onClick={(e) => { e.stopPropagation(); handleDelete(); }} />
+                        <img src={cross} className={styles.IconButton} onClick={() => setIsLeftSwipe(false)} />
+                    </div>
+                ) : (
+                    <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
+                )}
             </div>
             <div className={`${styles.CollapsedContent} ${!isCollapsed ? styles.ExpandedContent : ''}`}>
                 <div className={styles.Container}>
