@@ -35,3 +35,16 @@
     align-items: center;
     gap: 10px;
 }
+
+.ButtonContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0;
+    gap: 10px
+}
+
+.ButtonContainer button {
+    width: 100px;
+    height: 50px;
+}

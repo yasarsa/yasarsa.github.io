@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setShowAddPopup, setShowDeleteConfirmPopup } from "../../slices/popupSlice";
+import { setDeleteAttackIndex, setShowAddPopup, setShowDeleteConfirmPopup } from "../../slices/popupSlice";
 
 export default function usePopup() {
     const dispatch = useDispatch();
@@ -11,8 +11,9 @@ export default function usePopup() {
         dispatch(setShowAddPopup(false));
     }
 
-    const showDeleteConfirmPopup = () => {
+    const showDeleteConfirmPopup = (index: number) => {
         dispatch(setShowDeleteConfirmPopup(true));
+        dispatch(setDeleteAttackIndex(index));
     }
     const hideDeleteConfirmPopup = () => {
         dispatch(setShowDeleteConfirmPopup(false));

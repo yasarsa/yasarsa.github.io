@@ -6,9 +6,10 @@ import styles from './Attack.module.css';
 
 interface Props {
     name: string;
-    attack: IAttack
+    attack: IAttack;
+    index: number;
 }
-export default function Attack({ name, attack }: Props) {
+export default function Attack({ name, attack, index }: Props) {
 
     const { showDeleteConfirmPopup } = usePopup()
 
@@ -101,7 +102,7 @@ export default function Attack({ name, attack }: Props) {
     }
 
     const handleDelete = () => {
-        showDeleteConfirmPopup()
+        showDeleteConfirmPopup(index)
     }
     return (
         <div className={styles.Attack}>
