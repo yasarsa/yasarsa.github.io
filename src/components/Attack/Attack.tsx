@@ -133,11 +133,11 @@ export default function Attack({ name, attack, index }: Props) {
 
     return (
         <div className={styles.Attack}>
-            <div className={styles.TitleContainer} onClick={() => setIsCollapsed((prev) => !prev)}>
+            <div className={styles.TitleContainer} onClick={() => setIsCollapsed((prev) => !prev)} >
                 <p>{name}</p>
                 <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
             </div>
-            {!isCollapsed && (<>
+            <div className={`${styles.CollapsedContent} ${!isCollapsed ? styles.ExpandedContent : ''}`}>
                 <div className={styles.Container}>
                     <div className={styles.InputContainer}>
                         <label>Attack Bonus: </label>
@@ -226,7 +226,7 @@ export default function Attack({ name, attack, index }: Props) {
                     )}
                 </div>
                 <button className={styles.DeleteButton} onClick={handleDelete}>Delete</button>
-            </>)}
+            </div>
         </div>
     )
 }
