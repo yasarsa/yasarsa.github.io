@@ -16,7 +16,9 @@ export default function Attack({ name, attack, index }: Props) {
     const { updateAttack } = useAttack()
 
     const [attackResult, setAttackResult] = useState<string | null>(null);
+    const [attackDetails, setAttackDetails] = useState<string | null>(null);
     const [damageResult, setDamageResult] = useState<string | null>(null);
+    const [damageDetails, setDamageDetails] = useState<string | null>(null);
 
     const [attackBonus, setAttackBonus] = useState(attack.attackBonus);
     const [damageDieCount, setDamageDieCount] = useState(attack.damageDieCount);
@@ -51,16 +53,19 @@ export default function Attack({ name, attack, index }: Props) {
 
         if (roll >= critRange) {
             handleDamage(true);
-            setAttackResult(`Critical Hit! (${roll} + ${attackBonus})`);
+            setAttackResult(`Critical Hit!`);
+            setAttackDetails("")
             return
         } else if (roll === 1) {
             setAttackResult("Critical Miss!");
+            setAttackDetails("")
             return;
         } else {
             handleDamage()
         }
 
-        setAttackResult(`Result: ${roll + attackBonus} (${roll} + ${attackBonus})`);
+        setAttackResult(`${roll + attackBonus}`);
+        setAttackDetails(`(${roll} + ${attackBonus})`);
     }
 
     const handleDamage = (isDoubled?: boolean) => {
@@ -68,7 +73,7 @@ export default function Attack({ name, attack, index }: Props) {
         if (isDoubled) dieCount *= 2
 
         let totalDamage = 0;
-        let dmgDieArray = []
+        let dmgDieArray: number[] = []
         for (let i = 0; i < dieCount; i++) {
             let r = Math.floor(Math.random() * damageDieType) + 1;
             if (isGreatWeaponFighting && r < 3) {
@@ -100,8 +105,10 @@ export default function Attack({ name, attack, index }: Props) {
             totalDamage += proficiencyBonus;
         }
 
-        setDamageResult(`You dealt ${totalDamage} damage! ([${dmgDieArray.join(", ")}] + ${damageBonus}) ${isGreatWeaponMaster ? `+ ${proficiencyBonus}` : ""}`);
+        setDamageResult(`${totalDamage}`);
+        setDamageDetails(`([${dmgDieArray.join(", ")}] + ${damageBonus}) ${isGreatWeaponMaster ? `+ ${proficiencyBonus}` : ""}`);
     }
+
 
     const handleDelete = () => {
         showDeleteConfirmPopup(index)
@@ -174,7 +181,12 @@ export default function Attack({ name, attack, index }: Props) {
                     <div className={styles.ButtonContainer}>
                         <button onClick={handleAttack}>Attack!</button>
                     </div>
-                    <p>{attackResult}</p>
+                    {attackResult && (
+                        <p className={styles.ResultText}>Result: <span>{attackResult}</span></p>
+                    )}
+                    {attackDetails && (
+                        <p className={styles.DetailsText}>{attackDetails}</p>
+                    )}
                 </div>
                 <div className={styles.Container}>
                     <div className={styles.InputContainer}>
@@ -206,7 +218,12 @@ export default function Attack({ name, attack, index }: Props) {
                     <div className={styles.ButtonContainer}>
                         <button onClick={() => handleDamage()}>Damage!</button>
                     </div>
-                    <p>{damageResult}</p>
+                    {damageResult && (
+                        <p className={styles.ResultText}>You dealt <span>{damageResult}</span> damage.</p>
+                    )}
+                    {damageDetails && (
+                        <p className={styles.DetailsText}>{damageDetails}</p>
+                    )}
                 </div>
                 <button className={styles.DeleteButton} onClick={handleDelete}>Delete</button>
             </>)}

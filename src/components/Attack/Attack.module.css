@@ -40,3 +40,22 @@
     height: 50px;
     width: 100px;
 }
+
+.ResultText {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.ResultText>span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.DetailsText {
+    margin-top: 5px;
+    font-style: italic;
+    color: gray;
+    font-size: 0.8rem;
+    text-align: center;
+}
