@@ -1,12 +1,16 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
-import type { IAttack } from '../utils/types'
+import type { IAttack, ICharacter } from '../utils/types'
 
 export interface DataState {
+    characters: ICharacter[]
     attacks: IAttack[]
+    selectedCharacter: ICharacter
 }
 
 const initialState: DataState = {
+    characters: [],
+    selectedCharacter: {} as ICharacter,
     attacks: [
         // {
         //     name: 'Vicious Greatsword',
@@ -39,18 +43,27 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
-        setAttacks: (state, action: PayloadAction<IAttack[]>) => {
-            state.attacks = action.payload;
-            localStorage.setItem('attacks', JSON.stringify(action.payload));
+        setCharacters: (state, action: PayloadAction<ICharacter[]>) => {
+            state.characters = action.payload;
+            localStorage.setItem("characters", JSON.stringify(action.payload))
+            if (state.selectedCharacter && state.selectedCharacter.id) {
+                state.attacks = state.characters[state.selectedCharacter.id - 1].attacks ?? []
+            }
         },
-        addAttackData: (state, action: PayloadAction<IAttack>) => {
-            state.attacks.push(action.payload);
-            localStorage.setItem('attacks', JSON.stringify(state.attacks));
+        addCharacterData: (state, action: PayloadAction<ICharacter>) => {
+            state.characters.push(action.payload);
+            localStorage.setItem("characters", JSON.stringify(state.characters))
+            if (state.selectedCharacter && state.selectedCharacter.id) {
+                state.attacks = state.characters[state.selectedCharacter.id - 1].attacks ?? []
+            }
         },
+        setSelectedCharacter: (state, action: PayloadAction<ICharacter>) => {
+            state.selectedCharacter = action.payload
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setAttacks, addAttackData } = dataSlice.actions
+export const { setCharacters, addCharacterData, setSelectedCharacter } = dataSlice.actions
 
 export default dataSlice.reducer

@@ -1,46 +1,70 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { addAttackData, setAttacks } from "../../slices/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setCharacters } from "../../slices/dataSlice";
 import { setDeleteAttackIndex } from "../../slices/popupSlice";
-import type { IAttack } from "../types";
+import type { RootState } from "../../store";
+import type { IAttack, ICharacter } from "../types";
 
 export default function useAttack() {
     const dispatch = useDispatch();
+    const { selectedCharacter } = useSelector((state: RootState) => state.data)
 
     const addAttack = useCallback((attack: IAttack) => {
-        dispatch(addAttackData(attack));
-    }, [dispatch]);
+        const characters = localStorage.getItem("characters")
+        if (characters) {
+            const charactersArray = JSON.parse(characters) as ICharacter[];
+            if (selectedCharacter && selectedCharacter.id) {
+                const attacks = selectedCharacter.attacks ?? [] as IAttack[]
+                attacks.push(attack)
+                charactersArray[selectedCharacter.id - 1].attacks = attacks
+                dispatch(setCharacters(charactersArray))
+            }
+        }
 
-    const setAllAttacks = useCallback((attacks: IAttack[]) => {
-        dispatch(setAttacks(attacks));
-    }, [dispatch]);
+    }, [dispatch, selectedCharacter]);
+
 
     const getAttacks = useCallback(() => {
-        const attacks = localStorage.getItem('attacks');
-        if (attacks) {
-            setAllAttacks(JSON.parse(attacks) as IAttack[]);
+        const characters = localStorage.getItem("characters")
+        if (characters) {
+            const charactersArray = JSON.parse(characters) as ICharacter[];
+            if (selectedCharacter && selectedCharacter.id) {
+                const attacks = selectedCharacter.attacks ?? [] as IAttack[]
+                charactersArray[selectedCharacter.id - 1].attacks = attacks
+                dispatch(setCharacters(charactersArray))
+            }
         }
-    }, [setAllAttacks]);
+    }, [dispatch, selectedCharacter]);
 
     const deleteAttack = useCallback((index: number) => {
-        const attacks = localStorage.getItem('attacks');
-        if (attacks) {
-            const attacksArray = JSON.parse(attacks) as IAttack[];
-            attacksArray.splice(index, 1);
-            setAllAttacks(attacksArray);
-            dispatch(setDeleteAttackIndex(undefined));
+        const characters = localStorage.getItem("characters")
+        if (characters) {
+            const charactersArray = JSON.parse(characters) as ICharacter[];
+            if (selectedCharacter && selectedCharacter.id) {
+                const attacks = selectedCharacter.attacks ?? [] as IAttack[]
+                attacks.splice(index, 1);
+                charactersArray[selectedCharacter.id - 1].attacks = attacks
+                dispatch(setCharacters(charactersArray))
+                dispatch(setDeleteAttackIndex(undefined));
+
+            }
         }
-    }, [dispatch, setAllAttacks]);
+    }, [dispatch, selectedCharacter]);
 
     const updateAttack = useCallback((index: number, updatedAttack: IAttack) => {
-        const attacks = localStorage.getItem('attacks');
-        if (attacks) {
-            const attacksArray = JSON.parse(attacks) as IAttack[];
-            attacksArray[index] = updatedAttack;
-            setAllAttacks(attacksArray);
+        const characters = localStorage.getItem("characters")
+        if (characters) {
+            const charactersArray = JSON.parse(characters) as ICharacter[];
+            if (selectedCharacter && selectedCharacter.id) {
+                const attacks = selectedCharacter.attacks ?? [] as IAttack[]
+                attacks[index] = updatedAttack;
+                charactersArray[selectedCharacter.id - 1].attacks = attacks
+                dispatch(setCharacters(charactersArray))
+            }
         }
-    }, [setAllAttacks]);
+
+    }, [dispatch, selectedCharacter]);
 
 
-    return { addAttack, getAttacks, setAllAttacks, deleteAttack, updateAttack };
+    return { addAttack, getAttacks, deleteAttack, updateAttack };
 }

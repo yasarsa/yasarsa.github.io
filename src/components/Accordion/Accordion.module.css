@@ -1,14 +1,11 @@
-.Attack {
+.Accordion {
     display: flex;
-    /* flex-direction: column;
+    flex-direction: column;
     border: 1px solid black;
     margin: 10px;
     padding: 10px;
-    border-radius: 10px; */
-}
-
-.Attack input {
-    width: 40px;
+    border-radius: 10px;
+    width: 100%;
 }
 
 .Container {
@@ -17,6 +14,21 @@
     padding: 10px;
     border-radius: 10px;
     overflow: hidden;
+}
+
+.CollapsedContent {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.ExpandedContent {
+    max-height: 1000px;
+    opacity: 1;
+    transition: all 0.3s ease;
 }
 
 .RadioContainer {
@@ -29,6 +41,10 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+}
+
+.Accordion input {
+    width: 40px;
 }
 
 .ButtonContainer {
@@ -59,4 +75,10 @@
     color: gray;
     font-size: 0.8rem;
     text-align: center;
+}
+
+.IconButton {
+    height: 100%;
+    width: 30px;
+    margin-left: 10px;
 }

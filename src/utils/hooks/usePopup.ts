@@ -1,27 +1,47 @@
 import { useDispatch } from "react-redux";
-import { setDeleteAttackIndex, setShowAddPopup, setShowDeleteConfirmPopup } from "../../slices/popupSlice";
+import { setDeleteAttackIndex, setDeleteCharacterIndex, setShowAddAttackPopup, setShowAddCharacterPopup, setShowDeleteConfirmPopup } from "../../slices/popupSlice";
+import type { ItemType } from "../types";
 
 export default function usePopup() {
     const dispatch = useDispatch();
 
-    const showAddPopup = () => {
+    const showAddAttackPopup = () => {
         document.body.classList.add('no-scroll');
-        dispatch(setShowAddPopup(true));
+        dispatch(setShowAddAttackPopup(true));
     }
-    const hideAddPopup = () => {
+    const hideAddAttackPopup = () => {
         document.body.classList.remove('no-scroll');
-        dispatch(setShowAddPopup(false));
+        dispatch(setShowAddAttackPopup(false));
     }
 
-    const showDeleteConfirmPopup = (index: number) => {
+    const showDeleteConfirmPopup = (index: number, type: ItemType) => {
         document.body.classList.add('no-scroll');
-        dispatch(setShowDeleteConfirmPopup(true));
-        dispatch(setDeleteAttackIndex(index));
+        dispatch(setShowDeleteConfirmPopup({ show: true, itemType: type }));
+
+        if (type === "attack") {
+            dispatch(setDeleteAttackIndex(index));
+        }
+
+        if (type === "character") {
+            dispatch(setDeleteCharacterIndex(index))
+
+        }
+
     }
     const hideDeleteConfirmPopup = () => {
         document.body.classList.remove('no-scroll');
-        dispatch(setShowDeleteConfirmPopup(false));
+        dispatch(setShowDeleteConfirmPopup({ show: false, itemType: undefined }));
     }
 
-    return { showAddPopup, hideAddPopup, showDeleteConfirmPopup, hideDeleteConfirmPopup };
+    const showAddCharacterPopup = () => {
+        document.body.classList.remove('no-scroll');
+        dispatch(setShowAddCharacterPopup(true))
+    }
+
+    const hideAddCharacterPopup = () => {
+        document.body.classList.remove('no-scroll');
+        dispatch(setShowAddCharacterPopup(false))
+    }
+
+    return { showAddAttackPopup, hideAddAttackPopup, showDeleteConfirmPopup, hideDeleteConfirmPopup, showAddCharacterPopup, hideAddCharacterPopup };
 }

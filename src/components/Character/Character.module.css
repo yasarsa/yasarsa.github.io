@@ -1,13 +1,8 @@
-.Attack {
+.Character {
     display: flex;
-    /* flex-direction: column;
-    border: 1px solid black;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px; */
 }
 
-.Attack input {
+.Character input {
     width: 40px;
 }
 

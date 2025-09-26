@@ -1,36 +1,50 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
+import type { ItemType } from '../utils/types'
 
 export interface PopupState {
-    showAddPopup: boolean
+    showAddAttackPopup: boolean
     showDeleteConfirmPopup: boolean
     deleteAttackIndex?: number
+    deleteCharacterIndex?: number
+    showAddCharacterPopup: boolean
+    deleteActionType: ItemType
 }
 
 const initialState: PopupState = {
-    showAddPopup: false,
+    showAddAttackPopup: false,
     showDeleteConfirmPopup: false,
-    deleteAttackIndex: undefined
+    deleteAttackIndex: undefined,
+    deleteCharacterIndex: undefined,
+    showAddCharacterPopup: false,
+    deleteActionType: undefined
 }
 
 export const popupSlice = createSlice({
     name: 'popup',
     initialState,
     reducers: {
-        setShowAddPopup: (state, action: PayloadAction<boolean>) => {
-            state.showAddPopup = action.payload
+        setShowAddAttackPopup: (state, action: PayloadAction<boolean>) => {
+            state.showAddAttackPopup = action.payload
         },
-        setShowDeleteConfirmPopup: (state, action: PayloadAction<boolean>) => {
-            state.showDeleteConfirmPopup = action.payload
+        setShowDeleteConfirmPopup: (state, action: PayloadAction<{ show: boolean, itemType: ItemType }>) => {
+            state.showDeleteConfirmPopup = action.payload.show
+            state.deleteActionType = action.payload.itemType
         },
         setDeleteAttackIndex: (state, action: PayloadAction<number | undefined>) => {
             state.deleteAttackIndex = action.payload
+        },
+        setDeleteCharacterIndex: (state, action: PayloadAction<number | undefined>) => {
+            state.deleteCharacterIndex = action.payload
+        },
+        setShowAddCharacterPopup: (state, action: PayloadAction<boolean>) => {
+            state.showAddCharacterPopup = action.payload
         }
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setShowAddPopup, setShowDeleteConfirmPopup, setDeleteAttackIndex } = popupSlice.actions
+export const { setShowAddAttackPopup, setDeleteAttackIndex, setDeleteCharacterIndex, setShowAddCharacterPopup, setShowDeleteConfirmPopup } = popupSlice.actions
 
 export default popupSlice.reducer
