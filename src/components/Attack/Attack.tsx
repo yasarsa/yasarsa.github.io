@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import chevron from '../../assets/chevron-down.svg';
 import cross from '../../assets/cross.svg';
 import trash from '../../assets/trash.svg';
@@ -36,27 +36,64 @@ export default function Attack({ name, attack, index }: Props) {
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [touchStart, setTouchStart] = useState<number | null>(null)
     const [touchEnd, setTouchEnd] = useState<number | null>(null)
-    const [isLeftSwipe, setIsLeftSwipe] = useState(false)
+    const [showDelete, setShowDelete] = useState(false)
     const minSwipeDistance = 50
 
+    const timerRef = useRef<number | undefined>(undefined);
+
+    const handleLongPress = () => {
+        setShowDelete(true)
+    };
+
+    const startPress = () => {
+        if (!showDelete) {
+            timerRef.current = setTimeout(handleLongPress, 500); // 500ms
+        }
+    };
+
+    const endPress = () => {
+        clearTimeout(timerRef.current);
+    };
+
+    const [isTouchMoved, setIsTouchMoved] = useState(false);
+
     const onTouchStart = (e: React.TouchEvent) => {
-        setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+        setTouchEnd(null)
         setTouchStart(e.targetTouches[0].clientX)
+        setIsTouchMoved(false)
+        startPress()
     }
 
     const onTouchMove = (e: React.TouchEvent) => {
+        setIsTouchMoved(true)
         setTouchEnd(e.targetTouches[0].clientX)
     }
 
     const onTouchEnd = () => {
-        if (!touchStart || !touchEnd) return
+        endPress()
+
+        if (!touchStart) return
+
+        if (!touchEnd) {
+            // Sadece tap olmuş, hareket olmamış
+            if (!isTouchMoved) {
+                handleAccordionClick()
+            }
+            return
+        }
+
         const distance = touchStart - touchEnd
         const isLeftSwipe = distance > minSwipeDistance
         const isRightSwipe = distance < -minSwipeDistance
-        if (isLeftSwipe || isRightSwipe) console.log('swipe', isLeftSwipe ? 'left' : 'right')
-        // add your conditional logic here
-        if (isRightSwipe) setIsLeftSwipe(false)
-        if (isLeftSwipe) setIsLeftSwipe(true)
+
+        if (isLeftSwipe || isRightSwipe) {
+            console.log('swipe', isLeftSwipe ? 'left' : 'right')
+            if (isRightSwipe) setShowDelete(false)
+            if (isLeftSwipe) setShowDelete(true)
+        } else if (!isTouchMoved) {
+            // Eğer minimum swipe mesafesinden az hareket varsa ve hareket olmamışsa accordion'u aç/kapa
+            handleAccordionClick()
+        }
     }
 
     const handleAttack = () => {
@@ -158,19 +195,23 @@ export default function Attack({ name, attack, index }: Props) {
     }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, isSavageAttacker, isGreatWeaponFighting, isGreatWeaponMaster, proficiencyBonus, updateAttack, index])
 
     const handleAccordionClick = () => {
-        if (!isLeftSwipe) {
+        if (!showDelete) {
             setIsCollapsed((prev) => !prev)
         }
     }
 
     return (
         <div className={styles.Attack}>
-            <div className={styles.TitleContainer} onClick={handleAccordionClick} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+            <div
+                className={styles.TitleContainer}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}>
                 <p>{name}</p>
-                {isLeftSwipe ? (
+                {showDelete ? (
                     <div className={styles.SwipeButtonContainer}>
                         <img src={trash} className={styles.IconButton} onClick={(e) => { e.stopPropagation(); handleDelete(); }} />
-                        <img src={cross} className={styles.IconButton} onClick={() => setIsLeftSwipe(false)} />
+                        <img src={cross} className={styles.IconButton} onClick={() => setShowDelete(false)} />
                     </div>
                 ) : (
                     <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
@@ -264,7 +305,6 @@ export default function Attack({ name, attack, index }: Props) {
                         <p className={styles.DetailsText}>{damageDetails}</p>
                     )}
                 </div>
-                <button className={styles.DeleteButton} onClick={handleDelete}>Delete</button>
             </div>
         </div>
     )
