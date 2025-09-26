@@ -3,3 +3,35 @@ body {
   height: 100dvh;
   margin: 0;
 }
+
+body.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+body a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img:focus,
+img:active {
+  outline: none;
+}
+
+div {
+  -webkit-tap-highlight-color: transparent;
+}

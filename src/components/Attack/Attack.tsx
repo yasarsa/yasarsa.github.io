@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import chevron from '../../assets/chevron-down.svg';
+import cross from '../../assets/cross.svg';
+import trash from '../../assets/trash.svg';
+import useAttack from '../../utils/hooks/useAttack';
 import usePopup from '../../utils/hooks/usePopup';
 import type { IAttack } from '../../utils/types';
 import styles from './Attack.module.css';
@@ -12,9 +15,12 @@ interface Props {
 export default function Attack({ name, attack, index }: Props) {
 
     const { showDeleteConfirmPopup } = usePopup()
+    const { updateAttack } = useAttack()
 
     const [attackResult, setAttackResult] = useState<string | null>(null);
+    const [attackDetails, setAttackDetails] = useState<string | null>(null);
     const [damageResult, setDamageResult] = useState<string | null>(null);
+    const [damageDetails, setDamageDetails] = useState<string | null>(null);
 
     const [attackBonus, setAttackBonus] = useState(attack.attackBonus);
     const [damageDieCount, setDamageDieCount] = useState(attack.damageDieCount);
@@ -28,6 +34,67 @@ export default function Attack({ name, attack, index }: Props) {
     const [proficiencyBonus, setProficiencyBonus] = useState(attack.proficiencyBonus);
 
     const [isCollapsed, setIsCollapsed] = useState(true);
+    const [touchStart, setTouchStart] = useState<number | null>(null)
+    const [touchEnd, setTouchEnd] = useState<number | null>(null)
+    const [showDelete, setShowDelete] = useState(false)
+    const minSwipeDistance = 50
+
+    const timerRef = useRef<number | undefined>(undefined);
+
+    const handleLongPress = () => {
+        setShowDelete(true)
+    };
+
+    const startPress = () => {
+        if (!showDelete) {
+            timerRef.current = setTimeout(handleLongPress, 500); // 500ms
+        }
+    };
+
+    const endPress = () => {
+        clearTimeout(timerRef.current);
+    };
+
+    const [isTouchMoved, setIsTouchMoved] = useState(false);
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null)
+        setTouchStart(e.targetTouches[0].clientX)
+        setIsTouchMoved(false)
+        startPress()
+    }
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setIsTouchMoved(true)
+        setTouchEnd(e.targetTouches[0].clientX)
+    }
+
+    const onTouchEnd = () => {
+        endPress()
+
+        if (!touchStart) return
+
+        if (!touchEnd) {
+            // Sadece tap olmuş, hareket olmamış
+            if (!isTouchMoved) {
+                handleAccordionClick()
+            }
+            return
+        }
+
+        const distance = touchStart - touchEnd
+        const isLeftSwipe = distance > minSwipeDistance
+        const isRightSwipe = distance < -minSwipeDistance
+
+        if (isLeftSwipe || isRightSwipe) {
+            console.log('swipe', isLeftSwipe ? 'left' : 'right')
+            if (isRightSwipe) setShowDelete(false)
+            if (isLeftSwipe) setShowDelete(true)
+        } else if (!isTouchMoved) {
+            // Eğer minimum swipe mesafesinden az hareket varsa ve hareket olmamışsa accordion'u aç/kapa
+            handleAccordionClick()
+        }
+    }
 
     const handleAttack = () => {
         let roll = Math.floor(Math.random() * 20) + 1;
@@ -49,16 +116,19 @@ export default function Attack({ name, attack, index }: Props) {
 
         if (roll >= critRange) {
             handleDamage(true);
-            setAttackResult(`Critical Hit! (${roll} + ${attackBonus})`);
+            setAttackResult(`Critical Hit!`);
+            setAttackDetails("")
             return
         } else if (roll === 1) {
             setAttackResult("Critical Miss!");
+            setAttackDetails("")
             return;
         } else {
             handleDamage()
         }
 
-        setAttackResult(`Result: ${roll + attackBonus} (${roll} + ${attackBonus})`);
+        setAttackResult(`${roll + attackBonus}`);
+        setAttackDetails(`(${roll} + ${attackBonus})`);
     }
 
     const handleDamage = (isDoubled?: boolean) => {
@@ -66,7 +136,7 @@ export default function Attack({ name, attack, index }: Props) {
         if (isDoubled) dieCount *= 2
 
         let totalDamage = 0;
-        let dmgDieArray = []
+        let dmgDieArray: number[] = []
         for (let i = 0; i < dieCount; i++) {
             let r = Math.floor(Math.random() * damageDieType) + 1;
             if (isGreatWeaponFighting && r < 3) {
@@ -98,19 +168,56 @@ export default function Attack({ name, attack, index }: Props) {
             totalDamage += proficiencyBonus;
         }
 
-        setDamageResult(`You dealt ${totalDamage} damage! ([${dmgDieArray.join(", ")}] + ${damageBonus}) ${isGreatWeaponMaster ? `+ ${proficiencyBonus}` : ""}`);
+        setDamageResult(`${totalDamage}`);
+        setDamageDetails(`([${dmgDieArray.join(", ")}] + ${damageBonus}) ${isGreatWeaponMaster ? `+ ${proficiencyBonus}` : ""}`);
     }
+
 
     const handleDelete = () => {
         showDeleteConfirmPopup(index)
     }
+
+    useEffect(() => {
+        const newAttack: IAttack = {
+            name,
+            attackBonus,
+            damageDieCount,
+            damageDieType,
+            damageBonus,
+            critRange,
+            isSavageAttacker,
+            isGreatWeaponFighting,
+            isGreatWeaponMaster,
+            proficiencyBonus
+        }
+
+        updateAttack(index, newAttack)
+    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, isSavageAttacker, isGreatWeaponFighting, isGreatWeaponMaster, proficiencyBonus, updateAttack, index])
+
+    const handleAccordionClick = () => {
+        if (!showDelete) {
+            setIsCollapsed((prev) => !prev)
+        }
+    }
+
     return (
         <div className={styles.Attack}>
-            <div className={styles.TitleContainer} onClick={() => setIsCollapsed((prev) => !prev)}>
+            <div
+                className={styles.TitleContainer}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}>
                 <p>{name}</p>
-                <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
+                {showDelete ? (
+                    <div className={styles.SwipeButtonContainer}>
+                        <img src={trash} className={styles.IconButton} onClick={(e) => { e.stopPropagation(); handleDelete(); }} />
+                        <img src={cross} className={styles.IconButton} onClick={() => setShowDelete(false)} />
+                    </div>
+                ) : (
+                    <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
+                )}
             </div>
-            {!isCollapsed && (<>
+            <div className={`${styles.CollapsedContent} ${!isCollapsed ? styles.ExpandedContent : ''}`}>
                 <div className={styles.Container}>
                     <div className={styles.InputContainer}>
                         <label>Attack Bonus: </label>
@@ -154,7 +261,12 @@ export default function Attack({ name, attack, index }: Props) {
                     <div className={styles.ButtonContainer}>
                         <button onClick={handleAttack}>Attack!</button>
                     </div>
-                    <p>{attackResult}</p>
+                    {attackResult && (
+                        <p className={styles.ResultText}>Result: <span>{attackResult}</span></p>
+                    )}
+                    {attackDetails && (
+                        <p className={styles.DetailsText}>{attackDetails}</p>
+                    )}
                 </div>
                 <div className={styles.Container}>
                     <div className={styles.InputContainer}>
@@ -186,10 +298,14 @@ export default function Attack({ name, attack, index }: Props) {
                     <div className={styles.ButtonContainer}>
                         <button onClick={() => handleDamage()}>Damage!</button>
                     </div>
-                    <p>{damageResult}</p>
+                    {damageResult && (
+                        <p className={styles.ResultText}>You dealt <span>{damageResult}</span> damage.</p>
+                    )}
+                    {damageDetails && (
+                        <p className={styles.DetailsText}>{damageDetails}</p>
+                    )}
                 </div>
-                <button className={styles.DeleteButton} onClick={handleDelete}>Delete</button>
-            </>)}
+            </div>
         </div>
     )
 }

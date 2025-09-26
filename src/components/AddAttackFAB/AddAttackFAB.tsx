@@ -2,7 +2,10 @@ import plusImage from '../../assets/plus.svg';
 import usePopup from '../../utils/hooks/usePopup';
 import styles from './AddAttackFAB.module.css';
 
-export const AddAttackFAB = () => {
+interface Props {
+    isFloating?: boolean;
+}
+export const AddAttackFAB = ({ isFloating }: Props) => {
     const { showAddPopup } = usePopup();
 
     const handleClick = () => {
@@ -10,7 +13,7 @@ export const AddAttackFAB = () => {
     }
 
     return (
-        <div className={styles.AddAttackFAB} onClick={handleClick}>
+        <div className={styles.AddAttackFAB} style={{ position: isFloating ? "fixed" : "initial" }} role='button' onClick={handleClick}>
             <img src={plusImage} alt="Add" />
         </div>
     );

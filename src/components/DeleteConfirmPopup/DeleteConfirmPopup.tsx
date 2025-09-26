@@ -29,14 +29,16 @@ export default function DeleteConfirmPopup() {
 
 
     return (
-        <div className={styles.DeleteConfirmPopup}>
-            <div className={styles.TitleContainer}>
-                <p>Are you sure you want to delete {attackToBeDeleted.name}?</p>
-                <img src={crossImg} alt="Close" onClick={handleClose} />
-            </div>
-            <div className={styles.ButtonContainer}>
-                <button onClick={handleYes}>Yes</button>
-                <button onClick={handleNo}>No</button>
+        <div className={styles.Overlay}>
+            <div className={styles.DeleteConfirmPopup}>
+                <div className={styles.TitleContainer}>
+                    <p>Are you sure you want to delete {attackToBeDeleted.name}?</p>
+                    <img src={crossImg} alt="Close" onClick={handleClose} />
+                </div>
+                <div className={styles.ButtonContainer}>
+                    <button onClick={handleYes}>Yes</button>
+                    <button onClick={handleNo}>No</button>
+                </div>
             </div>
         </div>
     )
