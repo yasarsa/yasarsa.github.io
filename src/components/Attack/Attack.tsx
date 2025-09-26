@@ -34,12 +34,14 @@ export default function Attack({ name, attack, index }: Props) {
     const [proficiencyBonus, setProficiencyBonus] = useState(attack.proficiencyBonus);
 
     const [isCollapsed, setIsCollapsed] = useState(true);
-    const [touchStart, setTouchStart] = useState<number | null>(null)
-    const [touchEnd, setTouchEnd] = useState<number | null>(null)
+    const [startPos, setStartPos] = useState<number | null>(null)
+    const [endPos, setEndPos] = useState<number | null>(null)
     const [showDelete, setShowDelete] = useState(false)
     const minSwipeDistance = 50
 
     const timerRef = useRef<number | undefined>(undefined);
+    const [isMoved, setIsMoved] = useState(false);
+    const [isMouseDown, setIsMouseDown] = useState(false);
 
     const handleLongPress = () => {
         setShowDelete(true)
@@ -47,7 +49,7 @@ export default function Attack({ name, attack, index }: Props) {
 
     const startPress = () => {
         if (!showDelete) {
-            timerRef.current = setTimeout(handleLongPress, 500); // 500ms
+            timerRef.current = setTimeout(handleLongPress, 500);
         }
     };
 
@@ -55,44 +57,87 @@ export default function Attack({ name, attack, index }: Props) {
         clearTimeout(timerRef.current);
     };
 
-    const [isTouchMoved, setIsTouchMoved] = useState(false);
-
+    // Touch Events
     const onTouchStart = (e: React.TouchEvent) => {
-        setTouchEnd(null)
-        setTouchStart(e.targetTouches[0].clientX)
-        setIsTouchMoved(false)
+        e.stopPropagation();
+        e.preventDefault();
+        setEndPos(null)
+        setStartPos(e.targetTouches[0].clientX)
+        setIsMoved(false)
         startPress()
     }
 
     const onTouchMove = (e: React.TouchEvent) => {
-        setIsTouchMoved(true)
-        setTouchEnd(e.targetTouches[0].clientX)
+        e.stopPropagation();
+        e.preventDefault();
+        // Sadece yeterli hareket varsa moved olarak işaretle
+        if (Math.abs(e.targetTouches[0].clientX - (startPos || 0)) > 5) {
+            setIsMoved(true)
+            setEndPos(e.targetTouches[0].clientX)
+        }
     }
 
-    const onTouchEnd = () => {
+    const onTouchEnd = (e: React.TouchEvent) => {
+        e.stopPropagation();
+        e.preventDefault();
+        // Kısa bir gecikme ile işle
+        setTimeout(() => handleInteractionEnd(), 50);
+    }
+
+    // Mouse Events
+    const onMouseDown = (e: React.MouseEvent) => {
+        setEndPos(null)
+        setStartPos(e.clientX)
+        setIsMoved(false)
+        setIsMouseDown(true)
+        startPress()
+    }
+
+    const onMouseMove = (e: React.MouseEvent) => {
+        if (!isMouseDown) return
+        setIsMoved(true)
+        setEndPos(e.clientX)
+    }
+
+    const onMouseUp = () => {
+        setIsMouseDown(false)
+        handleInteractionEnd();
+    }
+
+    const onMouseLeave = () => {
+        if (isMouseDown) {
+            setIsMouseDown(false)
+            handleInteractionEnd();
+        }
+    }
+
+    const handleInteractionEnd = () => {
+
+
         endPress()
 
-        if (!touchStart) return
-
-        if (!touchEnd) {
-            // Sadece tap olmuş, hareket olmamış
-            if (!isTouchMoved) {
-                handleAccordionClick()
-            }
-            return
+        if (!startPos) {
+            return;
         }
 
-        const distance = touchStart - touchEnd
+        // Eğer endPos yoksa ve hareket olmadıysa, bu bir tap/click olayıdır
+        if (!endPos) {
+            if (!isMoved) {
+                setTimeout(() => handleAccordionClick(), 100);
+            }
+            return;
+        }
+
+        const distance = startPos - endPos
         const isLeftSwipe = distance > minSwipeDistance
         const isRightSwipe = distance < -minSwipeDistance
 
+
         if (isLeftSwipe || isRightSwipe) {
-            console.log('swipe', isLeftSwipe ? 'left' : 'right')
             if (isRightSwipe) setShowDelete(false)
             if (isLeftSwipe) setShowDelete(true)
-        } else if (!isTouchMoved) {
-            // Eğer minimum swipe mesafesinden az hareket varsa ve hareket olmamışsa accordion'u aç/kapa
-            handleAccordionClick()
+        } else if (!isMoved) {
+            setTimeout(() => handleAccordionClick(), 100);
         }
     }
 
@@ -196,7 +241,9 @@ export default function Attack({ name, attack, index }: Props) {
 
     const handleAccordionClick = () => {
         if (!showDelete) {
-            setIsCollapsed((prev) => !prev)
+            setIsCollapsed((prev) => {
+                return !prev;
+            });
         }
     }
 
@@ -206,12 +253,37 @@ export default function Attack({ name, attack, index }: Props) {
                 className={styles.TitleContainer}
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}>
+                onTouchEnd={onTouchEnd}
+                onMouseDown={onMouseDown}
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+                onMouseLeave={onMouseLeave}>
+
                 <p>{name}</p>
                 {showDelete ? (
-                    <div className={styles.SwipeButtonContainer}>
-                        <img src={trash} className={styles.IconButton} onClick={(e) => { e.stopPropagation(); handleDelete(); }} />
-                        <img src={cross} className={styles.IconButton} onClick={() => setShowDelete(false)} />
+                    <div className={styles.SwipeButtonContainer}
+                        onClick={(e) => e.stopPropagation()}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
+                        onTouchEnd={(e) => e.stopPropagation()}>
+                        <img
+                            src={trash}
+                            className={styles.IconButton}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                handleDelete();
+                            }}
+                        />
+                        <img
+                            src={cross}
+                            className={styles.IconButton}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setShowDelete(false);
+                            }}
+                        />
                     </div>
                 ) : (
                     <img src={chevron} style={{ transform: isCollapsed ? "none" : "rotate(180deg)" }} alt="Collapse" />
