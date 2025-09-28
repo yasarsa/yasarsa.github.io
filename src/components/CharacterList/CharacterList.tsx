@@ -17,6 +17,9 @@ export default function CharacterList() {
                 </div>
             ) : (
                 <>
+                    <div className={styles.TitleContainer}>
+                        <p>Your characters</p>
+                    </div>
                     {characters.map((character, index) => (
                         <Character key={index} character={character} index={index} />
                     )

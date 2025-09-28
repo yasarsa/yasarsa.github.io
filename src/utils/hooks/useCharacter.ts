@@ -30,7 +30,7 @@ export default function useCharacter() {
         dispatch(updateCharacterData({ index, updatedCharacter }))
     }, [dispatch])
 
-    const selectCharacter = useCallback((index: number) => {
+    const selectCharacter = useCallback((index: number | undefined) => {
         dispatch(setSelectedCharacter(index))
     }, [dispatch])
 

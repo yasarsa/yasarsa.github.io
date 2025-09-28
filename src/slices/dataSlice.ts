@@ -47,7 +47,12 @@ export const dataSlice = createSlice({
             state.characters = action.payload;
             localStorage.setItem("characters", JSON.stringify(state.characters))
         },
-        setSelectedCharacter: (state, action: PayloadAction<number>) => {
+        setSelectedCharacter: (state, action: PayloadAction<number | undefined>) => {
+            if (action.payload === undefined) {
+                state.selectedCharacter = {} as ICharacter;
+                state.attacks = []
+                return
+            }
             state.selectedCharacter = state.characters[action.payload];
             state.attacks = state.selectedCharacter.attacks ?? []
         },
@@ -64,10 +69,6 @@ export const dataSlice = createSlice({
             state.characters[index] = updatedCharacter;
             localStorage.setItem("characters", JSON.stringify(state.characters))
         },
-
-
-
-
         addAttackData: (state, action: PayloadAction<IAttack>) => {
             state.attacks.push(action.payload);
             state.characters[state.selectedCharacter.id - 1].attacks = state.attacks

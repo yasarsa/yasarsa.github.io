@@ -11,3 +11,17 @@
     height: 100dvh;
     margin: 0px 20px;
 }
+
+.TitleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #868686;
+}
+
+.TitleContainer p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
