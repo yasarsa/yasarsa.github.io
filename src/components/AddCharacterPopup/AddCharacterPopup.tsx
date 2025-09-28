@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import crossImg from '../../assets/cross.svg';
 import type { RootState } from '../../store';
+import { CharacterClasses } from '../../utils/contants';
 import useCharacter from '../../utils/hooks/useCharacter';
 import usePopup from '../../utils/hooks/usePopup';
+import type { CharacterClassType } from '../../utils/types';
 import styles from './AddCharacterPopup.module.css';
 
 export const AddCharacterPopup = () => {
@@ -14,6 +16,7 @@ export const AddCharacterPopup = () => {
 
     const [name, setName] = useState('');
     const [level, setLevel] = useState("")
+    const [characterClass, setCharacterClass] = useState<CharacterClassType>("Barbarian");
 
     const handleClose = () => {
         hideAddCharacterPopup()
@@ -29,6 +32,7 @@ export const AddCharacterPopup = () => {
                 id: characters.length + 1,
                 name,
                 level: Number(level),
+                characterClass: characterClass,
             });
 
             setName('');
@@ -48,7 +52,14 @@ export const AddCharacterPopup = () => {
                 <div className={styles.Container}>
                     <input type="text" placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
                     <input type="number" placeholder='Level' value={level} onChange={(e) => setLevel(e.target.value)} />
-
+                    <div className={styles.InputContainer}>
+                        <label>Class: </label>
+                        <select name="classes" id="classes" value={characterClass as string} onChange={(e) => setCharacterClass(e.target.value as CharacterClassType)}>
+                            {CharacterClasses.map((charClass) => (
+                                <option key={charClass} value={charClass} >{charClass}</option>
+                            ))}
+                        </select>
+                    </div>
                     <button className={styles.AddButton} onClick={handleAddCharacter}>Add Character</button>
                 </div>
             </div>

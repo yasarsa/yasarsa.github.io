@@ -1,3 +1,5 @@
+import type { CharacterClasses } from "./contants";
+
 export interface IAttack {
     name: string;
     damageDieCount: number;
@@ -16,7 +18,10 @@ export interface ICharacter {
     id: number;
     name: string;
     level: number;
+    characterClass: CharacterClassType;
     attacks?: IAttack[]
 }
 
 export type ItemType = "attack" | "character" | undefined
+
+export type CharacterClassType = (typeof CharacterClasses)[keyof typeof CharacterClasses]
