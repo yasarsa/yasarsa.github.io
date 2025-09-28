@@ -61,7 +61,7 @@ export default function Character({ character, index }: Props) {
 
     return (
         <div className={styles.Character}>
-            <Accordion title={character.name} onDelete={handleDelete} children={children} />
+            <Accordion title={character.name} extraTitle={`Level ${character.level} ${character.characterClass}`} onDelete={handleDelete} children={children} />
         </div>
     )
 }

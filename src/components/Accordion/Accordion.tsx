@@ -6,10 +6,11 @@ import styles from "./Accordion.module.css";
 
 interface Props {
     title: string;
+    extraTitle?: string;
     onDelete: () => void;
     children: React.ReactNode;
 }
-export default function Accordion({ title, onDelete, children }: Props) {
+export default function Accordion({ title, onDelete, children, extraTitle }: Props) {
 
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [startPos, setStartPos] = useState<number | null>(null)
@@ -142,7 +143,7 @@ export default function Accordion({ title, onDelete, children }: Props) {
                 onMouseUp={onMouseUp}
                 onMouseLeave={onMouseLeave}>
 
-                <p>{title}</p>
+                <p>{title} <span className={styles.ExtraTitle}>{extraTitle}</span></p>
                 {showDelete ? (
                     <div className={styles.SwipeButtonContainer}
                         onClick={(e) => e.stopPropagation()}
