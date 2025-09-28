@@ -5,6 +5,7 @@ export interface IAttack {
     damageBonus: number;
     attackBonus: number;
     critRange: number;
+    critMultiplier: number;
     isSavageAttacker: boolean;
     isGreatWeaponFighting: boolean;
     isGreatWeaponMaster: boolean;

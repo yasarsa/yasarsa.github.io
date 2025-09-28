@@ -25,6 +25,7 @@ export default function Attack({ attack, index }: Props) {
     const [damageDieType, setDamageDieType] = useState(attack.damageDieType);
     const [damageBonus, setDamageBonus] = useState(attack.damageBonus);
     const [critRange, setCritRange] = useState(attack.critRange);
+    const [critMultiplier, setCritMultiplier] = useState(attack.critMultiplier ?? 2);
     const [rollType, setRollType] = useState<"normal" | "advantage" | "disadvantage">("normal");
     const [isSavageAttacker, setSavageAttacker] = useState(attack.isSavageAttacker);
     const [isGreatWeaponFighting, setGreatWeaponFighting] = useState(attack.isGreatWeaponFighting);
@@ -68,9 +69,9 @@ export default function Attack({ attack, index }: Props) {
         setAttackDetails(`(${roll} + ${attackBonus})`);
     }
 
-    const handleDamage = (isDoubled?: boolean) => {
+    const handleDamage = (isCrit?: boolean) => {
         let dieCount = damageDieCount
-        if (isDoubled) dieCount *= 2
+        if (isCrit) dieCount *= critMultiplier
 
         let totalDamage = 0;
         let dmgDieArray: number[] = []
@@ -125,11 +126,12 @@ export default function Attack({ attack, index }: Props) {
             isSavageAttacker,
             isGreatWeaponFighting,
             isGreatWeaponMaster,
-            proficiencyBonus
+            proficiencyBonus,
+            critMultiplier
         }
 
         updateAttack(index, updatedAttack)
-    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, isSavageAttacker, isGreatWeaponFighting, isGreatWeaponMaster, proficiencyBonus, updateAttack, index])
+    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, isSavageAttacker, isGreatWeaponFighting, isGreatWeaponMaster, proficiencyBonus, updateAttack, index, critMultiplier])
 
     const children = <>
         <div className={styles.Container}>
@@ -143,7 +145,11 @@ export default function Attack({ attack, index }: Props) {
             </div>
             <div className={styles.InputContainer}>
                 <label>Crit range(starting value): </label>
-                <input type="number" value={critRange} onChange={(e) => setCritRange(parseInt(e.target.value))} />
+                <input type="number" min={0} value={critRange} onChange={(e) => setCritRange(parseInt(e.target.value))} />
+            </div>
+            <div className={styles.InputContainer}>
+                <label>Crit Multiplier: </label>
+                <input type="number" min={1} value={critMultiplier} onChange={(e) => setCritMultiplier(parseInt(e.target.value))} />
             </div>
             <div className={styles.RadioContainer}>
                 <label>Roll Type: </label>
