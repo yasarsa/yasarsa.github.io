@@ -1,48 +1,48 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
-import useAttack from '../../utils/hooks/useAttack';
-import { AddAttackFAB } from '../AddAttackFAB/AddAttackFAB';
+import useCharacter from '../../utils/hooks/useCharacter';
 import { AddAttackPopup } from '../AddAttackPopup/AddAttackPopup';
-import Attack from '../Attack/Attack';
+import { AddCharacterPopup } from '../AddCharacterPopup/AddCharacterPopup';
+import AttackList from '../AttackList/AttackList';
+import CharacterList from '../CharacterList/CharacterList';
 import DeleteConfirmPopup from '../DeleteConfirmPopup/DeleteConfirmPopup';
 import styles from './DND.module.css';
 
 
 export default function DND() {
 
-    const { getAttacks } = useAttack()
+    const { getCharacters } = useCharacter()
 
-    const { showAddPopup, showDeleteConfirmPopup } = useSelector((state: RootState) => state.popup);
+    const { showAddAttackPopup, showDeleteConfirmPopup, showAddCharacterPopup } = useSelector((state: RootState) => state.popup);
+    const { selectedCharacter } = useSelector((state: RootState) => state.data);
 
-    const { attacks } = useSelector((state: RootState) => state.data);
+    const isCharacterSelected = selectedCharacter.name ? true : false
 
     useEffect(() => {
-        getAttacks()
-    }, [getAttacks])
+        getCharacters()
+    }, [getCharacters])
 
     return (
         <div className={styles.DND}>
-            {attacks.length === 0 && (
-                <div className={styles.NoAttacksContainer}>
-                    <p className={styles.noAttacks}>No attacks added yet. Click the "+" button to add your first attack.</p>
-                    <AddAttackFAB isFloating={false} />
-                </div>
-            )}
-            {attacks.map((attack, index) => (
-                <Attack key={index} name={attack.name} attack={attack} index={index} />
-            ))}
-            {attacks.length > 0 && (
-                <AddAttackFAB isFloating={true} />
+            {isCharacterSelected ? (
+                <AttackList />
+            ) : (
+                <CharacterList />
             )}
 
-            {showAddPopup && (
+            {showAddAttackPopup && (
                 <AddAttackPopup />
             )}
 
             {showDeleteConfirmPopup && (
                 <DeleteConfirmPopup />
             )}
+
+            {showAddCharacterPopup && (
+                <AddCharacterPopup />
+            )}
+
         </div>
     )
 }

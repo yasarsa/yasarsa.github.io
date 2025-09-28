@@ -10,3 +10,12 @@ export interface IAttack {
     isGreatWeaponMaster: boolean;
     proficiencyBonus: number;
 }
+
+export interface ICharacter {
+    id: number;
+    name: string;
+    level: number;
+    attacks?: IAttack[]
+}
+
+export type ItemType = "attack" | "character" | undefined

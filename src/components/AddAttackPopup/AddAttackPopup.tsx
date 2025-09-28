@@ -5,7 +5,7 @@ import usePopup from '../../utils/hooks/usePopup';
 import styles from './AddAttackPopup.module.css';
 
 export const AddAttackPopup = () => {
-    const { hideAddPopup } = usePopup()
+    const { hideAddAttackPopup } = usePopup()
     const { addAttack } = useAttack()
 
     const [name, setName] = useState('');
@@ -16,21 +16,10 @@ export const AddAttackPopup = () => {
     const [damageBonus, setDamageBonus] = useState("");
 
     const handleClose = () => {
-        hideAddPopup()
+        hideAddAttackPopup()
     }
 
     const handleAddAttack = () => {
-        // Logic to add the attack
-        // You can send the data to a parent component or a global state
-        console.log({
-            name,
-            attackBonus,
-            critRange,
-            damageDieCount,
-            damageDieType,
-            damageBonus
-        });
-
         if (!name || attackBonus === undefined || critRange === undefined || damageDieCount === undefined || damageDieType === undefined || damageBonus === undefined) {
             alert("Please fill all fields before adding the attack.");
             return;
@@ -55,7 +44,7 @@ export const AddAttackPopup = () => {
             setDamageDieType("");
             setDamageBonus("");
 
-            hideAddPopup();
+            hideAddAttackPopup();
         }
     }
 

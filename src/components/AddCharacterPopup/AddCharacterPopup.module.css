@@ -1,0 +1,62 @@
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.AddCharacterPopup {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    padding: 20px;
+}
+
+.TitleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.TitleContainer img {
+    cursor: pointer;
+}
+
+.TitleContainer p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.Container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+}
+
+.Container input {
+    width: 100%;
+}
+
+.AddButton {
+    width: 100px;
+    height: 50px;
+    margin-top: 20px;
+}
