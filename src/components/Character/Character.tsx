@@ -25,14 +25,13 @@ export default function Character({ character, index }: Props) {
     }
 
     useEffect(() => {
-        const updatedCharacter: ICharacter = {
-            id: index + 1,
-            name: name,
-            level: level
-        }
-        updateCharacter(index, updatedCharacter)
+        const updatedCharacter: ICharacter = { ...character, name: name, level: level };
 
-    }, [name, level, character.name, updateCharacter, index])
+        if (character.name !== name || character.level !== level) {
+            updateCharacter(index, updatedCharacter)
+        }
+
+    }, [name, level, updateCharacter, character, index])
 
     const children = <>
         <div className={styles.Container}>

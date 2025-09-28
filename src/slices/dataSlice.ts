@@ -9,7 +9,7 @@ export interface DataState {
 }
 
 const initialState: DataState = {
-    characters: [],
+    characters: [] as ICharacter[],
     selectedCharacter: {} as ICharacter,
     attacks: [
         // {
@@ -36,7 +36,7 @@ const initialState: DataState = {
         //     isGreatWeaponMaster: false,
         //     proficiencyBonus: 5,
         // }
-    ],
+    ] as IAttack[],
 }
 
 export const dataSlice = createSlice({
@@ -45,25 +45,49 @@ export const dataSlice = createSlice({
     reducers: {
         setCharacters: (state, action: PayloadAction<ICharacter[]>) => {
             state.characters = action.payload;
-            localStorage.setItem("characters", JSON.stringify(action.payload))
-            if (state.selectedCharacter && state.selectedCharacter.id) {
-                state.attacks = state.characters[state.selectedCharacter.id - 1].attacks ?? []
-            }
+            localStorage.setItem("characters", JSON.stringify(state.characters))
+        },
+        setSelectedCharacter: (state, action: PayloadAction<number>) => {
+            state.selectedCharacter = state.characters[action.payload];
+            state.attacks = state.selectedCharacter.attacks ?? []
         },
         addCharacterData: (state, action: PayloadAction<ICharacter>) => {
             state.characters.push(action.payload);
             localStorage.setItem("characters", JSON.stringify(state.characters))
-            if (state.selectedCharacter && state.selectedCharacter.id) {
-                state.attacks = state.characters[state.selectedCharacter.id - 1].attacks ?? []
-            }
         },
-        setSelectedCharacter: (state, action: PayloadAction<ICharacter>) => {
-            state.selectedCharacter = action.payload
-        }
+        removeCharacterData: (state, action: PayloadAction<number>) => {
+            state.characters.splice(action.payload, 1);
+            localStorage.setItem("characters", JSON.stringify(state.characters))
+        },
+        updateCharacterData: (state, action: PayloadAction<{ index: number, updatedCharacter: ICharacter }>) => {
+            const { index, updatedCharacter } = action.payload;
+            state.characters[index] = updatedCharacter;
+            localStorage.setItem("characters", JSON.stringify(state.characters))
+        },
+
+
+
+
+        addAttackData: (state, action: PayloadAction<IAttack>) => {
+            state.attacks.push(action.payload);
+            state.characters[state.selectedCharacter.id - 1].attacks = state.attacks
+            localStorage.setItem("characters", JSON.stringify(state.characters))
+        },
+        removeAttackData: (state, action: PayloadAction<number>) => {
+            state.attacks.splice(action.payload, 1);
+            state.characters[state.selectedCharacter.id - 1].attacks = state.attacks
+            localStorage.setItem("characters", JSON.stringify(state.characters))
+        },
+        updateAttackData: (state, action: PayloadAction<{ index: number, updatedAttack: IAttack }>) => {
+            const { index, updatedAttack } = action.payload;
+            state.attacks[index] = updatedAttack;
+            state.characters[state.selectedCharacter.id - 1].attacks = state.attacks
+            localStorage.setItem("characters", JSON.stringify(state.characters))
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setCharacters, addCharacterData, setSelectedCharacter } = dataSlice.actions
+export const { setCharacters, addCharacterData, setSelectedCharacter, addAttackData, removeCharacterData, updateCharacterData, removeAttackData, updateAttackData } = dataSlice.actions
 
 export default dataSlice.reducer
