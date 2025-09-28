@@ -11,6 +11,7 @@ export const AddAttackPopup = () => {
     const [name, setName] = useState('');
     const [attackBonus, setAttackBonus] = useState("");
     const [critRange, setCritRange] = useState("");
+    const [critMultiplier, setCritMultiplier] = useState("");
     const [damageDieCount, setDamageDieCount] = useState("");
     const [damageDieType, setDamageDieType] = useState("");
     const [damageBonus, setDamageBonus] = useState("");
@@ -34,7 +35,8 @@ export const AddAttackPopup = () => {
                 isSavageAttacker: false,
                 isGreatWeaponFighting: false,
                 isGreatWeaponMaster: false,
-                proficiencyBonus: 0
+                proficiencyBonus: 0,
+                critMultiplier: Number(critMultiplier) || 2,
             });
 
             setName('');
@@ -43,6 +45,7 @@ export const AddAttackPopup = () => {
             setDamageDieCount("");
             setDamageDieType("");
             setDamageBonus("");
+            setCritMultiplier("");
 
             hideAddAttackPopup();
         }
@@ -59,6 +62,7 @@ export const AddAttackPopup = () => {
                     <input type="text" placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
                     <input type="number" placeholder='Attack Bonus' value={attackBonus} onChange={(e) => setAttackBonus(e.target.value)} />
                     <input type="number" placeholder='Crit Range' value={critRange} onChange={(e) => setCritRange(e.target.value)} />
+                    <input type="number" placeholder='Crit Multiplier' value={critMultiplier} onChange={(e) => setCritMultiplier(e.target.value)} />
                     <input type="number" placeholder='Damage Die Count' value={damageDieCount} onChange={(e) => setDamageDieCount(e.target.value)} />
                     <input type="number" placeholder='Damage Die Type' value={damageDieType} onChange={(e) => setDamageDieType(e.target.value)} />
                     <input type="number" placeholder='Damage Bonus' value={damageBonus} onChange={(e) => setDamageBonus(e.target.value)} />
