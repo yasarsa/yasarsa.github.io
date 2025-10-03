@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setDeleteAttackIndex, setDeleteCharacterIndex, setShowAddAttackPopup, setShowAddCharacterPopup, setShowDeleteConfirmPopup } from "../../slices/popupSlice";
+import { setDeleteAttackIndex, setDeleteCharacterIndex, setShowAddAttackPopup, setShowAddCharacterPopup, setShowDeleteConfirmPopup, setShowImportPopup, setShowSidebar } from "../../slices/popupSlice";
 import type { ItemType } from "../types";
 
 export default function usePopup() {
@@ -43,5 +43,23 @@ export default function usePopup() {
         dispatch(setShowAddCharacterPopup(false))
     }
 
-    return { showAddAttackPopup, hideAddAttackPopup, showDeleteConfirmPopup, hideDeleteConfirmPopup, showAddCharacterPopup, hideAddCharacterPopup };
+    const openSidebar = () => {
+        dispatch(setShowSidebar(true))
+    }
+
+    const closeSidebar = () => {
+        dispatch(setShowSidebar(false))
+    }
+
+    const showImportPopup = () => {
+        document.body.classList.add('no-scroll');
+        dispatch(setShowImportPopup(true));
+    }
+
+    const closeImportPopup = () => {
+        document.body.classList.remove('no-scroll');
+        dispatch(setShowImportPopup(false));
+    }
+
+    return { showAddAttackPopup, hideAddAttackPopup, showDeleteConfirmPopup, hideDeleteConfirmPopup, showAddCharacterPopup, hideAddCharacterPopup, openSidebar, closeSidebar, showImportPopup, closeImportPopup };
 }
