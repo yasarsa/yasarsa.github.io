@@ -19,6 +19,45 @@
     flex-direction: column;
 }
 
+.InputContainer {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.Features {
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 6px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.Feature {
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.Feature input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.NoFeature {
+    color: #666;
+    text-align: center;
+    padding: 10px;
+}
+
 .TitleContainer {
     display: flex;
     justify-content: space-between;
