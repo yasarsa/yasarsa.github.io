@@ -8,7 +8,7 @@ import { store } from "./store";
 export default function App() {
 
   useEffect(() => {
-    console.log("v1.0.0")
+    console.log("v1.0.1")
   }, [])
 
   return (

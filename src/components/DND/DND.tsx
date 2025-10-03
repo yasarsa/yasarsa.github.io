@@ -7,6 +7,8 @@ import { AddCharacterPopup } from '../AddCharacterPopup/AddCharacterPopup';
 import AttackList from '../AttackList/AttackList';
 import CharacterList from '../CharacterList/CharacterList';
 import DeleteConfirmPopup from '../DeleteConfirmPopup/DeleteConfirmPopup';
+import ImportPopup from '../ImportPopup/ImportPopup';
+import Sidebar from '../Sidebar/Sidebar';
 import styles from './DND.module.css';
 
 
@@ -14,7 +16,7 @@ export default function DND() {
 
     const { getCharacters } = useCharacter()
 
-    const { showAddAttackPopup, showDeleteConfirmPopup, showAddCharacterPopup } = useSelector((state: RootState) => state.popup);
+    const { showAddAttackPopup, showDeleteConfirmPopup, showAddCharacterPopup, showSidebar, showImportPopup } = useSelector((state: RootState) => state.popup);
     const { selectedCharacter } = useSelector((state: RootState) => state.data);
 
     const isCharacterSelected = selectedCharacter.name ? true : false
@@ -43,6 +45,14 @@ export default function DND() {
                 <AddCharacterPopup />
             )}
 
-        </div>
+            {showSidebar && (
+                <Sidebar />
+            )}
+
+            {showImportPopup && (
+                <ImportPopup />
+            )}
+        </div >
+
     )
 }

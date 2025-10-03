@@ -82,3 +82,9 @@
     width: 30px;
     margin-left: 10px;
 }
+
+.ExtraTitle {
+    font-size: 0.8rem;
+    color: gray;
+    margin-left: 10px;
+}

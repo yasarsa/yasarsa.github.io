@@ -14,7 +14,6 @@
 
 .TitleContainer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #868686;
@@ -24,4 +23,23 @@
     font-size: 24px;
     font-weight: bold;
     margin: 0;
+    margin-left: 10px;
+}
+
+.TitleContainer img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.ImportContainer {
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid black;
 }

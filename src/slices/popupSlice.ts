@@ -9,6 +9,8 @@ export interface PopupState {
     deleteCharacterIndex?: number
     showAddCharacterPopup: boolean
     deleteActionType: ItemType
+    showSidebar: boolean
+    showImportPopup: boolean
 }
 
 const initialState: PopupState = {
@@ -17,7 +19,9 @@ const initialState: PopupState = {
     deleteAttackIndex: undefined,
     deleteCharacterIndex: undefined,
     showAddCharacterPopup: false,
-    deleteActionType: undefined
+    deleteActionType: undefined,
+    showSidebar: false,
+    showImportPopup: false,
 }
 
 export const popupSlice = createSlice({
@@ -39,12 +43,20 @@ export const popupSlice = createSlice({
         },
         setShowAddCharacterPopup: (state, action: PayloadAction<boolean>) => {
             state.showAddCharacterPopup = action.payload
-        }
+        },
+        setShowSidebar: (state, action: PayloadAction<boolean>) => {
+            state.showSidebar = action.payload
+        },
+        setShowImportPopup: (state, action: PayloadAction<boolean>) => {
+            state.showImportPopup = action.payload
+        },
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setShowAddAttackPopup, setDeleteAttackIndex, setDeleteCharacterIndex, setShowAddCharacterPopup, setShowDeleteConfirmPopup } = popupSlice.actions
+export const { setShowAddAttackPopup, setDeleteAttackIndex, setDeleteCharacterIndex, setShowAddCharacterPopup, setShowImportPopup, setShowDeleteConfirmPopup
+    , setShowSidebar
+} = popupSlice.actions
 
 export default popupSlice.reducer

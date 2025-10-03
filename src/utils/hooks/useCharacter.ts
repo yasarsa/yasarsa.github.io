@@ -34,5 +34,9 @@ export default function useCharacter() {
         dispatch(setSelectedCharacter(index))
     }, [dispatch])
 
-    return { getCharacters, addCharacter, deleteCharacter, updateCharacter, selectCharacter }
+    const importCharacters = useCallback((characters: ICharacter[]) => {
+        dispatch(setCharacters(characters))
+    }, [dispatch])
+
+    return { getCharacters, addCharacter, deleteCharacter, updateCharacter, selectCharacter, importCharacters }
 }
