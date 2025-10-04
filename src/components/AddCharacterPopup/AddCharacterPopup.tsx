@@ -54,7 +54,6 @@ export const AddCharacterPopup = () => {
                     <input type="text" placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
                     {characterClasses.map((charClassDef, idx) => (
                         <div key={idx} className={styles.InputContainer}>
-                            <label>Class {idx + 1}: </label>
                             <select name="classes" id="classes" value={charClassDef.characterClass as string} onChange={(e) => {
                                 const updatedClasses = [...characterClasses];
                                 updatedClasses[idx].characterClass = e.target.value as CharacterClassType;
@@ -80,19 +79,6 @@ export const AddCharacterPopup = () => {
                     <button className={styles.AddClassButton} onClick={() => {
                         setCharacterClasses([...characterClasses, { characterClass: CharacterClasses[0], level: 1 } as ICharacterClassDefinition]);
                     }}>Add Another Class</button>
-                    {/* <input type="number" placeholder='Level' value={level} onChange={(e) => setLevel(e.target.value)} /> --- IGNORE --- */}
-                    {/* <div className={styles.Container}>
-                        <div className={styles.InputContainer}>
-                            <label>Class: </label>
-                            <select name="classes" id="classes" value={characterClass as string} onChange={(e) => setCharacterClass(e.target.value as CharacterClassType)}>
-                                {CharacterClasses.map((charClass) => (
-                                    <option key={charClass} value={charClass} >{charClass}</option>
-                                ))}
-                            </select>
-                            <input type="number" placeholder='Level' value={level} onChange={(e) => setLevel(e.target.value)} />
-
-                        </div>
-                    </div> */}
                     <button className={styles.AddButton} onClick={handleAddCharacter}>Add Character</button>
 
                 </div>

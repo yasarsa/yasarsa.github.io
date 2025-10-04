@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CharacterClasses, data } from "../../utils/contants";
 import useCharacter from "../../utils/hooks/useCharacter";
 import usePopup from "../../utils/hooks/usePopup";
@@ -15,9 +15,16 @@ export default function Character({ character, index }: Props) {
     const { updateCharacter, selectCharacter } = useCharacter()
 
     const [name, setName] = useState(character.name)
-    const [level, setLevel] = useState(character.level)
     const [characterClasses, setCharacterClasses] = useState<ICharacterClassDefinition[]>(character.characterClass)
     const [selectedFeatures, setSelectedFeatures] = useState<ICharacterClassFeature[]>(character.selectedFeatures || [])
+
+    const level = useMemo(() => {
+        return characterClasses.reduce((total, charClass) => total + (charClass.level || 0), 0);
+    }, [characterClasses])
+
+    const extraTitle = useMemo(() => {
+        return characterClasses.map(cc => `${cc.level} ${cc.characterClass}`).join(" / ")
+    }, [characterClasses])
 
     const handleDelete = () => {
         showDeleteConfirmPopup(index, "character")
@@ -52,8 +59,7 @@ export default function Character({ character, index }: Props) {
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div className={styles.InputContainer}>
-                <label>Level: </label>
-                <input type="number" value={level} onChange={(e) => setLevel(parseInt(e.target.value))} />
+                <label>Level: {level}</label>
             </div>
             {characterClasses.length > 0 && characterClasses.map((charClassDef, idx) => (
                 <div key={idx} className={styles.InputContainer}>
@@ -80,19 +86,17 @@ export default function Character({ character, index }: Props) {
                     )}
                 </div>
             ))}
-            {characterClasses.length < 3 && (
-                <button className={styles.AddClassButton} onClick={() => {
-                    setCharacterClasses([...characterClasses, { characterClass: "Barbarian", level: 1 }]);
-                }}>Add Another Class</button>
-            )}
+            <button className={styles.AddClassButton} onClick={() => {
+                setCharacterClasses([...characterClasses, { characterClass: "Barbarian", level: 1 }]);
+            }}>Add Another Class</button>
 
 
             {characterClasses.length > 0 && characterClasses.map((charClassDef, idx) => (
                 <div className={styles.FeatureContainer} key={idx}>
-                    <label>Class Features: </label>
+                    <label>{charClassDef.characterClass as string} Features: </label>
                     <div className={styles.Features}>
                         {typeof charClassDef.characterClass === "string" && data[charClassDef.characterClass.toLowerCase() as keyof typeof data]?.features
-                            .filter(feature => feature.unlockedLevel <= level)
+                            .filter(feature => feature.unlockedLevel <= charClassDef.level)
                             .map((feature, idx, arr) => {
                                 // Check if feature has a damage property and if there are multiple levels for the same feature
                                 const handleFeatureToggle = (feature: ICharacterClassFeature) => {
@@ -108,7 +112,7 @@ export default function Character({ character, index }: Props) {
 
                                 if (feature.extraDamageDieCount || feature.extraDamageDieType || feature.extraDamageBonus) {
                                     const highestLevelFeature = arr
-                                        .filter(f => f.name === feature.name && f.unlockedLevel <= level)
+                                        .filter(f => f.name === feature.name && f.unlockedLevel <= charClassDef.level)
                                         .reduce((prev, curr) => (curr.unlockedLevel > prev.unlockedLevel ? curr : prev), feature);
 
                                     if (feature.unlockedLevel === highestLevelFeature.unlockedLevel) {
@@ -137,7 +141,7 @@ export default function Character({ character, index }: Props) {
                                 );
                             })}
                         {typeof charClassDef.characterClass === "string" && data[charClassDef.characterClass.toLowerCase() as keyof typeof data]?.features
-                            .filter(feature => feature.unlockedLevel <= level).length === 0 && (
+                            .filter(feature => feature.unlockedLevel <= charClassDef.level).length === 0 && (
                                 <div className={styles.NoFeature}>No features unlocked yet.</div>
                             )}
                     </div>
@@ -153,7 +157,7 @@ export default function Character({ character, index }: Props) {
 
     return (
         <div className={styles.Character}>
-            <Accordion title={character.name} extraTitle={`Level ${character.level} ${character.characterClass}`} onDelete={handleDelete} children={children} />
+            <Accordion title={character.name} extraTitle={extraTitle} onDelete={handleDelete} children={children} />
         </div>
     )
 }
