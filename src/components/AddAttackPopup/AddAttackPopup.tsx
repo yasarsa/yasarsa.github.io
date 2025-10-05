@@ -28,7 +28,7 @@ export const AddAttackPopup = () => {
             addAttack({
                 name,
                 attackBonus: Number(attackBonus),
-                critRange: Number(critRange),
+                critRange: Number(critRange) || 20,
                 damageDieCount: Number(damageDieCount),
                 damageDieType: Number(damageDieType),
                 damageBonus: Number(damageBonus),
