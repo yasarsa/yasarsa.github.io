@@ -1,8 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store';
+import { DAMAGE_TYPE_COLORS } from '../../utils/constants';
 import useAttack from '../../utils/hooks/useAttack';
+import { useFeats } from '../../utils/hooks/useFeats';
+import { useFeatures } from '../../utils/hooks/useFeatures';
 import usePopup from '../../utils/hooks/usePopup';
 import type { IAttack } from '../../utils/types';
 import Accordion from '../Accordion/Accordion';
+import Tooltip from '../Tooltip/Tooltip';
 import styles from './Attack.module.css';
 
 interface Props {
@@ -14,10 +20,12 @@ export default function Attack({ attack, index }: Props) {
     const { showDeleteConfirmPopup } = usePopup()
     const { updateAttack } = useAttack()
 
+    const { selectedCharacter } = useSelector((state: RootState) => state.data)
+
     const [attackResult, setAttackResult] = useState<string | null>(null);
     const [attackDetails, setAttackDetails] = useState<string | null>(null);
     const [damageResult, setDamageResult] = useState<string | null>(null);
-    const [damageDetails, setDamageDetails] = useState<string | null>(null);
+    const [damageDetails, setDamageDetails] = useState<React.ReactNode | null>(null);
 
     const [name, setName] = useState(attack.name)
     const [attackBonus, setAttackBonus] = useState(attack.attackBonus);
@@ -27,11 +35,18 @@ export default function Attack({ attack, index }: Props) {
     const [critRange, setCritRange] = useState(attack.critRange);
     const [critMultiplier, setCritMultiplier] = useState(attack.critMultiplier ?? 2);
     const [rollType, setRollType] = useState<"normal" | "advantage" | "disadvantage">("normal");
-    const [isSavageAttacker, setSavageAttacker] = useState(attack.isSavageAttacker);
-    const [isGreatWeaponFighting, setGreatWeaponFighting] = useState(attack.isGreatWeaponFighting);
-    const [isGreatWeaponMaster, setGreatWeaponMaster] = useState(attack.isGreatWeaponMaster);
-    const [proficiencyBonus, setProficiencyBonus] = useState(attack.proficiencyBonus);
+    const { availableFeats, selectedFeats, toggleFeat, isSelected } = useFeats({
+        characterFeats: selectedCharacter.feats || [],
+        defaultSelectedFeats: attack.selectedFeats || selectedCharacter.feats || []
+    });
 
+    const { availableFeatures, selectedFeatures, toggleFeature, isSelected: isFeatureSelected } = useFeatures({
+        characterFeatures: selectedCharacter.selectedFeatures || [],
+        defaultSelectedFeatures: attack.selectedFeatures || selectedCharacter.selectedFeatures || []
+    });
+    const [includeProficiencyBonus, setIncludeProficiencyBonus] = useState(true);
+
+    const proficiencyBonus = useMemo(() => Math.floor((selectedCharacter.level - 1) / 4) + 2, [selectedCharacter.level])
 
 
     const handleAttack = () => {
@@ -77,19 +92,19 @@ export default function Attack({ attack, index }: Props) {
         let dmgDieArray: number[] = []
         for (let i = 0; i < dieCount; i++) {
             let r = Math.floor(Math.random() * damageDieType) + 1;
-            if (isGreatWeaponFighting && r < 3) {
+            if (selectedFeats.includes('Great Weapon Fighting') && r < 3) {
                 r = 3
             }
             dmgDieArray.push(r);
             totalDamage += r;
         }
 
-        if (isSavageAttacker) {
+        if (selectedFeats.includes('Savage Attacker')) {
             let totalDamage2 = 0;
             const dmgDieArray2 = []
             for (let i = 0; i < dieCount; i++) {
                 let r = Math.floor(Math.random() * damageDieType) + 1;
-                if (isGreatWeaponFighting && r < 3) {
+                if (selectedFeats.includes('Great Weapon Fighting') && r < 3) {
                     r = 3
                 }
                 dmgDieArray2.push(r);
@@ -101,13 +116,87 @@ export default function Attack({ attack, index }: Props) {
             totalDamage = Math.max(totalDamage, totalDamage2);
             console.log(`Savage Attacker Roll: ${totalDamage2} vs ${totalDamage}`);
         }
+        // Add base damage bonus
         totalDamage += damageBonus;
-        if (isGreatWeaponMaster) {
+
+        // Add proficiency bonus only if Great Weapon Master is selected and enabled
+        if (selectedFeats.includes('Great Weapon Master') && includeProficiencyBonus) {
             totalDamage += proficiencyBonus;
         }
 
+        // Add feature-based damage
+        const featureDamageDetails: string[] = [];
+        selectedFeatures.forEach(feature => {
+            if (feature.extraDamageDieCount && feature.extraDamageDieType) {
+                let featureDieCount = feature.extraDamageDieCount;
+                if (isCrit) featureDieCount *= critMultiplier;
+
+                let featureDamage = 0;
+                const featureDieRolls: number[] = [];
+
+                for (let i = 0; i < featureDieCount; i++) {
+                    const roll = Math.floor(Math.random() * feature.extraDamageDieType) + 1;
+                    featureDieRolls.push(roll);
+                    featureDamage += roll;
+                }
+
+                if (feature.extraDamageBonus) {
+                    featureDamage += feature.extraDamageBonus;
+                }
+
+                totalDamage += featureDamage;
+                featureDamageDetails.push(
+                    `${feature.name}: [${featureDieRolls.join(', ')}]${feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}`
+                );
+            }
+        });
+
         setDamageResult(`${totalDamage}`);
-        setDamageDetails(`([${dmgDieArray.join(", ")}] + ${damageBonus}) ${isGreatWeaponMaster ? `+ ${proficiencyBonus}` : ""}`);
+        const weaponDamageDetails = `Base Weapon Damage Rolls: [${dmgDieArray.join(", ")}] + ${damageBonus}`;
+        let details = (
+            <Tooltip content={weaponDamageDetails}>
+                <span>[{dmgDieArray.reduce((a, b) => a + b, 0) + damageBonus}]</span>
+            </Tooltip>
+        );
+        if (selectedFeats.includes('Great Weapon Master') && includeProficiencyBonus) {
+            const gwmDetail = (
+                <Tooltip content={`Great Weapon Master: +${proficiencyBonus}`}>
+                    <span> + [{proficiencyBonus}]</span>
+                </Tooltip>
+            );
+            details = (
+                <>
+                    {details}
+                    {gwmDetail}
+                </>
+            );
+        }
+        if (featureDamageDetails.length > 0) {
+            const featureElements = featureDamageDetails.map((detail, index) => {
+                const [featureName, damageRolls] = detail.split(': ');
+                const total = damageRolls.match(/\d+/g)?.reduce((sum, num) => sum + parseInt(num, 10), 0) || 0;
+
+                // Find the matching feature to get its damage type
+                const feature = selectedFeatures.find(f => f.name === featureName);
+                const damageType = feature?.extraDamageType;
+                const damageColor = damageType ?
+                    DAMAGE_TYPE_COLORS[damageType as keyof typeof DAMAGE_TYPE_COLORS] || '#000000' :
+                    '#000000';
+
+                return (
+                    <Tooltip key={index} content={`${featureName}: ${damageRolls}${damageType ? ` (${damageType} damage)` : ''}`}>
+                        <span style={{ color: damageColor }}> + [{total}]</span>
+                    </Tooltip>
+                );
+            });
+            details = (
+                <>
+                    {details}
+                    {featureElements}
+                </>
+            );
+        }
+        setDamageDetails(details);
     }
 
 
@@ -123,15 +212,13 @@ export default function Attack({ attack, index }: Props) {
             damageDieType,
             damageBonus,
             critRange,
-            isSavageAttacker,
-            isGreatWeaponFighting,
-            isGreatWeaponMaster,
-            proficiencyBonus,
-            critMultiplier
+            critMultiplier,
+            selectedFeats,
+            selectedFeatures
         }
 
         updateAttack(index, updatedAttack)
-    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, isSavageAttacker, isGreatWeaponFighting, isGreatWeaponMaster, proficiencyBonus, updateAttack, index, critMultiplier])
+    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, selectedFeats, selectedFeatures, proficiencyBonus, updateAttack, index, critMultiplier])
 
     const children = <>
         <div className={styles.Container}>
@@ -202,23 +289,51 @@ export default function Attack({ attack, index }: Props) {
                 <input type="number" value={damageBonus} onChange={(e) => setDamageBonus(parseInt(e.target.value))} />
             </div>
             <div className={styles.InputContainer}>
-                <label>Savage Attacker:</label>
-                <input type="checkbox" checked={isSavageAttacker} onChange={() => setSavageAttacker((prev) => !prev)} />
+                <label>Proficiency Bonus(+{proficiencyBonus}):</label>
+                <input
+                    type="checkbox"
+                    checked={includeProficiencyBonus}
+                    onChange={() => setIncludeProficiencyBonus(prev => !prev)}
+                />
             </div>
-            <div className={styles.InputContainer}>
-                <label>Great Weapon Fighting:</label>
-                <input type="checkbox" checked={isGreatWeaponFighting} onChange={() => setGreatWeaponFighting((prev) => !prev)} />
+            <div className={styles.FeatsContainer}>
+                {availableFeats.length > 0 && (
+                    <label>Available Feats:</label>
+                )}
+                {availableFeats.map((feat) => (
+                    <div key={feat as string} className={styles.InputContainer}>
+                        <label>{feat as string}:</label>
+                        <input
+                            type="checkbox"
+                            checked={isSelected(feat)}
+                            onChange={() => toggleFeat(feat)}
+                        />
+                    </div>
+                ))}
             </div>
-            <div className={styles.InputContainer}>
-                <label>Great Weapon Master:</label>
-                <input type="checkbox" checked={isGreatWeaponMaster} onChange={() => setGreatWeaponMaster((prev) => !prev)} />
+            <div className={styles.FeaturesContainer}>
+                {availableFeatures.length > 0 && (
+                    <label>Available Features:</label>
+                )}
+                {availableFeatures.map((feature) => (
+                    <div key={`${feature.name}-${feature.unlockedLevel}`} className={styles.InputContainer}>
+                        <label>{feature.name} (Level {feature.unlockedLevel}):</label>
+                        <input
+                            type="checkbox"
+                            checked={isFeatureSelected(feature)}
+                            onChange={() => toggleFeature(feature)}
+                        />
+                        {feature.extraDamageDieCount && feature.extraDamageDieType && (
+                            <span className={styles.FeatureDetail}>
+                                Extra Damage: {feature.extraDamageDieCount}d{feature.extraDamageDieType}
+                                {feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}
+                                {feature.extraDamageType ? ` ${feature.extraDamageType}` : ''}
+                            </span>
+                        )}
+                    </div>
+                ))}
             </div>
-            {isGreatWeaponMaster && (
-                <div className={styles.InputContainer}>
-                    <label>Proficiency Bonus:</label>
-                    <input type="number" value={proficiencyBonus} onChange={(e) => setProficiencyBonus(parseInt(e.target.value))} />
-                </div>
-            )}
+            {/* Proficiency bonus is now calculated automatically based on character level */}
             <div className={styles.ButtonContainer}>
                 <button onClick={() => handleDamage()}>Damage!</button>
             </div>

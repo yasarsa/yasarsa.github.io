@@ -1,0 +1,21 @@
+.Feats {
+    display: flex;
+    flex-direction: column;
+}
+
+.FeatsTitle {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.FeatRow {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.Feats button {
+    height: 30px;
+    width: 100px;
+}

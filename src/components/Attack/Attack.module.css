@@ -60,3 +60,23 @@
     font-size: 0.8rem;
     text-align: center;
 }
+
+.FeatsContainer,
+.FeaturesContainer {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.FeaturesContainer {
+    margin-top: 20px;
+}
+
+.FeatureDetail {
+    margin-left: 10px;
+    color: #666;
+    font-size: 0.9em;
+    font-style: italic;
+}

@@ -60,3 +60,14 @@
     height: 50px;
     margin-top: 20px;
 }
+
+.InputContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.InputContainer input {
+    width: 100px;
+}
