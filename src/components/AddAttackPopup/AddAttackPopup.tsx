@@ -32,10 +32,6 @@ export const AddAttackPopup = () => {
                 damageDieCount: Number(damageDieCount),
                 damageDieType: Number(damageDieType),
                 damageBonus: Number(damageBonus),
-                isSavageAttacker: false,
-                isGreatWeaponFighting: false,
-                isGreatWeaponMaster: false,
-                proficiencyBonus: 0,
                 critMultiplier: Number(critMultiplier) || 2,
             });
 
