@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { CharacterClasses, data } from "../../utils/contants";
 import useCharacter from "../../utils/hooks/useCharacter";
 import usePopup from "../../utils/hooks/usePopup";
-import type { CharacterClassType, ICharacter, ICharacterClassDefinition, ICharacterClassFeature } from "../../utils/types";
+import type { CharacterClassType, FeatsType, ICharacter, ICharacterClassDefinition, ICharacterClassFeature } from "../../utils/types";
 import Accordion from "../Accordion/Accordion";
+import Feats from "../Feats/Feats";
 import styles from "./Character.module.css";
 
 interface Props {
@@ -17,6 +18,7 @@ export default function Character({ character, index }: Props) {
     const [name, setName] = useState(character.name)
     const [characterClasses, setCharacterClasses] = useState<ICharacterClassDefinition[]>(character.characterClass)
     const [selectedFeatures, setSelectedFeatures] = useState<ICharacterClassFeature[]>(character.selectedFeatures || [])
+    const [selectedFeats, setSelectedFeats] = useState<FeatsType[]>(character.feats || [])
 
     const level = useMemo(() => {
         return characterClasses.reduce((total, charClass) => total + (charClass.level || 0), 0);
@@ -40,17 +42,20 @@ export default function Character({ character, index }: Props) {
             name: name,
             level: level,
             characterClass: characterClasses,
-            selectedFeatures: selectedFeatures
+            selectedFeatures: selectedFeatures,
+            feats: selectedFeats
         };
 
         if (character.name !== name ||
             character.level !== level ||
             character.characterClass !== characterClasses ||
-            JSON.stringify(character.selectedFeatures) !== JSON.stringify(selectedFeatures)) {
+            JSON.stringify(character.selectedFeatures) !== JSON.stringify(selectedFeatures) ||
+            JSON.stringify(character.feats) !== JSON.stringify(selectedFeats)
+        ) {
             updateCharacter(index, updatedCharacter)
         }
 
-    }, [name, level, updateCharacter, character, index, characterClasses, selectedFeatures])
+    }, [name, level, updateCharacter, character, index, characterClasses, selectedFeatures, selectedFeats])
 
     const children = <>
         <div className={styles.Container}>
@@ -148,6 +153,9 @@ export default function Character({ character, index }: Props) {
                 </div>
             )
             )}
+
+            <Feats selectedFeats={selectedFeats} setSelectedFeats={setSelectedFeats} />
+
 
             <div className={styles.ButtonContainer}>
                 <button onClick={handleSelect}>Select</button>

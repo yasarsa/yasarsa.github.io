@@ -1,4 +1,4 @@
-import type { CharacterClasses, DamageTypes } from "./contants";
+import type { CharacterClasses, DamageTypes, Feats } from "./contants";
 
 export interface IAttack {
     name: string;
@@ -8,10 +8,8 @@ export interface IAttack {
     attackBonus: number;
     critRange: number;
     critMultiplier: number;
-    isSavageAttacker: boolean;
-    isGreatWeaponFighting: boolean;
-    isGreatWeaponMaster: boolean;
-    proficiencyBonus: number;
+    selectedFeats?: FeatsType[];
+    selectedFeatures?: ICharacterClassFeature[];
 }
 
 export interface ICharacter {
@@ -21,6 +19,7 @@ export interface ICharacter {
     selectedFeatures: ICharacterClassFeature[];
     characterClass: ICharacterClassDefinition[];
     attacks?: IAttack[]
+    feats?: FeatsType[]
 }
 
 export type ItemType = "attack" | "character" | undefined
@@ -28,6 +27,8 @@ export type ItemType = "attack" | "character" | undefined
 export type CharacterClassType = (typeof CharacterClasses)[keyof typeof CharacterClasses]
 
 export type DamageType = (typeof DamageTypes)[keyof typeof DamageTypes]
+
+export type FeatsType = (typeof Feats)[keyof typeof Feats]
 
 export interface ICharacterClassFeature {
     unlockedLevel: number;
