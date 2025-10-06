@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
-import { DAMAGE_TYPE_COLORS } from '../../utils/constants';
+import { DAMAGE_TYPE_COLORS, DamageTypes } from '../../utils/constants';
 import useAttack from '../../utils/hooks/useAttack';
 import { useFeats } from '../../utils/hooks/useFeats';
 import { useFeatures } from '../../utils/hooks/useFeatures';
 import usePopup from '../../utils/hooks/usePopup';
-import type { IAttack } from '../../utils/types';
+import type { DamageType, IAttack } from '../../utils/types';
 import Accordion from '../Accordion/Accordion';
 import Tooltip from '../Tooltip/Tooltip';
 import styles from './Attack.module.css';
@@ -32,6 +32,7 @@ export default function Attack({ attack, index }: Props) {
     const [damageDieCount, setDamageDieCount] = useState(attack.damageDieCount);
     const [damageDieType, setDamageDieType] = useState(attack.damageDieType);
     const [damageBonus, setDamageBonus] = useState(attack.damageBonus);
+    const [damageType, setDamageType] = useState(attack.damageType || "slashing" as DamageType);
     const [critRange, setCritRange] = useState(attack.critRange);
     const [critMultiplier, setCritMultiplier] = useState(attack.critMultiplier ?? 2);
     const [rollType, setRollType] = useState<"normal" | "advantage" | "disadvantage">("normal");
@@ -92,6 +93,9 @@ export default function Attack({ attack, index }: Props) {
         let dmgDieArray: number[] = []
         for (let i = 0; i < dieCount; i++) {
             let r = Math.floor(Math.random() * damageDieType) + 1;
+            if (selectedFeats.includes('Elemental Adept') && r === 1) {
+                r = 2
+            }
             if (selectedFeats.includes('Great Weapon Fighting') && r < 3) {
                 r = 3
             }
@@ -104,6 +108,9 @@ export default function Attack({ attack, index }: Props) {
             const dmgDieArray2 = []
             for (let i = 0; i < dieCount; i++) {
                 let r = Math.floor(Math.random() * damageDieType) + 1;
+                if (selectedFeats.includes('Elemental Adept') && r === 1) {
+                    r = 2
+                }
                 if (selectedFeats.includes('Great Weapon Fighting') && r < 3) {
                     r = 3
                 }
@@ -152,10 +159,12 @@ export default function Attack({ attack, index }: Props) {
         });
 
         setDamageResult(`${totalDamage}`);
-        const weaponDamageDetails = `Base Weapon Damage Rolls: [${dmgDieArray.join(", ")}] + ${damageBonus}`;
+        const weaponDamageDetails = `Base Weapon Damage Rolls (${damageType}): [${dmgDieArray.join(", ")}] + ${damageBonus}`;
         let details = (
             <Tooltip content={weaponDamageDetails}>
-                <span>[{dmgDieArray.reduce((a, b) => a + b, 0) + damageBonus}]</span>
+                <span style={{ color: DAMAGE_TYPE_COLORS[damageType as keyof typeof DAMAGE_TYPE_COLORS] || '#000000' }}>
+                    [{dmgDieArray.reduce((a, b) => a + b, 0) + damageBonus}]
+                </span>
             </Tooltip>
         );
         if (selectedFeats.includes('Great Weapon Master') && includeProficiencyBonus) {
@@ -214,11 +223,12 @@ export default function Attack({ attack, index }: Props) {
             critRange,
             critMultiplier,
             selectedFeats,
-            selectedFeatures
+            selectedFeatures,
+            damageType: damageType as DamageType
         }
 
         updateAttack(index, updatedAttack)
-    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, selectedFeats, selectedFeatures, proficiencyBonus, updateAttack, index, critMultiplier])
+    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, selectedFeats, selectedFeatures, proficiencyBonus, updateAttack, index, critMultiplier, damageType])
 
     const children = <>
         <div className={styles.Container}>
@@ -276,7 +286,7 @@ export default function Attack({ attack, index }: Props) {
                 <p className={styles.ResultText}>Result: <span>{attackResult}</span></p>
             )}
             {attackDetails && (
-                <p className={styles.DetailsText}>{attackDetails}</p>
+                <div className={styles.DetailsText}>{attackDetails}</div>
             )}
         </div>
         <div className={styles.Container}>
@@ -287,6 +297,10 @@ export default function Attack({ attack, index }: Props) {
                 <input type="number" value={damageDieType} onChange={(e) => setDamageDieType(parseInt(e.target.value))} />
                 <span> + </span>
                 <input type="number" value={damageBonus} onChange={(e) => setDamageBonus(parseInt(e.target.value))} />
+                <select value={damageType as string} onChange={(e) => setDamageType(e.target.value as DamageType)}>\n                    {DamageTypes.map((dt) => (
+                    <option key={dt} value={dt}>{dt}</option>
+                ))}
+                </select>
             </div>
             <div className={styles.InputContainer}>
                 <label>Proficiency Bonus(+{proficiencyBonus}):</label>
@@ -296,43 +310,46 @@ export default function Attack({ attack, index }: Props) {
                     onChange={() => setIncludeProficiencyBonus(prev => !prev)}
                 />
             </div>
-            <div className={styles.FeatsContainer}>
-                {availableFeats.length > 0 && (
+            {availableFeats.length > 0 && (
+                <div className={styles.FeatsContainer}>
                     <label>Available Feats:</label>
-                )}
-                {availableFeats.map((feat) => (
-                    <div key={feat as string} className={styles.InputContainer}>
-                        <label>{feat as string}:</label>
-                        <input
-                            type="checkbox"
-                            checked={isSelected(feat)}
-                            onChange={() => toggleFeat(feat)}
-                        />
-                    </div>
-                ))}
-            </div>
-            <div className={styles.FeaturesContainer}>
-                {availableFeatures.length > 0 && (
+
+                    {availableFeats.map((feat) => (
+                        <div key={feat as string} className={styles.InputContainer}>
+                            <label>{feat as string}:</label>
+                            <input
+                                type="checkbox"
+                                checked={isSelected(feat)}
+                                onChange={() => toggleFeat(feat)}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {availableFeatures.length > 0 && (
+                <div className={styles.FeaturesContainer}>
                     <label>Available Features:</label>
-                )}
-                {availableFeatures.map((feature) => (
-                    <div key={`${feature.name}-${feature.unlockedLevel}`} className={styles.InputContainer}>
-                        <label>{feature.name} (Level {feature.unlockedLevel}):</label>
-                        <input
-                            type="checkbox"
-                            checked={isFeatureSelected(feature)}
-                            onChange={() => toggleFeature(feature)}
-                        />
-                        {feature.extraDamageDieCount && feature.extraDamageDieType && (
-                            <span className={styles.FeatureDetail}>
-                                Extra Damage: {feature.extraDamageDieCount}d{feature.extraDamageDieType}
-                                {feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}
-                                {feature.extraDamageType ? ` ${feature.extraDamageType}` : ''}
-                            </span>
-                        )}
-                    </div>
-                ))}
-            </div>
+
+                    {availableFeatures.map((feature) => (
+                        <div key={`${feature.name}-${feature.unlockedLevel}`} className={styles.InputContainer}>
+                            <label>{feature.name} (Level {feature.unlockedLevel}):</label>
+                            <input
+                                type="checkbox"
+                                checked={isFeatureSelected(feature)}
+                                onChange={() => toggleFeature(feature)}
+                            />
+                            {feature.extraDamageDieCount && feature.extraDamageDieType && (
+                                <span className={styles.FeatureDetail}>
+                                    Extra Damage: {feature.extraDamageDieCount}d{feature.extraDamageDieType}
+                                    {feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}
+                                    {feature.extraDamageType ? ` ${feature.extraDamageType}` : ''}
+                                </span>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
             {/* Proficiency bonus is now calculated automatically based on character level */}
             <div className={styles.ButtonContainer}>
                 <button onClick={() => handleDamage()}>Damage!</button>
@@ -341,7 +358,7 @@ export default function Attack({ attack, index }: Props) {
                 <p className={styles.ResultText}>You dealt <span>{damageResult}</span> damage.</p>
             )}
             {damageDetails && (
-                <p className={styles.DetailsText}>{damageDetails}</p>
+                <div className={styles.DetailsText}>{damageDetails}</div>
             )}
         </div></>
 

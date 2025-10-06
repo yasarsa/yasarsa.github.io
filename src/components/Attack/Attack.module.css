@@ -80,3 +80,11 @@
     font-size: 0.9em;
     font-style: italic;
 }
+
+.InputContainer {
+    display: flex;
+}
+
+.InputContainer select {
+    margin-left: 10px;
+}

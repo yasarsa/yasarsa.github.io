@@ -1,4 +1,4 @@
-import { Feats as FeatsEnum } from '../../utils/contants';
+import { Feats as FeatsEnum } from '../../utils/constants';
 import type { FeatsType } from '../../utils/types';
 import styles from './Feats.module.css';
 

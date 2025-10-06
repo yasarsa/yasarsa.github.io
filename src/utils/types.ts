@@ -1,4 +1,4 @@
-import type { CharacterClasses, DamageTypes, Feats } from "./contants";
+import type { CharacterClasses, DamageTypes, Feats } from "./constants";
 
 export interface IAttack {
     name: string;
@@ -10,6 +10,7 @@ export interface IAttack {
     critMultiplier: number;
     selectedFeats?: FeatsType[];
     selectedFeatures?: ICharacterClassFeature[];
+    damageType: DamageType;
 }
 
 export interface ICharacter {
