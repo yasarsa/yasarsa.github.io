@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import crossImg from '../../assets/cross.svg';
+import { DamageTypes } from '../../utils/constants';
 import useAttack from '../../utils/hooks/useAttack';
 import usePopup from '../../utils/hooks/usePopup';
+import type { DamageType } from '../../utils/types';
 import styles from './AddAttackPopup.module.css';
 
 export const AddAttackPopup = () => {
@@ -15,6 +17,7 @@ export const AddAttackPopup = () => {
     const [damageDieCount, setDamageDieCount] = useState("");
     const [damageDieType, setDamageDieType] = useState("");
     const [damageBonus, setDamageBonus] = useState("");
+    const [damageType, setDamageType] = useState("Slashing");
 
     const handleClose = () => {
         hideAddAttackPopup()
@@ -33,6 +36,7 @@ export const AddAttackPopup = () => {
                 damageDieType: Number(damageDieType),
                 damageBonus: Number(damageBonus),
                 critMultiplier: Number(critMultiplier) || 2,
+                damageType: damageType as DamageType
             });
 
             setName('');
@@ -62,6 +66,11 @@ export const AddAttackPopup = () => {
                     <input type="number" placeholder='Damage Die Count' value={damageDieCount} onChange={(e) => setDamageDieCount(e.target.value)} />
                     <input type="number" placeholder='Damage Die Type' value={damageDieType} onChange={(e) => setDamageDieType(e.target.value)} />
                     <input type="number" placeholder='Damage Bonus' value={damageBonus} onChange={(e) => setDamageBonus(e.target.value)} />
+                    <select name="damageType" id="damageType" value={damageType} onChange={(e) => setDamageType(e.target.value)}>
+                        {DamageTypes.map((type) => (
+                            <option key={type} value={type} >{type}</option>
+                        ))}
+                    </select>
                     <button className={styles.AddButton} onClick={handleAddAttack}>Add Attack</button>
                 </div>
             </div>
