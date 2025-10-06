@@ -193,7 +193,7 @@ export default function Attack({ attack, index }: Props) {
                     '#000000';
 
                 return (
-                    <Tooltip key={index} content={`${featureName}: ${damageRolls}${damageType ? ` (${damageType} damage)` : ''}`}>
+                    <Tooltip key={index} content={`${featureName}: ${damageRolls}`}>
                         <span style={{ color: damageColor }}> + [{total}]</span>
                     </Tooltip>
                 );
@@ -338,19 +338,26 @@ export default function Attack({ attack, index }: Props) {
 
                     {availableFeatures.map((feature) => (
                         <div key={`${feature.name}-${feature.unlockedLevel}`} className={styles.InputContainer}>
-                            <label>{feature.name} (Level {feature.unlockedLevel}):</label>
+                            {/* <label>{feature.name} (Lv {feature.unlockedLevel}):</label> */}
+                            <label>{feature.name} (<span className={styles.FeatureDetail}>
+                                <span style={{ color: feature.extraDamageType ? DAMAGE_TYPE_COLORS[feature.extraDamageType as keyof typeof DAMAGE_TYPE_COLORS] : 'inherit' }}>
+                                    {feature.extraDamageDieCount}d{feature.extraDamageDieType}
+                                    {feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}
+                                </span>
+                            </span>):</label>
+
                             <input
                                 type="checkbox"
                                 checked={isFeatureSelected(feature)}
                                 onChange={() => toggleFeature(feature)}
                             />
-                            {feature.extraDamageDieCount && feature.extraDamageDieType && (
+                            {/* {feature.extraDamageDieCount && feature.extraDamageDieType && (
                                 <span className={styles.FeatureDetail}>
                                     Extra Damage: {feature.extraDamageDieCount}d{feature.extraDamageDieType}
                                     {feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}
                                     {feature.extraDamageType ? ` ${feature.extraDamageType}` : ''}
                                 </span>
-                            )}
+                            )} */}
                         </div>
                     ))}
                 </div>
