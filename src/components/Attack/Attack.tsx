@@ -297,9 +297,14 @@ export default function Attack({ attack, index }: Props) {
                 <input type="number" value={damageDieType} onChange={(e) => setDamageDieType(parseInt(e.target.value))} />
                 <span> + </span>
                 <input type="number" value={damageBonus} onChange={(e) => setDamageBonus(parseInt(e.target.value))} />
-                <select value={damageType as string} onChange={(e) => setDamageType(e.target.value as DamageType)}>\n                    {DamageTypes.map((dt) => (
-                    <option key={dt} value={dt}>{dt}</option>
-                ))}
+
+            </div>
+            <div className={styles.InputContainer}>
+                <label>Damage Type: </label>
+                <select value={damageType as string} onChange={(e) => setDamageType(e.target.value as DamageType)}>
+                    {DamageTypes.map((dt) => (
+                        <option key={dt} value={dt}>{dt}</option>
+                    ))}
                 </select>
             </div>
             <div className={styles.InputContainer}>
