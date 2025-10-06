@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CharacterClasses, data } from "../../utils/contants";
+import { CharacterClasses, data } from "../../utils/constants";
 import useCharacter from "../../utils/hooks/useCharacter";
 import usePopup from "../../utils/hooks/usePopup";
 import type { CharacterClassType, FeatsType, ICharacter, ICharacterClassDefinition, ICharacterClassFeature } from "../../utils/types";

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import crossImg from '../../assets/cross.svg';
 import type { RootState } from '../../store';
-import { CharacterClasses } from '../../utils/contants';
+import { CharacterClasses } from '../../utils/constants';
 import useCharacter from '../../utils/hooks/useCharacter';
 import usePopup from '../../utils/hooks/usePopup';
 import type { CharacterClassType, ICharacterClassDefinition } from '../../utils/types';
