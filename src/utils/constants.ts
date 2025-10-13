@@ -20,8 +20,7 @@ export const RougeClassFeatures: ICharacterClassFeature[] = [
 ]
 
 export const RangerClassFeatures: ICharacterClassFeature[] = [
-    { name: "Dreadful Strikes", unlockedLevel: 3, extraDamageDieCount: 1, extraDamageDieType: 4, extraDamageType: "Psychic" },
-    { name: "Dreadful Strikes", unlockedLevel: 11, extraDamageDieCount: 1, extraDamageDieType: 6, extraDamageType: "Psychic" },
+    { name: "Dreadful Strike", unlockedLevel: 3, extraDamageDieCount: 2, extraDamageDieType: 6, extraDamageType: "Psychic" },
 ]
 
 export const data: IData = {
