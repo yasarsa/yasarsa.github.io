@@ -31,7 +31,7 @@ export type ItemType = "attack" | "character" | undefined
 
 export type CharacterClassType = (typeof CharacterClasses)[keyof typeof CharacterClasses]
 
-export type DamageType = (typeof DamageTypes)[keyof typeof DamageTypes]
+export type DamageType = typeof DamageTypes[number];
 
 export type FeatsType = (typeof Feats)[keyof typeof Feats]
 
