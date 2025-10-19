@@ -53,6 +53,7 @@ export default function useCharacter() {
 
     const updateCharacter = useCallback((index: number, updatedCharacter: ICharacter) => {
         // Karakteri güncellerken feature'ları temizle
+        // TODO
         // const cleanedCharacter = cleanFeatures(updatedCharacter);
         // dispatch(updateCharacterData({ index, updatedCharacter: cleanedCharacter }))
         dispatch(updateCharacterData({ index, updatedCharacter }))
