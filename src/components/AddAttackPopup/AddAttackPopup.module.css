@@ -46,7 +46,8 @@
     gap: 12px;
     padding: 24px;
     overflow-y: auto;
-    max-height: calc(90vh - 70px); /* 70px is approximately title height */
+    max-height: calc(90vh - 70px);
+    /* 70px is approximately title height */
 }
 
 .Container input,
@@ -74,14 +75,14 @@
     background-color: #f9f9f9;
 }
 
-.DamageContainer > p {
+.DamageContainer>p {
     margin: 0;
     font-weight: 600;
     color: #333;
     font-size: 14px;
 }
 
-.DamageContainer > div {
+.DamageContainer>div {
     display: flex;
     gap: 8px;
     align-items: center;
@@ -170,7 +171,7 @@ button:hover {
         padding: 16px;
     }
 
-    .DamageContainer > div {
+    .DamageContainer>div {
         gap: 6px;
     }
 
