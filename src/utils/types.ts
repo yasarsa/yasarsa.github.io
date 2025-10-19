@@ -1,16 +1,20 @@
 import type { CharacterClasses, DamageTypes, Feats } from "./constants";
 
-export interface IAttack {
-    name: string;
+export interface IDamage {
     damageDieCount: number;
     damageDieType: number;
     damageBonus: number;
+    damageType: DamageType;
+}
+
+export interface IAttack {
+    name: string;
     attackBonus: number;
     critRange: number;
     critMultiplier: number;
     selectedFeats?: FeatsType[];
     selectedFeatures?: ICharacterClassFeature[];
-    damageType: DamageType;
+    damages: IDamage[];
 }
 
 export interface ICharacter {

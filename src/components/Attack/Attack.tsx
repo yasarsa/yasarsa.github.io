@@ -29,10 +29,12 @@ export default function Attack({ attack, index }: Props) {
 
     const [name, setName] = useState(attack.name)
     const [attackBonus, setAttackBonus] = useState(attack.attackBonus);
-    const [damageDieCount, setDamageDieCount] = useState(attack.damageDieCount);
-    const [damageDieType, setDamageDieType] = useState(attack.damageDieType);
-    const [damageBonus, setDamageBonus] = useState(attack.damageBonus);
-    const [damageType, setDamageType] = useState(attack.damageType || "slashing" as DamageType);
+    const [damages, setDamages] = useState(attack.damages || [{
+        damageDieCount: 1,
+        damageDieType: 6,
+        damageBonus: 0,
+        damageType: "Slashing"
+    }]);
     const [critRange, setCritRange] = useState(attack.critRange);
     const [critMultiplier, setCritMultiplier] = useState(attack.critMultiplier ?? 2);
     const [rollType, setRollType] = useState<"normal" | "advantage" | "disadvantage">("normal");
@@ -86,54 +88,77 @@ export default function Attack({ attack, index }: Props) {
     }
 
     const handleDamage = (isCrit?: boolean) => {
-        let dieCount = damageDieCount
-        if (isCrit) dieCount *= critMultiplier
-
         let totalDamage = 0;
-        let dmgDieArray: number[] = []
-        for (let i = 0; i < dieCount; i++) {
-            let r = Math.floor(Math.random() * damageDieType) + 1;
-            if (selectedFeats.includes('Elemental Adept') && r === 1) {
-                r = 2
-            }
-            if (selectedFeats.includes('Great Weapon Fighting') && r < 3) {
-                r = 3
-            }
-            dmgDieArray.push(r);
-            totalDamage += r;
-        }
+        const allDamageDetails: React.ReactNode[] = [];
 
-        if (selectedFeats.includes('Savage Attacker')) {
-            let totalDamage2 = 0;
-            const dmgDieArray2 = []
+        // Her bir hasar tipi için zar atışı yap
+        damages.forEach((damage, damageIndex) => {
+            let dieCount = damage.damageDieCount;
+            if (isCrit) dieCount *= critMultiplier;
+
+            let currentDamage = 0;
+            const dmgDieArray: number[] = [];
+
+            // Zar atışlarını yap
             for (let i = 0; i < dieCount; i++) {
-                let r = Math.floor(Math.random() * damageDieType) + 1;
+                let r = Math.floor(Math.random() * damage.damageDieType) + 1;
                 if (selectedFeats.includes('Elemental Adept') && r === 1) {
-                    r = 2
+                    r = 2;
                 }
                 if (selectedFeats.includes('Great Weapon Fighting') && r < 3) {
-                    r = 3
+                    r = 3;
                 }
-                dmgDieArray2.push(r);
-                totalDamage2 += r;
+                dmgDieArray.push(r);
+                currentDamage += r;
             }
-            if (totalDamage2 > totalDamage) {
-                dmgDieArray = [...dmgDieArray2];
-            }
-            totalDamage = Math.max(totalDamage, totalDamage2);
-            console.log(`Savage Attacker Roll: ${totalDamage2} vs ${totalDamage}`);
-        }
-        // Add base damage bonus
-        totalDamage += damageBonus;
 
-        // Add proficiency bonus only if Great Weapon Master is selected and enabled
+            // Savage Attacker özelliği için ikinci atış
+            if (damageIndex === 0 && selectedFeats.includes('Savage Attacker')) {
+                let totalDamage2 = 0;
+                const dmgDieArray2 = [];
+                for (let i = 0; i < dieCount; i++) {
+                    let r = Math.floor(Math.random() * damage.damageDieType) + 1;
+                    if (selectedFeats.includes('Elemental Adept') && r === 1) {
+                        r = 2;
+                    }
+                    if (selectedFeats.includes('Great Weapon Fighting') && r < 3) {
+                        r = 3;
+                    }
+                    dmgDieArray2.push(r);
+                    totalDamage2 += r;
+                }
+                if (totalDamage2 > currentDamage) {
+                    currentDamage = totalDamage2;
+                }
+            }
+
+            // Hasar bonusunu ekle
+            currentDamage += damage.damageBonus;
+            totalDamage += currentDamage;
+
+            // Hasar detaylarını oluştur
+            const damageDetails = `${damage.damageDieCount}d${damage.damageDieType} (${damage.damageType}): [${dmgDieArray.join(", ")}] + ${damage.damageBonus}`;
+            allDamageDetails.push(
+                <Tooltip key={damageIndex} content={damageDetails}>
+                    <span style={{ color: DAMAGE_TYPE_COLORS[damage.damageType as keyof typeof DAMAGE_TYPE_COLORS] || '#000000' }}>
+                        [{currentDamage}]
+                    </span>
+                </Tooltip>
+            );
+        });
+
+        // Great Weapon Master özelliği için proficiency bonusunu ekle
         if (selectedFeats.includes('Great Weapon Master') && includeProficiencyBonus) {
             totalDamage += proficiencyBonus;
+            allDamageDetails.push(
+                <Tooltip key="gwm" content={`Great Weapon Master: +${proficiencyBonus}`}>
+                    <span> + [{proficiencyBonus}]</span>
+                </Tooltip>
+            );
         }
 
-        // Add feature-based damage
-        const featureDamageDetails: string[] = [];
-        selectedFeatures.forEach(feature => {
+        // Feature'lardan gelen ekstra hasarları ekle
+        selectedFeatures.forEach((feature, index) => {
             if (feature.extraDamageDieCount && feature.extraDamageDieType) {
                 let featureDieCount = feature.extraDamageDieCount;
                 if (isCrit) featureDieCount *= critMultiplier;
@@ -152,60 +177,20 @@ export default function Attack({ attack, index }: Props) {
                 }
 
                 totalDamage += featureDamage;
-                featureDamageDetails.push(
-                    `${feature.name}: [${featureDieRolls.join(', ')}]${feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}`
+
+                const featureDetails = `${feature.name}: ${featureDieRolls.join(', ')}${feature.extraDamageBonus ? ` + ${feature.extraDamageBonus}` : ''}`;
+                allDamageDetails.push(
+                    <Tooltip key={`feature-${index}`} content={featureDetails}>
+                        <span style={{ color: feature.extraDamageType ? DAMAGE_TYPE_COLORS[feature.extraDamageType as keyof typeof DAMAGE_TYPE_COLORS] : '#000000' }}>
+                            + [{featureDamage}]
+                        </span>
+                    </Tooltip>
                 );
             }
         });
 
         setDamageResult(`${totalDamage}`);
-        const weaponDamageDetails = `Base Weapon Damage Rolls (${damageType}): [${dmgDieArray.join(", ")}] + ${damageBonus}`;
-        let details = (
-            <Tooltip content={weaponDamageDetails}>
-                <span style={{ color: DAMAGE_TYPE_COLORS[damageType as keyof typeof DAMAGE_TYPE_COLORS] || '#000000' }}>
-                    [{dmgDieArray.reduce((a, b) => a + b, 0) + damageBonus}]
-                </span>
-            </Tooltip>
-        );
-        if (selectedFeats.includes('Great Weapon Master') && includeProficiencyBonus) {
-            const gwmDetail = (
-                <Tooltip content={`Great Weapon Master: +${proficiencyBonus}`}>
-                    <span> + [{proficiencyBonus}]</span>
-                </Tooltip>
-            );
-            details = (
-                <>
-                    {details}
-                    {gwmDetail}
-                </>
-            );
-        }
-        if (featureDamageDetails.length > 0) {
-            const featureElements = featureDamageDetails.map((detail, index) => {
-                const [featureName, damageRolls] = detail.split(': ');
-                const total = damageRolls.match(/\d+/g)?.reduce((sum, num) => sum + parseInt(num, 10), 0) || 0;
-
-                // Find the matching feature to get its damage type
-                const feature = selectedFeatures.find(f => f.name === featureName);
-                const damageType = feature?.extraDamageType;
-                const damageColor = damageType ?
-                    DAMAGE_TYPE_COLORS[damageType as keyof typeof DAMAGE_TYPE_COLORS] || '#000000' :
-                    '#000000';
-
-                return (
-                    <Tooltip key={index} content={`${featureName}: ${damageRolls}`}>
-                        <span style={{ color: damageColor }}> + [{total}]</span>
-                    </Tooltip>
-                );
-            });
-            details = (
-                <>
-                    {details}
-                    {featureElements}
-                </>
-            );
-        }
-        setDamageDetails(details);
+        setDamageDetails(<>{allDamageDetails}</>);
     }
 
 
@@ -217,18 +202,15 @@ export default function Attack({ attack, index }: Props) {
         const updatedAttack: IAttack = {
             name,
             attackBonus,
-            damageDieCount,
-            damageDieType,
-            damageBonus,
+            damages,
             critRange,
             critMultiplier,
             selectedFeats,
-            selectedFeatures,
-            damageType: damageType as DamageType
+            selectedFeatures
         }
 
         updateAttack(index, updatedAttack)
-    }, [name, attackBonus, damageDieCount, damageDieType, damageBonus, critRange, selectedFeats, selectedFeatures, proficiencyBonus, updateAttack, index, critMultiplier, damageType])
+    }, [name, attackBonus, damages, critRange, selectedFeats, selectedFeatures, updateAttack, index, critMultiplier])
 
     const children = <>
         <div className={styles.Container}>
@@ -290,23 +272,80 @@ export default function Attack({ attack, index }: Props) {
             )}
         </div>
         <div className={styles.Container}>
-            <div className={styles.InputContainer}>
-                <label>Damage: </label>
-                <input type="number" value={damageDieCount} onChange={(e) => setDamageDieCount(parseInt(e.target.value))} />
-                <span>d</span>
-                <input type="number" value={damageDieType} onChange={(e) => setDamageDieType(parseInt(e.target.value))} />
-                <span> + </span>
-                <input type="number" value={damageBonus} onChange={(e) => setDamageBonus(parseInt(e.target.value))} />
-
-            </div>
-            <div className={styles.InputContainer}>
-                <label>Damage Type: </label>
-                <select value={damageType as string} onChange={(e) => setDamageType(e.target.value as DamageType)}>
-                    {DamageTypes.map((dt) => (
-                        <option key={dt} value={dt}>{dt}</option>
-                    ))}
-                </select>
-            </div>
+            {damages.map((damage, idx) => (
+                <div key={idx}>
+                    <div className={styles.InputContainer}>
+                        <label>Damage {idx + 1}: </label>
+                        <input
+                            type="number"
+                            value={damage.damageDieCount}
+                            onChange={(e) => {
+                                const newDamages = [...damages];
+                                newDamages[idx] = { ...damage, damageDieCount: parseInt(e.target.value) || 0 };
+                                setDamages(newDamages);
+                            }}
+                        />
+                        <span>d</span>
+                        <input
+                            type="number"
+                            value={damage.damageDieType}
+                            onChange={(e) => {
+                                const newDamages = [...damages];
+                                newDamages[idx] = { ...damage, damageDieType: parseInt(e.target.value) || 0 };
+                                setDamages(newDamages);
+                            }}
+                        />
+                        <span> + </span>
+                        <input
+                            type="number"
+                            value={damage.damageBonus}
+                            onChange={(e) => {
+                                const newDamages = [...damages];
+                                newDamages[idx] = { ...damage, damageBonus: parseInt(e.target.value) || 0 };
+                                setDamages(newDamages);
+                            }}
+                        />
+                    </div>
+                    <div className={styles.InputContainer}>
+                        <label>Damage Type {idx + 1}: </label>
+                        <select
+                            value={damage.damageType as string}
+                            onChange={(e) => {
+                                const newDamages = [...damages];
+                                newDamages[idx] = { ...damage, damageType: e.target.value as DamageType };
+                                setDamages(newDamages);
+                            }}
+                        >
+                            {DamageTypes.map((dt) => (
+                                <option key={dt} value={dt}>{dt}</option>
+                            ))}
+                        </select>
+                        {damages.length > 1 && (
+                            <button
+                                onClick={() => {
+                                    setDamages(damages.filter((_, i) => i !== idx));
+                                }}
+                                className={styles.RemoveClassButton}
+                            >
+                                Remove Damage
+                            </button>
+                        )}
+                    </div>
+                </div>
+            ))}
+            <button
+                className={styles.AddClassButton}
+                onClick={() => {
+                    setDamages([...damages, {
+                        damageDieCount: 1,
+                        damageDieType: 6,
+                        damageBonus: 0,
+                        damageType: "Slashing"
+                    }]);
+                }}
+            >
+                Add Another Damage Type
+            </button>
             <div className={styles.InputContainer}>
                 <label>Proficiency Bonus(+{proficiencyBonus}):</label>
                 <input
