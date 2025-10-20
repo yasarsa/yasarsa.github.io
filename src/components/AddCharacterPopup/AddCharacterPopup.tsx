@@ -72,13 +72,13 @@ export const AddCharacterPopup = () => {
                                 <button className={styles.RemoveClassButton} onClick={() => {
                                     const updatedClasses = characterClasses.filter((_, classIdx) => classIdx !== idx);
                                     setCharacterClasses(updatedClasses);
-                                }}>Remove Class</button>
+                                }}>Remove</button>
                             )}
                         </div>
                     ))}
                     <button className={styles.AddClassButton} onClick={() => {
                         setCharacterClasses([...characterClasses, { characterClass: CharacterClasses[0], level: 1 } as ICharacterClassDefinition]);
-                    }}>Add Another Class</button>
+                    }}>+ Class</button>
                     <button className={styles.AddButton} onClick={handleAddCharacter}>Add Character</button>
 
                 </div>

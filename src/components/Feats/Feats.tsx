@@ -45,7 +45,7 @@ export default function Feats({ selectedFeats, setSelectedFeats }: Props) {
                         className={styles.RemoveFeatButton}
                         onClick={() => handleRemoveFeat(index)}
                     >
-                        Remove Feat
+                        Remove
                     </button>
                 </div>
             ))}
@@ -53,7 +53,7 @@ export default function Feats({ selectedFeats, setSelectedFeats }: Props) {
                 className={styles.AddFeatButton}
                 onClick={handleAddFeat}
             >
-                Add New Feat
+                + Feat
             </button>
         </div>
     )

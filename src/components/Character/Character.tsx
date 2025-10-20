@@ -68,7 +68,6 @@ export default function Character({ character, index }: Props) {
             </div>
             {characterClasses.length > 0 && characterClasses.map((charClassDef, idx) => (
                 <div key={idx} className={styles.InputContainer}>
-                    <label>Class {idx + 1}: </label>
                     <select name={`class-${idx}`} id={`class-${idx}`} value={charClassDef.characterClass as string} onChange={(e) => {
                         const updatedClasses = [...characterClasses];
                         updatedClasses[idx] = { ...updatedClasses[idx], characterClass: e.target.value as CharacterClassType };
@@ -87,13 +86,13 @@ export default function Character({ character, index }: Props) {
                         <button className={styles.RemoveClassButton} onClick={() => {
                             const updatedClasses = characterClasses.filter((_, classIdx) => classIdx !== idx);
                             setCharacterClasses(updatedClasses);
-                        }}>Remove Class</button>
+                        }}>Remove</button>
                     )}
                 </div>
             ))}
             <button className={styles.AddClassButton} onClick={() => {
                 setCharacterClasses([...characterClasses, { characterClass: "Barbarian", level: 1 }]);
-            }}>Add Another Class</button>
+            }}>+ Class</button>
 
 
             {characterClasses.length > 0 && characterClasses.map((charClassDef, idx) => (

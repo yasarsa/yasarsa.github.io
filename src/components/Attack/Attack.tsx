@@ -275,7 +275,6 @@ export default function Attack({ attack, index }: Props) {
             {damages.map((damage, idx) => (
                 <div key={idx}>
                     <div className={styles.InputContainer}>
-                        <label>Damage {idx + 1}: </label>
                         <input
                             type="number"
                             value={damage.damageDieCount}
@@ -307,7 +306,6 @@ export default function Attack({ attack, index }: Props) {
                         />
                     </div>
                     <div className={styles.InputContainer}>
-                        <label>Damage Type {idx + 1}: </label>
                         <select
                             value={damage.damageType as string}
                             onChange={(e) => {
@@ -327,7 +325,7 @@ export default function Attack({ attack, index }: Props) {
                                 }}
                                 className={styles.RemoveClassButton}
                             >
-                                Remove Damage
+                                Remove
                             </button>
                         )}
                     </div>
@@ -344,7 +342,7 @@ export default function Attack({ attack, index }: Props) {
                     }]);
                 }}
             >
-                Add Another Damage Type
+                + Damage Type
             </button>
             <div className={styles.InputContainer}>
                 <label>Proficiency Bonus(+{proficiencyBonus}):</label>

@@ -71,3 +71,7 @@
 .InputContainer input {
     width: 100px;
 }
+
+.RemoveClassButton {
+    background-color: var(--red);
+}
