@@ -157,6 +157,10 @@ button:hover {
     background: #666;
 }
 
+.RemoveDamageButton {
+    background-color: var(--red);
+}
+
 /* Mobile Responsive Adjustments */
 @media (max-width: 600px) {
     .Overlay {

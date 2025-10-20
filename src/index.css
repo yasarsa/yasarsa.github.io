@@ -2,6 +2,10 @@ body {
   width: 100dvw;
   height: 100dvh;
   margin: 0;
+
+  --green: #45a049;
+  --red: #e41313;
+  --card-shadow: 0 6px 18px rgba(15, 20, 30, 0.3);
 }
 
 body.no-scroll {

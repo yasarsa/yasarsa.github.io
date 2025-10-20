@@ -116,6 +116,7 @@ export const AddAttackPopup = () => {
                                 </select>
                                 {damages.length > 1 && (
                                     <button
+                                        className={styles.RemoveDamageButton}
                                         onClick={() => {
                                             setDamages(damages.filter((_, i) => i !== idx));
                                         }}
