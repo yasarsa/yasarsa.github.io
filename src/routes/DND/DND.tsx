@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { AddAttackPopup } from '../../components/AddAttackPopup/AddAttackPopup';
 import type { RootState } from '../../store';
 import useCharacter from '../../utils/hooks/useCharacter';
-import { AddAttackPopup } from '../AddAttackPopup/AddAttackPopup';
-import { AddCharacterPopup } from '../AddCharacterPopup/AddCharacterPopup';
-import AttackList from '../AttackList/AttackList';
-import CharacterList from '../CharacterList/CharacterList';
-import DeleteConfirmPopup from '../DeleteConfirmPopup/DeleteConfirmPopup';
-import ImportPopup from '../ImportPopup/ImportPopup';
-import Sidebar from '../Sidebar/Sidebar';
+
+import { AddCharacterPopup } from '../../components/AddCharacterPopup/AddCharacterPopup';
+import AttackList from '../../components/AttackList/AttackList';
+import CharacterList from '../../components/CharacterList/CharacterList';
+import DeleteConfirmPopup from '../../components/DeleteConfirmPopup/DeleteConfirmPopup';
+import ImportPopup from '../../components/ImportPopup/ImportPopup';
+import Sidebar from '../../components/Sidebar/Sidebar';
 import styles from './DND.module.css';
 
 

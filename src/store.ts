@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import dataReducer from './slices/dataSlice'
+import ktReducer from './slices/ktSlice'
 import popupReducer from './slices/popupSlice'
 
 export const store = configureStore({
     reducer: {
         popup: popupReducer,
-        data: dataReducer
+        data: dataReducer,
+        kt: ktReducer,
     },
 })
 
