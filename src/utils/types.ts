@@ -69,3 +69,31 @@ export interface ICharacterClassDefinition {
     characterClass: CharacterClassType;
     level: number;
 }
+
+export type KTWeaponType = "melee" | "ranged";
+
+export interface IKTWeapon {
+    name: string;
+    type: KTWeaponType;
+    atk: number;
+    hit: number;
+    normalDmg: number;
+    critDmg: number;
+    wr: string[];
+}
+
+export interface IKTOperatorAbility {
+    name: string;
+    description: string;
+}
+
+export interface IKTOperator {
+    name: string;
+    imgSrc?: string;
+    apl: number;
+    move: number;
+    save: number;
+    wounds: number;
+    weapons: IKTWeapon[];
+    abilities?: IKTOperatorAbility[];
+}
