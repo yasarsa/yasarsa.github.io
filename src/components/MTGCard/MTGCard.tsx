@@ -1,4 +1,4 @@
-import yasarImg from "../../assets/yasar_anil_sansak.jpg";
+import yasarImg from "../../assets/yasar_anil_sansak.png";
 import styles from "./MTGCard.module.css";
 
 interface Props {
