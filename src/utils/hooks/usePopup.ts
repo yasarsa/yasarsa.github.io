@@ -34,7 +34,7 @@ export default function usePopup() {
     }
 
     const showAddCharacterPopup = () => {
-        document.body.classList.remove('no-scroll');
+        document.body.classList.add('no-scroll');
         dispatch(setShowAddCharacterPopup(true))
     }
 

@@ -1,14 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import MTGCard from '../../components/MTGCard/MTGCard';
 import styles from './Home.module.css';
 
 export default function Home() {
+    const navigate = useNavigate();
 
     const handleDNDClick = () => {
-        window.location.href = '/dnd';
+        navigate('/dnd');
     }
 
     const handleKTClick = () => {
-        window.location.href = '/kt';
+        navigate('/kt');
     }
 
     return (

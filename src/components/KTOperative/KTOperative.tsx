@@ -48,7 +48,15 @@ export default function KTOperative({ operator }: Props) {
             <div className={styles.AbilitiesContainer}>
                 {operator.abilities?.map((ability) => (
                     <p key={ability.name}>
-                        <strong>{ability.name}:</strong> <span dangerouslySetInnerHTML={{ __html: ability.description }} />
+                        <strong>{ability.name}:</strong>{' '}
+                        <span>
+                            {ability.description.split(/(<b>.*?<\/b>)/g).map((part, i) => {
+                                if (part.startsWith('<b>') && part.endsWith('</b>')) {
+                                    return <b key={i}>{part.replace(/<\/?b>/g, '')}</b>;
+                                }
+                                return part;
+                            })}
+                        </span>
                     </p>
                 ))}
             </div>

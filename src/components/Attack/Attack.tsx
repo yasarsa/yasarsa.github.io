@@ -39,17 +39,18 @@ export default function Attack({ attack, index }: Props) {
     const [critMultiplier, setCritMultiplier] = useState(attack.critMultiplier ?? 2);
     const [rollType, setRollType] = useState<"normal" | "advantage" | "disadvantage">("normal");
     const { availableFeats, selectedFeats, toggleFeat, isSelected } = useFeats({
-        characterFeats: selectedCharacter.feats || [],
-        defaultSelectedFeats: attack.selectedFeats || selectedCharacter.feats || []
+        characterFeats: selectedCharacter!.feats || [],
+        defaultSelectedFeats: attack.selectedFeats || selectedCharacter!.feats || []
     });
 
     const { availableFeatures, selectedFeatures, toggleFeature, isSelected: isFeatureSelected } = useFeatures({
-        characterFeatures: selectedCharacter.selectedFeatures || [],
-        defaultSelectedFeatures: attack.selectedFeatures || selectedCharacter.selectedFeatures || []
+        characterFeatures: selectedCharacter!.selectedFeatures || [],
+        defaultSelectedFeatures: attack.selectedFeatures || selectedCharacter!.selectedFeatures || []
     });
     const [includeProficiencyBonus, setIncludeProficiencyBonus] = useState(true);
 
-    const proficiencyBonus = useMemo(() => Math.floor((selectedCharacter.level - 1) / 4) + 2, [selectedCharacter.level])
+    const characterLevel = selectedCharacter!.level;
+    const proficiencyBonus = useMemo(() => Math.floor((characterLevel - 1) / 4) + 2, [characterLevel])
 
 
     const handleAttack = () => {
@@ -237,7 +238,7 @@ export default function Attack({ attack, index }: Props) {
                         type="radio"
                         name="rollType"
                         value="normal"
-                        defaultChecked
+                        checked={rollType === "normal"}
                         onChange={() => { setRollType("normal") }}
                     />
                     Normal
@@ -247,6 +248,7 @@ export default function Attack({ attack, index }: Props) {
                         type="radio"
                         name="rollType"
                         value="advantage"
+                        checked={rollType === "advantage"}
                         onChange={() => { setRollType("advantage") }}
                     />
                     Advantage
@@ -256,6 +258,7 @@ export default function Attack({ attack, index }: Props) {
                         type="radio"
                         name="rollType"
                         value="disadvantage"
+                        checked={rollType === "disadvantage"}
                         onChange={() => { setRollType("disadvantage") }}
                     />
                     Disadvantage

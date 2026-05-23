@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import DND from "./routes/DND/DND";
 import Home from "./routes/Home/Home";
 import KT from "./routes/KT/KT";
@@ -15,11 +16,13 @@ export default function App() {
   return (
     <Provider store={store}>
       <BrowserRouter basename="/">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dnd" element={<DND />} />
-          <Route path="/kt" element={<KT />} />
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dnd" element={<DND />} />
+            <Route path="/kt" element={<KT />} />
+          </Routes>
+        </ErrorBoundary>
       </BrowserRouter>
     </Provider>
   )

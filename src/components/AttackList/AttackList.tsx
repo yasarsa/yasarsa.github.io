@@ -26,7 +26,7 @@ export default function AttackList() {
                 <>
                     <div className={styles.TitleContainer}>
                         <img src={backIcon} onClick={handleBack} />
-                        <p>{selectedCharacter.name}'s Attacks</p>
+                        <p>{selectedCharacter?.name}'s Attacks</p>
                     </div>
                     {attacks.map((attack, index) => (
                         <Attack key={index} attack={attack} index={index} />
