@@ -30,14 +30,23 @@ export default function useCharacter() {
     }, [])
 
     const getCharacters = useCallback(() => {
-        const characters = localStorage.getItem("characters")
-        if (characters) {
-            const parsedCharacters = JSON.parse(characters) as ICharacter[];
-            // Her karakterin feature'larını temizle
-            const cleanedCharacters = parsedCharacters.map(char => cleanFeatures(char));
-            dispatch(setCharacters(cleanedCharacters))
+        try {
+            const characters = localStorage.getItem("characters")
+            if (characters) {
+                const parsed = JSON.parse(characters)
+                if (!Array.isArray(parsed)) {
+                    console.warn("localStorage 'characters' is not an array, resetting.")
+                    dispatch(setCharacters([]))
+                    return
+                }
+                const parsedCharacters = parsed as ICharacter[];
+                const cleanedCharacters = parsedCharacters.map(char => cleanFeatures(char));
+                dispatch(setCharacters(cleanedCharacters))
+            }
+        } catch (error) {
+            console.error("Failed to parse characters from localStorage:", error)
+            dispatch(setCharacters([]))
         }
-        return
     }, [cleanFeatures, dispatch])
 
     const addCharacter = useCallback((character: ICharacter) => {
@@ -52,12 +61,9 @@ export default function useCharacter() {
     }, [dispatch])
 
     const updateCharacter = useCallback((index: number, updatedCharacter: ICharacter) => {
-        // Karakteri güncellerken feature'ları temizle
-        // TODO
-        // const cleanedCharacter = cleanFeatures(updatedCharacter);
-        // dispatch(updateCharacterData({ index, updatedCharacter: cleanedCharacter }))
-        dispatch(updateCharacterData({ index, updatedCharacter }))
-    }, [dispatch])
+        const cleanedCharacter = cleanFeatures(updatedCharacter);
+        dispatch(updateCharacterData({ index, updatedCharacter: cleanedCharacter }))
+    }, [cleanFeatures, dispatch])
 
     const selectCharacter = useCallback((index: number | undefined) => {
         dispatch(setSelectedCharacter(index))

@@ -5,12 +5,12 @@ import type { IAttack, ICharacter } from '../utils/types'
 export interface DataState {
     characters: ICharacter[]
     attacks: IAttack[]
-    selectedCharacter: ICharacter
+    selectedCharacter: ICharacter | null
 }
 
 const initialState: DataState = {
     characters: [] as ICharacter[],
-    selectedCharacter: {} as ICharacter,
+    selectedCharacter: null,
     attacks: [] as IAttack[],
 }
 
@@ -24,12 +24,12 @@ export const dataSlice = createSlice({
         },
         setSelectedCharacter: (state, action: PayloadAction<number | undefined>) => {
             if (action.payload === undefined) {
-                state.selectedCharacter = {} as ICharacter;
+                state.selectedCharacter = null;
                 state.attacks = []
                 return
             }
-            state.selectedCharacter = state.characters[action.payload];
-            state.attacks = state.selectedCharacter.attacks ?? []
+            state.selectedCharacter = state.characters[action.payload] ?? null;
+            state.attacks = state.selectedCharacter?.attacks ?? []
         },
         addCharacterData: (state, action: PayloadAction<ICharacter>) => {
             state.characters.push(action.payload);
@@ -46,18 +46,27 @@ export const dataSlice = createSlice({
         },
         addAttackData: (state, action: PayloadAction<IAttack>) => {
             state.attacks.push(action.payload);
-            state.characters[state.selectedCharacter.id - 1].attacks = state.attacks
+            if (state.selectedCharacter) {
+                const charIndex = state.characters.findIndex(c => c.id === state.selectedCharacter!.id)
+                if (charIndex !== -1) state.characters[charIndex].attacks = state.attacks
+            }
             localStorage.setItem("characters", JSON.stringify(state.characters))
         },
         removeAttackData: (state, action: PayloadAction<number>) => {
             state.attacks.splice(action.payload, 1);
-            state.characters[state.selectedCharacter.id - 1].attacks = state.attacks
+            if (state.selectedCharacter) {
+                const charIndex = state.characters.findIndex(c => c.id === state.selectedCharacter!.id)
+                if (charIndex !== -1) state.characters[charIndex].attacks = state.attacks
+            }
             localStorage.setItem("characters", JSON.stringify(state.characters))
         },
         updateAttackData: (state, action: PayloadAction<{ index: number, updatedAttack: IAttack }>) => {
             const { index, updatedAttack } = action.payload;
             state.attacks[index] = updatedAttack;
-            state.characters[state.selectedCharacter.id - 1].attacks = state.attacks
+            if (state.selectedCharacter) {
+                const charIndex = state.characters.findIndex(c => c.id === state.selectedCharacter!.id)
+                if (charIndex !== -1) state.characters[charIndex].attacks = state.attacks
+            }
             localStorage.setItem("characters", JSON.stringify(state.characters))
         },
     },

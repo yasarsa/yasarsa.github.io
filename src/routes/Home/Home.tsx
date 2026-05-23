@@ -1,22 +1,19 @@
-import MTGCard from '../../components/MTGCard/MTGCard';
+import { useNavigate } from 'react-router-dom';
+import CardCarousel from '../../components/CardCarousel/CardCarousel';
+import { cvCards } from '../../utils/cvData';
 import styles from './Home.module.css';
 
 export default function Home() {
-
-    const handleDNDClick = () => {
-        window.location.href = '/dnd';
-    }
-
-    const handleKTClick = () => {
-        window.location.href = '/kt';
-    }
+    const navigate = useNavigate();
 
     return (
         <div className={styles.Home}>
-            <MTGCard description='desc' image={""} name='Yaşar Anıl Sansak' skills={["skills1", "skiills2"]} type='Legendary Creature - Frontend Developer' flavorText='flavor' manaCost='manacost' power='power' toughness='toughness' />
+            <CardCarousel cards={cvCards} />
 
-            <button onClick={handleDNDClick}>Go to DND Damage Calculator</button>
-            <button onClick={handleKTClick}>Go to KT Page</button>
+            <div className={styles.NavLinks}>
+                <button onClick={() => navigate('/dnd')}>D&D Damage Calculator</button>
+                <button onClick={() => navigate('/kt')}>Kill Team Operatives</button>
+            </div>
         </div>
     )
 }  

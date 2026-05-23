@@ -20,7 +20,7 @@ export default function DND() {
     const { showAddAttackPopup, showDeleteConfirmPopup, showAddCharacterPopup, showSidebar, showImportPopup } = useSelector((state: RootState) => state.popup);
     const { selectedCharacter } = useSelector((state: RootState) => state.data);
 
-    const isCharacterSelected = selectedCharacter.name ? true : false
+    const isCharacterSelected = selectedCharacter !== null
 
     useEffect(() => {
         getCharacters()

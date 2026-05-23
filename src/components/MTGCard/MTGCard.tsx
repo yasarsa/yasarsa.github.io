@@ -3,14 +3,16 @@ import styles from "./MTGCard.module.css";
 
 interface Props {
     name: string;
-    manaCost?: string; // Your experience years could be represented as mana cost
+    manaCost?: string;
     image: string;
-    type: string; // Like "Legendary Professional - Software Engineer"
-    skills: string[]; // Array of skills/abilities
+    type: string;
+    skills: string[];
     description: string;
-    flavorText?: string; // A quote or motto
-    power?: string; // Could represent years of experience
-    toughness?: string; // Could represent number of completed projects
+    flavorText?: string;
+    power?: string;
+    toughness?: string;
+    /** CSS gradient string to use as card art instead of image */
+    gradient?: string;
 }
 
 export default function MTGCard({
@@ -22,7 +24,8 @@ export default function MTGCard({
     description,
     flavorText,
     power,
-    toughness
+    toughness,
+    gradient,
 }: Props) {
     return (
         <div className={styles.MTGCard}>
@@ -33,11 +36,11 @@ export default function MTGCard({
                 </div>
 
                 <div className={styles.ImageContainer}>
-                    {name === "Yaşar Anıl Sansak" ? (
+                    {gradient ? (
+                        <div className={styles.Image} style={{ background: gradient }} />
+                    ) : name === "Yaşar Anıl Sansak" ? (
                         <img src={yasarImg} alt={name} className={styles.Image} />
-
                     ) : (
-
                         <img src={image} alt={name} className={styles.Image} />
                     )}
                 </div>

@@ -48,7 +48,7 @@ export default function Character({ character, index }: Props) {
 
         if (character.name !== name ||
             character.level !== level ||
-            character.characterClass !== characterClasses ||
+            JSON.stringify(character.characterClass) !== JSON.stringify(characterClasses) ||
             JSON.stringify(character.selectedFeatures) !== JSON.stringify(selectedFeatures) ||
             JSON.stringify(character.feats) !== JSON.stringify(selectedFeats)
         ) {

@@ -15,19 +15,34 @@ export default function ImportPopup() {
         }
     }
 
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    const REQUIRED_CHARACTER_FIELDS = ['id', 'name', 'level', 'characterClass'] as const;
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            if (file.size > MAX_FILE_SIZE) {
+                alert('File is too large. Maximum size is 5MB.');
+                return;
+            }
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
                     const json = JSON.parse(event.target?.result as string);
-                    if (Array.isArray(json)) {
-                        importCharacters(json);
-                        closeImportPopup();
-                    } else {
+                    if (!Array.isArray(json)) {
                         alert('Invalid JSON format. Expected an array of characters.');
+                        return;
                     }
+                    const isValid = json.every((item: unknown) => {
+                        if (typeof item !== 'object' || item === null) return false;
+                        return REQUIRED_CHARACTER_FIELDS.every(field => field in (item as Record<string, unknown>));
+                    });
+                    if (!isValid) {
+                        alert('Invalid character data. Each character must have id, name, level, and characterClass fields.');
+                        return;
+                    }
+                    importCharacters(json);
+                    closeImportPopup();
                 } catch (error) {
                     alert('Error parsing JSON file.');
                     console.error(error);
