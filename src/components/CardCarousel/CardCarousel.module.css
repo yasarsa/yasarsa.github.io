@@ -1,0 +1,113 @@
+.Carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.Viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.Track {
+    display: flex;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.Slide {
+    flex: 0 0 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
+}
+
+/* Navigation arrows */
+.ArrowButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    backdrop-filter: blur(4px);
+}
+
+.ArrowButton:hover {
+    background: rgba(0, 0, 0, 0.75);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.ArrowButton:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.ArrowLeft {
+    left: 8px;
+}
+
+.ArrowRight {
+    right: 8px;
+}
+
+/* Dots indicator */
+.Dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.Dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    padding: 0;
+}
+
+.Dot:hover {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.DotActive {
+    background: white;
+    border-color: white;
+    transform: scale(1.2);
+}
+
+/* Gradient placeholder for cards without images */
+.CardGradient {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+/* Card counter label */
+.Counter {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Beleren', serif;
+    letter-spacing: 1px;
+}
