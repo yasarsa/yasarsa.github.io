@@ -1,0 +1,50 @@
+.IdentityBar {
+    grid-area: identity;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+}
+
+.Name {
+    font-family: var(--font-mtg-display);
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-1);
+}
+
+.ClassLine {
+    font-weight: var(--weight-semibold);
+    margin: 0;
+}
+
+.SubLine {
+    color: var(--parch-ink-muted);
+    font-style: italic;
+    margin: 0;
+    max-width: none;
+}
+
+.XpWrap {
+    min-width: 200px;
+}
+
+.XpLabel {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--parch-ink-muted);
+    margin-bottom: 4px;
+}
+
+.XpBar {
+    width: 100%;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--parch-rule);
+    overflow: hidden;
+}
+
+.XpFill {
+    height: 100%;
+    background: var(--parch-accent);
+}

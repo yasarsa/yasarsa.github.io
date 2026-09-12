@@ -1,0 +1,6 @@
+.Text {
+    max-width: none;
+    line-height: var(--leading-relaxed);
+    font-family: var(--font-mtg-body);
+    font-size: var(--text-lg);
+}

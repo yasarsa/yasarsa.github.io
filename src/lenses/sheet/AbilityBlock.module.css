@@ -1,0 +1,47 @@
+.AbilityBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: var(--space-3);
+    background: var(--parch-bg);
+    border: 1px solid var(--parch-rule);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.Label {
+    font-family: var(--font-mtg-display);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--parch-ink-muted);
+}
+
+.Score {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.Mod {
+    font-size: var(--text-sm);
+    color: var(--parch-accent);
+    font-weight: 600;
+}
+
+.Rationale {
+    margin-top: var(--space-1);
+    font-size: var(--text-xs);
+}
+
+.Rationale summary {
+    cursor: pointer;
+    color: var(--parch-ink-muted);
+}
+
+.Rationale p {
+    max-width: 14ch;
+    margin: var(--space-1) 0 0;
+    color: var(--parch-ink-muted);
+    font-style: italic;
+}

@@ -1,0 +1,48 @@
+.Table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+}
+
+.Table th {
+    text-align: left;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--parch-ink-muted);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--parch-rule);
+}
+
+.Table td {
+    padding: var(--space-1) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--parch-rule) 40%, transparent);
+}
+
+.Dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--parch-ink-muted);
+}
+
+.Dot[data-state="proficient"] {
+    background: var(--parch-accent);
+    border-color: var(--parch-accent);
+}
+
+.Dot[data-state="expertise"] {
+    background: var(--parch-accent);
+    border-color: var(--parch-accent);
+    box-shadow: 0 0 0 2px var(--parch-bg), 0 0 0 3px var(--parch-accent);
+}
+
+.Ability {
+    color: var(--parch-ink-muted);
+}
+
+.Mod {
+    font-weight: 700;
+    text-align: right;
+}

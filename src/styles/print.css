@@ -1,0 +1,36 @@
+@media print {
+
+    header[data-site-header],
+    footer[data-site-footer],
+    nav[data-lens-switcher],
+    [data-no-print] {
+        display: none !important;
+    }
+
+    :root {
+        color-scheme: light;
+        --bg: #fff;
+        --fg: #111;
+    }
+
+    body {
+        background: #fff;
+        color: #111;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 14mm;
+    }
+
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: .75em;
+        color: #555;
+    }
+
+    .sheetPanel,
+    .sheetAbility {
+        break-inside: avoid;
+    }
+}

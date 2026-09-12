@@ -1,0 +1,11 @@
+.ExternalLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.Arrow {
+    font-size: 0.85em;
+}

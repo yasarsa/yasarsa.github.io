@@ -1,0 +1,51 @@
+.Line {
+    counter-increment: line;
+    white-space: pre-wrap;
+    word-break: break-word;
+    position: relative;
+    padding-left: 3.5em;
+}
+
+.Line::before {
+    content: counter(line);
+    position: absolute;
+    left: 0;
+    width: 2.5em;
+    text-align: right;
+    color: var(--code-gutter-fg, #5a564f);
+    user-select: none;
+}
+
+.Toggle {
+    all: unset;
+    cursor: pointer;
+    display: inline-block;
+    width: 1em;
+    color: var(--code-punct, #6f6a62);
+    font-size: 0.8em;
+}
+
+.Key {
+    color: var(--code-key, #79b8ff);
+}
+
+.String {
+    color: var(--code-string, #a5d6a7);
+}
+
+.Number {
+    color: var(--code-number, #f8bd7f);
+}
+
+.Bool {
+    color: var(--code-bool, #c792ea);
+}
+
+.Null {
+    color: var(--code-null, #8a8578);
+}
+
+.Collapsed {
+    color: var(--code-punct, #6f6a62);
+    font-style: italic;
+}

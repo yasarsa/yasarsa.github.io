@@ -1,0 +1,21 @@
+.ProjectsIndex {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: var(--space-12) var(--gutter) var(--space-section);
+}
+
+.Header {
+    max-width: var(--container-narrow);
+    margin-bottom: var(--space-10);
+}
+
+.Header h1 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-3);
+}
+
+.Header p {
+    color: var(--fg-muted);
+    font-size: var(--text-lg);
+    max-width: none;
+}

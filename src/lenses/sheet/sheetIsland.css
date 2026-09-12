@@ -1,0 +1,53 @@
+/*
+ * Parchment island tokens. Deliberately unconditional — a character
+ * sheet always looks like parchment, regardless of the site theme.
+ * Texture is two low-alpha repeating-linear-gradients + a vignette,
+ * no image asset needed.
+ */
+.sheetIsland {
+    --parch-bg: #f2e8d5;
+    --parch-bg-alt: #e8dcc4;
+    --parch-ink: #2b2118;
+    --parch-ink-muted: #5c4b38;
+    --parch-rule: #b09a72;
+    --parch-accent: #7a2b1e;
+    --font-mtg-display: 'Cinzel', serif;
+    --font-mtg-body: 'EB Garamond', serif;
+
+    background-color: var(--parch-bg);
+    background-image:
+        repeating-linear-gradient(45deg, rgb(0 0 0 / .015) 0 2px, transparent 2px 4px),
+        repeating-linear-gradient(-45deg, rgb(0 0 0 / .012) 0 2px, transparent 2px 4px),
+        radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / .08) 100%);
+    color: var(--parch-ink);
+    padding-block: var(--space-8) var(--space-16);
+}
+
+.sheetPanel {
+    background: var(--parch-bg-alt);
+    border: 1px solid var(--parch-rule);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+}
+
+.sheetPanelTitle {
+    font-family: var(--font-mtg-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--parch-accent);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--parch-rule);
+}
+
+.sheetList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+

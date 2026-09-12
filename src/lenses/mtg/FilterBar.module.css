@@ -1,0 +1,43 @@
+.FilterBar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--gutter);
+}
+
+.Group {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.Chip {
+    padding: 6px var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--mtg-rule);
+    background: transparent;
+    color: var(--mtg-ink-muted);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.Chip:hover {
+    color: var(--mtg-ink);
+}
+
+.ChipActive {
+    background: var(--mtg-panel);
+    color: var(--mtg-ink);
+    border-color: var(--mtg-ink-muted);
+}
+
+.Select {
+    margin-left: auto;
+    padding: 6px var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--mtg-rule);
+    background: var(--mtg-panel);
+    color: var(--mtg-ink);
+    font-size: var(--text-sm);
+}

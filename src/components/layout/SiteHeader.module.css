@@ -1,0 +1,105 @@
+.SiteHeader {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+
+.Inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: var(--space-3) var(--gutter);
+}
+
+.Brand {
+    font-family: var(--font-display);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-lg);
+    text-decoration: none;
+    color: var(--fg);
+    white-space: nowrap;
+}
+
+.DesktopNav {
+    display: none;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+    .DesktopNav {
+        display: flex;
+    }
+}
+
+.NavLink {
+    text-decoration: none;
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    transition: color var(--dur-fast) var(--ease-out);
+}
+
+.NavLink:hover {
+    color: var(--fg);
+}
+
+.NavLinkActive {
+    color: var(--brand);
+}
+
+.Actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.MenuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-raised);
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .MenuButton {
+        display: none;
+    }
+}
+
+.MobileNav {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-2) var(--gutter) var(--space-4);
+    border-top: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+    .MobileNav {
+        display: none;
+    }
+}
+
+.MobileNavLink {
+    padding: var(--space-3) 0;
+    text-decoration: none;
+    color: var(--fg);
+    font-size: var(--text-base);
+    border-bottom: 1px solid var(--border);
+}
+
+.MobileNavLink:last-child {
+    border-bottom: none;
+}

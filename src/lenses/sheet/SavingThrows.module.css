@@ -1,0 +1,32 @@
+.List {
+    gap: var(--space-2);
+}
+
+.Row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+}
+
+.Dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--parch-ink-muted);
+    background: transparent;
+    flex-shrink: 0;
+}
+
+.Dot[data-filled="true"] {
+    background: var(--parch-accent);
+    border-color: var(--parch-accent);
+}
+
+.Ability {
+    flex: 1;
+}
+
+.Mod {
+    font-weight: 700;
+}

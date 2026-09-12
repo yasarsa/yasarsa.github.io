@@ -1,0 +1,216 @@
+:root {
+    color-scheme: light dark;
+
+    /* ── primitives: warm neutral ─────────────────────────── */
+    --gray-0: #fff;
+    --gray-25: #fbfbfa;
+    --gray-50: #f6f6f4;
+    --gray-100: #ecebe8;
+    --gray-200: #dedcd7;
+    --gray-300: #c4c1ba;
+    --gray-400: #9c988f;
+    --gray-500: #77736b;
+    --gray-600: #585550;
+    --gray-700: #403e3a;
+    --gray-800: #2a2926;
+    --gray-900: #1a1917;
+    --gray-950: #0f0e0d;
+
+    /* ── primitives: ink blue accent ──────────────────────── */
+    --accent-50: #eef4fb;
+    --accent-100: #d6e4f5;
+    --accent-200: #adc8e9;
+    --accent-300: #7ba5d8;
+    --accent-400: #4a7fc1;
+    --accent-500: #2c5f9e;
+    --accent-600: #234c80;
+    --accent-700: #1c3c66;
+    --accent-800: #16304f;
+    --accent-900: #10233a;
+
+    /* ── semantic (LIGHT is the default) ──────────────────── */
+    --bg: var(--gray-25);
+    --bg-subtle: var(--gray-50);
+    --bg-raised: var(--gray-0);
+    --bg-inset: var(--gray-100);
+    --bg-overlay: rgb(26 25 23 / .55);
+    --fg: var(--gray-900);
+    --fg-muted: var(--gray-600);
+    --fg-subtle: var(--gray-500);
+    --fg-on-brand: var(--gray-0);
+    --border: var(--gray-200);
+    --border-strong: var(--gray-300);
+    --brand: var(--accent-600);
+    --brand-hover: var(--accent-700);
+    --brand-subtle: var(--accent-50);
+
+    --shadow-1: 0 1px 2px rgb(26 25 23 / .06), 0 1px 1px rgb(26 25 23 / .04);
+    --shadow-2: 0 4px 12px rgb(26 25 23 / .08), 0 1px 3px rgb(26 25 23 / .06);
+    --shadow-3: 0 12px 32px rgb(26 25 23 / .12), 0 4px 8px rgb(26 25 23 / .06);
+
+    /* ── type ─────────────────────────────────────────────── */
+    --font-sans: 'Inter var', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-display: 'Fraunces var', Georgia, 'Times New Roman', serif;
+    --font-mono: 'JetBrains Mono var', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --text-xs: .75rem;
+    --text-sm: .875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: clamp(1.25rem, 1.10rem + 0.5vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+    --text-3xl: clamp(1.875rem, 1.40rem + 2.0vw, 2.75rem);
+    --text-4xl: clamp(2.25rem, 1.40rem + 3.6vw, 4rem);
+    --text-hero: clamp(2.75rem, 1.20rem + 6.0vw, 6rem);
+
+    --leading-tight: 1.15;
+    --leading-snug: 1.35;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.75;
+    --tracking-tight: -0.02em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.06em;
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* ── space (4px base) ─────────────────────────────────── */
+    --space-1: .25rem;
+    --space-2: .5rem;
+    --space-3: .75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-section: clamp(4rem, 10vw, 8rem);
+    --gutter: clamp(1rem, 4vw, 3rem);
+    --container: 72rem;
+    --container-narrow: 44rem;
+    --measure: 68ch;
+
+    /* ── radii / shape ────────────────────────────────────── */
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 999px;
+    --radius-card: 18px;
+
+    /* ── motion ───────────────────────────────────────────── */
+    --dur-instant: 80ms;
+    --dur-fast: 150ms;
+    --dur-base: 250ms;
+    --dur-slow: 400ms;
+    --dur-slower: 700ms;
+    --ease-out: cubic-bezier(.2, .8, .25, 1);
+    --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+    --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+
+    /* ── focus ────────────────────────────────────────────── */
+    --focus-ring-width: 2px;
+    --focus-ring: 0 0 0 var(--focus-ring-width) var(--bg),
+        0 0 0 calc(var(--focus-ring-width) * 2) var(--brand);
+
+    /* ── z ────────────────────────────────────────────────── */
+    --z-base: 0;
+    --z-raised: 10;
+    --z-sticky: 100;
+    --z-header: 200;
+    --z-overlay: 800;
+    --z-modal: 900;
+    --z-toast: 1000;
+
+    /* ── LEGACY: consumed by /dnd and /kt. Do not remove. ─── */
+    --green: #45a049;
+    --red: #e41313;
+    --kt-orange: #ED5B20;
+    --card-shadow: 0 6px 18px rgb(15 20 30 / .3);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #141312;
+        --bg-subtle: #1a1917;
+        --bg-raised: #211f1d;
+        --bg-inset: #0f0e0d;
+        --bg-overlay: rgb(0 0 0 / .7);
+        --fg: #f2f0ec;
+        --fg-muted: #a8a49c;
+        --fg-subtle: #7a766e;
+        --border: #302e2b;
+        --border-strong: #454340;
+        --brand: var(--accent-300);
+        --brand-hover: var(--accent-200);
+        --brand-subtle: #16304f;
+        --shadow-1: 0 1px 2px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .04);
+        --shadow-2: 0 4px 14px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .05);
+        --shadow-3: 0 16px 40px rgb(0 0 0 / .6), inset 0 1px 0 rgb(255 255 255 / .06);
+        color-scheme: dark;
+    }
+}
+
+/*
+ * Explicit override, deliberately placed AFTER the media query above.
+ * Both selectors are specificity (0,2,0), so source order decides —
+ * this is what makes the toggle win in both directions (explicit
+ * light on a dark-preferring OS, explicit dark on a light-preferring
+ * OS). Getting the order wrong is the classic hand-rolled-theme bug.
+ */
+:root[data-theme="dark"] {
+    --bg: #141312;
+    --bg-subtle: #1a1917;
+    --bg-raised: #211f1d;
+    --bg-inset: #0f0e0d;
+    --bg-overlay: rgb(0 0 0 / .7);
+    --fg: #f2f0ec;
+    --fg-muted: #a8a49c;
+    --fg-subtle: #7a766e;
+    --border: #302e2b;
+    --border-strong: #454340;
+    --brand: var(--accent-300);
+    --brand-hover: var(--accent-200);
+    --brand-subtle: #16304f;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .04);
+    --shadow-2: 0 4px 14px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .05);
+    --shadow-3: 0 16px 40px rgb(0 0 0 / .6), inset 0 1px 0 rgb(255 255 255 / .06);
+    color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --dur-instant: 1ms;
+        --dur-fast: 1ms;
+        --dur-base: 1ms;
+        --dur-slow: 1ms;
+        --dur-slower: 1ms;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --border: var(--gray-500);
+        --fg-muted: var(--gray-800);
+    }
+}

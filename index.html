@@ -3,9 +3,49 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width,height=device-height initial-scale=1, user-scalable=no" />
-  <title>Yaşar Anıl Sansak</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Yaşar Anıl Sansak — Software Architect &amp; Team Lead</title>
+  <meta name="description"
+    content="Yaşar Anıl Sansak — Software Architect &amp; Team Lead at Vestel. Computer Engineer, MSc. Explore the CV as an MTG card set, a D&amp;D character sheet, or JSON Resume." />
+  <link rel="canonical" href="https://yasarsa.github.io/" />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Yaşar Anıl Sansak — Software Architect &amp; Team Lead" />
+  <meta property="og:description"
+    content="Explore my CV as an MTG card set, a D&amp;D character sheet, or JSON Resume." />
+  <meta property="og:url" content="https://yasarsa.github.io/" />
+  <meta property="og:image" content="https://yasarsa.github.io/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Yaşar Anıl Sansak" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#141312" media="(prefers-color-scheme: dark)" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-100-900var-latin.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-100-900var-latin-ext.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-100-900var-latin.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-100-900var-latin-ext.woff2" crossorigin />
+
+  <script>
+    // Inline & blocking, on purpose — a deferred theme script causes a flash
+    // of the wrong theme on load. Mirrors the logic in src/hooks/useTheme.ts.
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (e) { /* localStorage unavailable */ }
+      document.documentElement.setAttribute('data-js', 'true');
+    })();
+  </script>
 </head>
 
 <body>

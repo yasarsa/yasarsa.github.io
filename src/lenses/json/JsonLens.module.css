@@ -1,0 +1,32 @@
+.JsonLens {
+    min-height: 60vh;
+}
+
+.Header {
+    max-width: var(--container-narrow);
+    padding: var(--space-6) var(--gutter) var(--space-4);
+}
+
+.Title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-3);
+}
+
+.Subtitle {
+    color: var(--code-gutter-fg);
+    max-width: none;
+}
+
+.Subtitle a {
+    color: var(--code-key);
+}
+
+.Viewer {
+    padding: var(--space-4) var(--gutter) var(--space-16);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    counter-reset: line;
+    overflow-x: auto;
+}

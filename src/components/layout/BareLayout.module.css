@@ -1,0 +1,4 @@
+.BareLayout {
+    min-height: 100dvh;
+    background: var(--bg);
+}

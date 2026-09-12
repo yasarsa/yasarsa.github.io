@@ -2,54 +2,65 @@
     width: 100%;
     max-width: 375px;
     margin: 0 auto;
-    font-family: 'Beleren', serif;
+    font-family: var(--font-mtg-display, 'Cinzel', serif);
+    --frame-color: #8a8a8a;
+    --frame-glow: rgba(0, 0, 0, 0);
 }
 
 .CardContainer {
     position: relative;
     aspect-ratio: 5/7;
-    background-color: #000;
-    border-radius: 18px;
-    padding: 15px;
+    background: linear-gradient(160deg, #1a1a1a, #050505 60%);
+    border-radius: 22px;
+    padding: 14px;
     box-shadow:
-        0 0 0 1px #000,
-        0 0 0 2px #bbb,
-        0 0 0 3px #000,
-        2px 2px 10px rgba(0, 0, 0, 0.5);
+        0 0 0 2px #000,
+        0 0 0 5px var(--frame-color),
+        0 0 0 6px #000,
+        0 10px 24px rgba(0, 0, 0, 0.55),
+        0 0 24px var(--frame-glow);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
+}
+
+.CardContainer::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    pointer-events: none;
 }
 
 .CardHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 32px;
+    min-height: 30px;
     margin-bottom: 2px;
+    padding: 3px 10px;
     color: #fff;
+    background: linear-gradient(180deg, #2c2a26, #17150f);
+    border: 1px solid #000;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .Name {
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: bold;
     margin: 0;
-}
-
-.ManaCost {
-    display: flex;
-    gap: 4px;
-    font-size: 1em;
-    font-weight: bold;
+    letter-spacing: 0.01em;
 }
 
 .ImageContainer {
     width: 100%;
-    /* aspect-ratio: 4/3; */
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
     border: 1px solid #000;
-    margin: 4px 0;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    margin: 2px 0;
 }
 
 .Image {
@@ -59,75 +70,111 @@
 }
 
 .TypeLine {
-    background-color: #d3d3d3;
-    padding: 4px 8px;
-    border-radius: 4px;
-    margin: 2px 0;
+    background: linear-gradient(180deg, #d8d3c6, #bcb6a5);
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    margin: 0;
     color: #000;
-    font-size: 0.9em;
+    font-size: 0.85em;
+    font-weight: 600;
 }
 
 .TextBox {
     flex-grow: 1;
-    background-color: #d3d3d3;
-    padding: 8px;
-    border-radius: 4px;
+    background: linear-gradient(180deg, #efece2, #ddd8c8);
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 5px;
     font-size: 0.85em;
-    color: #000;
+    color: #1a1917;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-family: var(--font-mtg-body, 'EB Garamond', serif);
 }
 
-.SkillContainer {
+.Summary {
+    margin: 0;
+    line-height: 1.35;
+}
+
+.TagRow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
-    align-items: flex-start;
 }
 
-.SkillSymbol {
-    color: #666;
-    font-size: 1.2em;
-    line-height: 1;
+.Tag {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.78em;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    color: #2b2a26;
 }
 
-.Skill {
-    flex: 1;
+.Footer {
+    margin-top: auto;
+    padding-top: 6px;
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
 }
 
 .Description {
-    margin-top: 4px;
-    font-size: 0.9em;
+    font-size: 0.82em;
+    font-style: italic;
+    color: #4a4a4a;
+    min-width: 0;
 }
 
-.FlavorText {
-    margin-top: auto;
-    padding-top: 8px;
-    border-top: 1px solid #999;
-    font-size: 0.85em;
-    color: #666;
+.MoreInfo {
+    flex-shrink: 0;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.78em;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.06);
+    color: #1a1917;
+    cursor: pointer;
+    transition: background var(--dur-fast, 150ms) var(--ease-out, ease), transform var(--dur-fast, 150ms) var(--ease-out, ease);
+}
+
+.MoreInfo:hover {
+    background: rgba(0, 0, 0, 0.14);
+    transform: translateY(-1px);
 }
 
 .PowerToughness {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
-    background-color: #d3d3d3;
-    padding: 2px 6px;
-    border-radius: 4px;
+    bottom: 22px;
+    right: 22px;
+    background: linear-gradient(180deg, #d8d3c6, #bcb6a5);
+    border: 1px solid #000;
+    padding: 3px 8px;
+    border-radius: 5px;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 0.95em;
     color: #000;
 }
 
 /* Responsive Design */
 @media (max-width: 480px) {
     .CardContainer {
-        padding: 12px;
+        padding: 11px;
     }
 
     .Name {
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .TextBox {
@@ -135,19 +182,23 @@
     }
 }
 
-/* Special Rarities - Add class to CardContainer */
-.Common {
-    background: linear-gradient(45deg, #111, #333);
+/* Rarity frame treatments */
+.MTGCard[data-rarity="common"] {
+    --frame-color: #8a8a8a;
+    --frame-glow: rgba(0, 0, 0, 0);
 }
 
-.Uncommon {
-    background: linear-gradient(45deg, #666, #999);
+.MTGCard[data-rarity="uncommon"] {
+    --frame-color: #c7d0d8;
+    --frame-glow: rgba(199, 208, 216, 0.15);
 }
 
-.Rare {
-    background: linear-gradient(45deg, #DAA520, #FFD700);
+.MTGCard[data-rarity="rare"] {
+    --frame-color: #DAA520;
+    --frame-glow: rgba(218, 165, 32, 0.4);
 }
 
-.Mythic {
-    background: linear-gradient(45deg, #8B0000, #FF4500);
+.MTGCard[data-rarity="mythic"] {
+    --frame-color: #FF4500;
+    --frame-glow: rgba(255, 69, 0, 0.5);
 }

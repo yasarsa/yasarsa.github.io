@@ -1,0 +1,53 @@
+/*
+ * JSON / code-editor island. Unlike the MTG and sheet islands, this one
+ * follows the site theme — a code editor legitimately has both a light
+ * and a dark scheme. Mirrors the dark-mode order rule in
+ * src/styles/tokens.css: the explicit [data-theme="dark"] block comes
+ * after the media query so it wins in both directions.
+ */
+.jsonIsland {
+    --code-bg: #fbfbfa;
+    --code-bg-alt: #f0efec;
+    --code-fg: #2a2926;
+    --code-gutter-fg: #9c988f;
+    --code-border: #dedcd7;
+    --code-key: #234c80;
+    --code-string: #1a7a3d;
+    --code-number: #a15c00;
+    --code-bool: #7b3fb0;
+    --code-null: #77736b;
+    --code-punct: #9c988f;
+
+    background: var(--code-bg);
+    color: var(--code-fg);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .jsonIsland {
+        --code-bg: #1c1b1a;
+        --code-bg-alt: #242322;
+        --code-fg: #e6e3dc;
+        --code-gutter-fg: #5a564f;
+        --code-border: #302e2b;
+        --code-key: #79b8ff;
+        --code-string: #a5d6a7;
+        --code-number: #f8bd7f;
+        --code-bool: #c792ea;
+        --code-null: #8a8578;
+        --code-punct: #6f6a62;
+    }
+}
+
+:root[data-theme="dark"] .jsonIsland {
+    --code-bg: #1c1b1a;
+    --code-bg-alt: #242322;
+    --code-fg: #e6e3dc;
+    --code-gutter-fg: #5a564f;
+    --code-border: #302e2b;
+    --code-key: #79b8ff;
+    --code-string: #a5d6a7;
+    --code-number: #f8bd7f;
+    --code-bool: #c792ea;
+    --code-null: #8a8578;
+    --code-punct: #6f6a62;
+}

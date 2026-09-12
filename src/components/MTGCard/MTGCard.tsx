@@ -1,72 +1,56 @@
-import yasarImg from "../../assets/yasar_anil_sansak.png";
+import type { MtgCard } from "../../adapters/toMtgCards";
 import styles from "./MTGCard.module.css";
 
 interface Props {
-    name: string;
-    manaCost?: string;
-    image: string;
-    type: string;
-    skills: string[];
-    description: string;
-    flavorText?: string;
-    power?: string;
-    toughness?: string;
-    /** CSS gradient string to use as card art instead of image */
-    gradient?: string;
+    card: MtgCard;
+    onMoreInfo?: () => void;
 }
 
-export default function MTGCard({
-    name,
-    manaCost,
-    image,
-    type,
-    skills,
-    description,
-    flavorText,
-    power,
-    toughness,
-    gradient,
-}: Props) {
+export default function MTGCard({ card, onMoreInfo }: Props) {
+    const { name, typeLine, footerLine, summary, techLine, art, power, toughness, rarity } = card;
+    const tags = techLine ? techLine.split(' • ').slice(0, 3) : [];
+
     return (
-        <div className={styles.MTGCard}>
+        <div className={styles.MTGCard} data-rarity={rarity}>
             <div className={styles.CardContainer}>
                 <div className={styles.CardHeader}>
                     <h1 className={styles.Name}>{name}</h1>
-                    {manaCost && <div className={styles.ManaCost}>{manaCost}</div>}
                 </div>
 
                 <div className={styles.ImageContainer}>
-                    {gradient ? (
-                        <div className={styles.Image} style={{ background: gradient }} />
-                    ) : name === "Yaşar Anıl Sansak" ? (
-                        <img src={yasarImg} alt={name} className={styles.Image} />
+                    {art.kind === "gradient" ? (
+                        <div className={styles.Image} style={{ background: art.value }} />
                     ) : (
-                        <img src={image} alt={name} className={styles.Image} />
+                        <img src={art.src} alt={art.alt} className={styles.Image} loading="lazy" />
                     )}
                 </div>
 
                 <div className={styles.TypeLine}>
-                    <div className={styles.Type}>{type}</div>
+                    <div className={styles.Type}>{typeLine}</div>
                 </div>
 
                 <div className={styles.TextBox}>
-                    {skills.map((skill, index) => (
-                        <div key={index} className={styles.SkillContainer}>
-                            <div className={styles.SkillSymbol}>•</div>
-                            <div className={styles.Skill}>{skill}</div>
-                        </div>
-                    ))}
+                    {summary && <p className={styles.Summary}>{summary}</p>}
 
-                    <div className={styles.Description}>{description}</div>
-
-                    {flavorText && (
-                        <div className={styles.FlavorText}>
-                            <i>{flavorText}</i>
-                        </div>
+                    {tags.length > 0 && (
+                        <ul className={styles.TagRow}>
+                            {tags.map((tag) => (
+                                <li key={tag} className={styles.Tag}>{tag}</li>
+                            ))}
+                        </ul>
                     )}
+
+                    <div className={styles.Footer}>
+                        <span className={styles.Description}>{footerLine}</span>
+                        {onMoreInfo && (
+                            <button type="button" className={styles.MoreInfo} onClick={onMoreInfo}>
+                                More info <span aria-hidden="true">→</span>
+                            </button>
+                        )}
+                    </div>
                 </div>
 
-                {(power || toughness) && (
+                {(power !== undefined || toughness !== undefined) && (
                     <div className={styles.PowerToughness}>
                         {power}/{toughness}
                     </div>

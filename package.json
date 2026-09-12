@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
+    "generate:cv": "node --experimental-strip-types scripts/generateCvJson.ts",
+    "dev": "npm run generate:cv && vite --host",
+    "build": "npm run generate:cv && tsc -b && vite build && node scripts/emitRoutes.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
