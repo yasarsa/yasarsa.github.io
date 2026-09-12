@@ -3,11 +3,15 @@ import { Outlet, ScrollRestoration } from 'react-router-dom';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import RouteSkeleton from './RouteSkeleton';
+import Grain from '../fx/Grain';
+import Cursor from '../fx/Cursor';
 import { useRouteFocus } from '../../hooks/useRouteFocus';
+import { useSmoothScroll } from '../../hooks/useSmoothScroll';
 import styles from './SiteLayout.module.css';
 
 export default function SiteLayout() {
     const { mainRef, announcement } = useRouteFocus();
+    useSmoothScroll();
 
     return (
         <div className={styles.SiteLayout}>
@@ -19,6 +23,8 @@ export default function SiteLayout() {
                 </Suspense>
             </main>
             <SiteFooter />
+            <Grain />
+            <Cursor />
             <ScrollRestoration getKey={(location) => location.pathname} />
             <div aria-live="polite" className="visually-hidden">{announcement}</div>
         </div>

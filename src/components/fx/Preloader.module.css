@@ -1,0 +1,58 @@
+.Preloader {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-preloader);
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-6);
+    background: var(--void);
+    color: var(--bone);
+    clip-path: inset(0 0 0 0);
+}
+
+.Die {
+    width: clamp(5rem, 14vw, 8rem);
+    color: var(--bone);
+}
+
+.Count {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-tight);
+}
+
+.Of {
+    font-size: .35em;
+    color: var(--ash);
+    vertical-align: super;
+    margin-left: .15em;
+}
+
+.StatusMask {
+    height: 1.5em;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--ash);
+}
+
+.Status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Status > span {
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+.Nat {
+    color: var(--ember);
+}

@@ -6,6 +6,8 @@
 
 .Main {
     flex: 1;
+    /* Room for the fixed header; the homepage pulls itself back up under it. */
+    padding-top: var(--header-h);
 }
 
 .Main:focus {

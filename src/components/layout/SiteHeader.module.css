@@ -1,105 +1,262 @@
 .SiteHeader {
-    position: sticky;
-    top: 0;
-    z-index: var(--z-header);
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
+    /* Deliberately NOT positioned: a fixed/z-indexed header would form a
+       stacking context and isolate the bar's difference blend from the page. */
+    position: static;
+    height: 0;
 }
 
-.Inner {
+.Bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: calc(var(--z-overlay) + 1);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
-    max-width: var(--container);
-    margin-inline: auto;
-    padding: var(--space-3) var(--gutter);
+    height: var(--header-h);
+    padding-inline: var(--gutter);
+    color: var(--bone);
+    mix-blend-mode: difference;
+    transition: transform var(--dur-slower) var(--ease-expo);
+}
+
+.SiteHeader[data-hidden="true"] .Bar {
+    transform: translateY(-110%);
+}
+
+.SiteHeader[data-open="true"] .Bar {
+    mix-blend-mode: normal;
 }
 
 .Brand {
-    font-family: var(--font-display);
-    font-weight: var(--weight-semibold);
-    font-size: var(--text-lg);
-    text-decoration: none;
-    color: var(--fg);
-    white-space: nowrap;
-}
-
-.DesktopNav {
-    display: none;
-    align-items: center;
-    gap: var(--space-6);
-}
-
-@media (min-width: 768px) {
-    .DesktopNav {
-        display: flex;
-    }
-}
-
-.NavLink {
-    text-decoration: none;
-    color: var(--fg-muted);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
-    transition: color var(--dur-fast) var(--ease-out);
-}
-
-.NavLink:hover {
-    color: var(--fg);
-}
-
-.NavLinkActive {
-    color: var(--brand);
-}
-
-.Actions {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: var(--space-3);
+    text-decoration: none;
+    color: inherit;
+}
+
+.Mono {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -.06em;
+}
+
+.Mono::after {
+    content: '✦';
+    display: inline-block;
+    margin-left: .15em;
+    font-size: .55em;
+    vertical-align: .35em;
+    color: currentColor;
+    transition: transform var(--dur-slower) var(--ease-expo);
+}
+
+.Brand:hover .Mono::after {
+    transform: rotate(180deg);
+}
+
+.BrandSub {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    opacity: .7;
 }
 
 .MenuButton {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg-raised);
+    gap: var(--space-3);
+    padding: .6rem .2rem .6rem 1rem;
+    background: none;
+    border: 0;
+    color: inherit;
     cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
 }
 
-@media (min-width: 768px) {
-    .MenuButton {
-        display: none;
-    }
+.Burger {
+    display: grid;
+    gap: 6px;
+    width: 28px;
 }
 
-.MobileNav {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-2) var(--gutter) var(--space-4);
-    border-top: 1px solid var(--border);
+.Burger i {
+    display: block;
+    height: 2px;
+    background: currentColor;
+    transition: transform var(--dur-slow) var(--ease-expo);
 }
 
-@media (min-width: 768px) {
-    .MobileNav {
-        display: none;
-    }
+.SiteHeader[data-open="true"] .Burger i:first-child {
+    transform: translateY(4px) rotate(45deg);
 }
 
-.MobileNavLink {
-    padding: var(--space-3) 0;
+.SiteHeader[data-open="true"] .Burger i:last-child {
+    transform: translateY(-4px) rotate(-45deg);
+}
+
+/* ── overlay ─────────────────────────────────────── */
+.Overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    visibility: hidden;
+    background:
+        radial-gradient(60% 50% at 90% 100%, rgb(255 74 28 / .35), transparent 70%),
+        radial-gradient(50% 40% at 0% 0%, rgb(139 108 255 / .2), transparent 70%),
+        var(--void-2);
+    overflow-y: auto;
+    clip-path: inset(0 0 100% 0);
+}
+
+.OverlayInner {
+    min-height: 100%;
+    display: grid;
+    gap: var(--space-10);
+    align-content: center;
+    padding: calc(var(--header-h) + var(--space-6)) var(--gutter) var(--space-10);
+}
+
+.Primary ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+}
+
+.LinkMask {
+    overflow: hidden;
+}
+
+.BigLink {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: .4em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.2rem, .8rem + 5vw, 5.75rem);
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: var(--bone);
     text-decoration: none;
-    color: var(--fg);
-    font-size: var(--text-base);
-    border-bottom: 1px solid var(--border);
+    padding-block: .04em;
+    /* No transform transition here: GSAP owns this element's transform. */
+    transition: color var(--dur-base);
 }
 
-.MobileNavLink:last-child {
-    border-bottom: none;
+.LinkText {
+    transition: transform var(--dur-slow) var(--ease-expo);
+}
+
+.BigLink:hover {
+    color: var(--ember);
+}
+
+.BigLink:hover .LinkText {
+    transform: translateX(.2em);
+}
+
+.Active {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--bone);
+}
+
+.Num {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: var(--text-xs);
+    letter-spacing: 0;
+    padding-top: .8em;
+    color: var(--ember);
+    -webkit-text-stroke: 0;
+}
+
+.Side {
+    display: grid;
+    gap: var(--space-8);
+    align-content: end;
+}
+
+.Realms ul {
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.Realms a {
+    display: inline-flex;
+    gap: .5em;
+    padding: .5em 1em;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    color: var(--bone);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: background var(--dur-base), color var(--dur-base), border-color var(--dur-base);
+}
+
+.Realms a span {
+    font-family: var(--font-mono);
+    color: var(--ember);
+}
+
+.Realms a:hover {
+    background: var(--bone);
+    color: var(--void);
+    border-color: var(--bone);
+}
+
+.Contact {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.Contact > a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-xl);
+    color: var(--bone);
+    text-decoration: none;
+}
+
+.Contact > a:hover {
+    color: var(--ember);
+}
+
+.Socials {
+    display: flex;
+    gap: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+}
+
+.Socials a {
+    color: var(--fg-muted);
+    text-decoration: none;
+}
+
+.Socials a:hover {
+    color: var(--ember);
+}
+
+@media (min-width: 768px) {
+    .BrandSub {
+        display: inline;
+    }
+
+    .OverlayInner {
+        grid-template-columns: 1.4fr 1fr;
+        align-items: end;
+    }
 }

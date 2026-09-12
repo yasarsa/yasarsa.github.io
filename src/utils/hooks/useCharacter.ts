@@ -10,12 +10,12 @@ export default function useCharacter() {
     const dispatch = useDispatch()
 
     const cleanFeatures = useCallback((character: ICharacter) => {
-        // Karakter için geçerli olan feature'ları belirle
+        // Work out which features apply to this character
         const validFeatures = character.selectedFeatures?.filter(feature => {
-            // Feature'ın ait olduğu class'ı bul
+            // Find the class the feature belongs to
             return character.characterClass.some(classInfo => {
                 const classData = data[(classInfo.characterClass as string).toLocaleLowerCase() as keyof typeof data];
-                // Class'ın feature'larında bu feature var mı ve level uygun mu kontrol et
+                // Check the class grants this feature and the level is high enough
                 return classData?.features.some(f =>
                     f.name === feature.name &&
                     f.unlockedLevel <= classInfo.level
@@ -50,7 +50,7 @@ export default function useCharacter() {
     }, [cleanFeatures, dispatch])
 
     const addCharacter = useCallback((character: ICharacter) => {
-        // Yeni karakter eklerken feature'ları temizle
+        // Clean up features when adding a new character
         const cleanedCharacter = cleanFeatures(character);
         dispatch(addCharacterData(cleanedCharacter))
     }, [cleanFeatures, dispatch])
@@ -70,7 +70,7 @@ export default function useCharacter() {
     }, [dispatch])
 
     const importCharacters = useCallback((characters: ICharacter[]) => {
-        // Import edilen karakterlerin feature'larını temizle
+        // Clean up features on imported characters
         const cleanedCharacters = characters.map(char => cleanFeatures(char));
         dispatch(setCharacters(cleanedCharacters))
     }, [cleanFeatures, dispatch])

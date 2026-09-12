@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
     {
         id: 'this-site',
         title: 'This Site',
-        blurb: 'This portfolio itself — a CV rendered as an MTG card set, a D&D character sheet, and a JSON Resume, built with React and zero UI dependencies.',
+        blurb: 'This portfolio itself — one CV told five ways (terminal, video game, Warhammer dossier, MTG cards, D&D sheet), with scroll-driven motion built on React, GSAP and Lenis.',
         year: '2026',
         status: 'active',
         kind: 'repo',

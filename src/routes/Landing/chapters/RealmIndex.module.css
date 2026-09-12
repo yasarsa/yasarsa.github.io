@@ -1,0 +1,226 @@
+.RealmIndex {
+    position: relative;
+    overflow: clip;
+}
+
+.Track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+    padding: var(--space-section) var(--gutter);
+}
+
+.Intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: 34rem;
+}
+
+.Title {
+    font-size: var(--text-5xl);
+    font-weight: 800;
+    letter-spacing: -.045em;
+    line-height: .92;
+}
+
+.Lede {
+    color: var(--fg-muted);
+    font-size: var(--text-lg);
+    max-width: 36ch;
+}
+
+.Cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+}
+
+.CardItem {
+    display: flex;
+}
+
+.Card {
+    --card-bg: var(--void-3);
+    --card-fg: var(--bone);
+    --card-accent: var(--ember);
+    --card-font: var(--font-display);
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto auto;
+    gap: var(--space-3);
+    width: 100%;
+    min-height: 26rem;
+    padding: var(--space-6);
+    border-radius: 28px;
+    background: var(--card-bg);
+    color: var(--card-fg);
+    text-decoration: none;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / .08);
+    /* transform is scroll-driven by GSAP — never transition it. */
+    transition: box-shadow var(--dur-slow) var(--ease-expo);
+}
+
+.Card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 70% at 100% 0%, color-mix(in srgb, var(--card-accent) 38%, transparent), transparent 60%);
+    opacity: .7;
+    transition: opacity var(--dur-slow) var(--ease-out);
+    pointer-events: none;
+}
+
+.Card:hover::after {
+    opacity: 1;
+}
+
+.Card:hover .Glyph {
+    transform: scale(1.12) rotate(-4deg);
+}
+
+.Card:hover .CardCta {
+    color: var(--card-accent);
+    letter-spacing: .3em;
+}
+
+.CardNumber {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: color-mix(in srgb, var(--card-fg) 60%, transparent);
+}
+
+.Glyph {
+    align-self: center;
+    justify-self: start;
+    font-family: var(--card-font);
+    font-size: clamp(4.5rem, 9vw, 8rem);
+    line-height: 1;
+    color: var(--card-accent);
+    transition: transform var(--dur-slower) var(--ease-expo);
+    transform-origin: left center;
+}
+
+.GlyphDie {
+    width: 1.1em;
+}
+
+.CardName {
+    position: relative;
+    z-index: 1;
+    font-family: var(--card-font);
+    font-size: var(--text-4xl);
+    line-height: 1;
+}
+
+.CardTag {
+    position: relative;
+    z-index: 1;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: color-mix(in srgb, var(--card-fg) 75%, transparent);
+    max-width: 30ch;
+}
+
+.CardCta {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    transition: color var(--dur-base), letter-spacing var(--dur-slow) var(--ease-expo);
+}
+
+/* ── realm skins ─────────────────────────────────── */
+.soft {
+    --card-bg: var(--soft-bg);
+    --card-accent: var(--soft-lime);
+    --card-font: var(--font-mono);
+}
+
+.game {
+    --card-bg: var(--game-bg);
+    --card-accent: var(--game-magenta);
+    --card-font: var(--font-pixel);
+}
+
+.game .CardName {
+    font-size: var(--text-2xl);
+    line-height: 1.3;
+}
+
+.game .Glyph {
+    font-size: clamp(3rem, 6vw, 5rem);
+}
+
+.wh {
+    --card-bg: var(--wh-parchment);
+    --card-fg: var(--wh-ink);
+    --card-accent: var(--wh-blood);
+    --card-font: var(--font-gothic);
+}
+
+.mtg {
+    --card-bg: linear-gradient(160deg, #17162a, var(--mtg-bg-realm));
+    --card-accent: var(--mana-u);
+    --card-font: var(--font-fantasy);
+    background: var(--card-bg);
+}
+
+.mtg .Glyph {
+    background: conic-gradient(var(--mana-w), var(--mana-u), var(--mana-b), var(--mana-r), var(--mana-g), var(--mana-w));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.dnd {
+    --card-bg: var(--dnd-bg);
+    --card-accent: var(--dnd-red);
+    --card-font: var(--font-fantasy);
+}
+
+.dnd .Glyph {
+    color: var(--dnd-gold);
+}
+
+/* ── desktop: horizontal pinned track ───────────── */
+@media (min-width: 768px) {
+    .RealmIndex {
+        min-height: 100svh;
+    }
+
+    .Track {
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(2rem, 5vw, 5rem);
+        width: max-content;
+        min-height: 100svh;
+        padding-block: calc(var(--header-h) + var(--space-8)) var(--space-12);
+    }
+
+    .Intro {
+        width: min(34rem, 40vw);
+        flex-shrink: 0;
+    }
+
+    .Cards {
+        display: flex;
+        gap: clamp(1.25rem, 2.5vw, 2.5rem);
+        padding-right: 6vw;
+    }
+
+    .CardItem {
+        width: clamp(19rem, 30vw, 28rem);
+    }
+
+    .Card {
+        height: min(68svh, 38rem);
+        min-height: 26rem;
+        padding: var(--space-8);
+    }
+}

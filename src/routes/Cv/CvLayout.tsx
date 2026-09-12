@@ -1,13 +1,19 @@
 import { useEffect } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styles from './CvLayout.module.css';
 
 const LENS_STORAGE_KEY = 'cv-lens';
 
 const LENSES = [
-    { to: '/cv/mtg', label: 'MTG Cards' },
-    { to: '/cv/sheet', label: 'Character Sheet' },
-    { to: '/cv/json', label: 'JSON' },
+    { to: '/cv/json', label: 'Software · JSON' },
+    { to: '/cv/mtg', label: 'Magic · Card set' },
+    { to: '/cv/sheet', label: 'D&D · Character sheet' },
+];
+
+// The other two realms live only on the homepage.
+const HOME_REALMS = [
+    { to: '/#gamedev', label: 'Game Dev' },
+    { to: '/#warhammer', label: 'Warhammer' },
 ];
 
 export default function CvLayout() {
@@ -44,6 +50,12 @@ export default function CvLayout() {
                     >
                         {lens.label}
                     </NavLink>
+                ))}
+                <span className={styles.Divider} aria-hidden="true" />
+                {HOME_REALMS.map((realm) => (
+                    <Link key={realm.to} to={realm.to} className={styles.LensLink}>
+                        {realm.label} <span aria-hidden="true">↗</span>
+                    </Link>
                 ))}
             </nav>
             <div className={styles.LensBody}>

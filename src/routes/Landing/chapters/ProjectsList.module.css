@@ -1,0 +1,204 @@
+.Projects {
+    position: relative;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: var(--space-section) var(--gutter);
+}
+
+.Head {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
+}
+
+.Title {
+    font-size: var(--text-5xl);
+    font-weight: 800;
+    letter-spacing: -.05em;
+    line-height: .92;
+}
+
+.List {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border-strong);
+}
+
+.Item {
+    border-bottom: 1px solid var(--border-strong);
+}
+
+.Row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    grid-template-areas:
+        "idx name arrow"
+        "idx meta meta"
+        "idx blurb blurb";
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-6) 0;
+    color: inherit;
+    text-decoration: none;
+    isolation: isolate;
+}
+
+.Row::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(var(--gutter) * -1);
+    z-index: -1;
+    background: var(--ember);
+    transform: scaleY(0);
+    transform-origin: 50% 100%;
+    transition: transform var(--dur-slow) var(--ease-expo);
+}
+
+.Index {
+    grid-area: idx;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--fg-subtle);
+    padding-top: .6em;
+}
+
+.Name {
+    grid-area: name;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-4xl);
+    line-height: 1;
+    letter-spacing: -.04em;
+    transition: transform var(--dur-slow) var(--ease-expo);
+}
+
+.Meta {
+    grid-area: meta;
+    display: flex;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+}
+
+.Blurb {
+    grid-area: blurb;
+    color: var(--fg-muted);
+    max-width: 60ch;
+}
+
+.Arrow {
+    grid-area: arrow;
+    align-self: start;
+    font-size: var(--text-3xl);
+    line-height: 1;
+    transition: transform var(--dur-slow) var(--ease-expo);
+}
+
+.Row:hover::before,
+.Row:focus-visible::before {
+    transform: scaleY(1);
+}
+
+.Row:hover,
+.Row:focus-visible {
+    color: var(--void);
+}
+
+.Row:hover .Index,
+.Row:hover .Meta,
+.Row:hover .Blurb {
+    color: rgb(10 10 12 / .75);
+}
+
+.Row:hover .Name {
+    transform: translateX(.3em);
+}
+
+.Row:hover .Arrow {
+    transform: rotate(45deg);
+}
+
+.Foot {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-6);
+}
+
+.All {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ember);
+    padding-bottom: 2px;
+}
+
+.All:hover {
+    color: var(--ember);
+}
+
+.Preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-overlay);
+    width: 20rem;
+    aspect-ratio: 4 / 3;
+    margin: -7.5rem 0 0 -10rem;
+    pointer-events: none;
+    border-radius: 16px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0);
+    box-shadow: 0 30px 70px rgb(0 0 0 / .6);
+}
+
+.PreviewCard {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: end start;
+    padding: 1.2rem;
+    transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.PreviewCard span {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-2xl);
+    line-height: 1;
+    color: #fff;
+    max-width: 10ch;
+}
+
+@media (min-width: 768px) {
+    .Row {
+        grid-template-columns: 4rem 1.4fr 1fr auto;
+        grid-template-areas:
+            "idx name meta arrow"
+            "idx name blurb arrow";
+        align-items: center;
+        padding: var(--space-8) 0;
+    }
+
+    .Meta {
+        justify-content: space-between;
+    }
+
+    .Arrow {
+        align-self: center;
+    }
+}
+
+@media (pointer: coarse) {
+    .Preview {
+        display: none;
+    }
+}

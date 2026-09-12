@@ -1,0 +1,145 @@
+.Contact {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: var(--space-8);
+    min-height: 90svh;
+    align-content: center;
+    padding: var(--space-section) var(--gutter) var(--space-10);
+    overflow: clip;
+    border-top: 1px solid var(--border);
+}
+
+.Glow {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    bottom: -40vmax;
+    width: 90vmax;
+    height: 70vmax;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 74 28 / .5), rgb(139 108 255 / .15) 45%, transparent 70%);
+    filter: blur(40px);
+}
+
+.Title {
+    font-size: clamp(2.6rem, .5rem + 10vw, 12rem);
+    font-weight: 800;
+    line-height: .86;
+    letter-spacing: -.055em;
+    max-width: 10ch;
+}
+
+.Row {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+}
+
+.Lede {
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    color: var(--fg-muted);
+    max-width: 32ch;
+}
+
+.Button {
+    justify-self: start;
+    display: inline-grid;
+    place-items: center;
+    width: clamp(9rem, 16vw, 13rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--ember);
+    color: var(--void);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    text-decoration: none;
+    transition: background var(--dur-base), color var(--dur-base);
+}
+
+.Button:hover {
+    background: var(--bone);
+}
+
+.Bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+}
+
+.Email {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-2xl);
+    color: var(--fg);
+    text-decoration: none;
+    background: linear-gradient(var(--ember), var(--ember)) 0 100% / 0 2px no-repeat;
+    transition: background-size var(--dur-slow) var(--ease-expo);
+}
+
+.Email:hover {
+    background-size: 100% 2px;
+}
+
+.Links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+.Links a {
+    color: var(--fg-muted);
+    text-decoration: none;
+}
+
+.Links a:hover {
+    color: var(--ember);
+}
+
+.Time {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+}
+
+.Pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3fdc7a;
+    box-shadow: 0 0 0 0 rgb(63 220 122 / .6);
+    animation: ping 2s ease-out infinite;
+}
+
+@keyframes ping {
+    to { box-shadow: 0 0 0 10px rgb(63 220 122 / 0); }
+}
+
+@media (min-width: 768px) {
+    .Row {
+        grid-template-columns: 1fr auto;
+    }
+
+    .Button {
+        justify-self: end;
+    }
+}

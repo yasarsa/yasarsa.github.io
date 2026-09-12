@@ -49,7 +49,7 @@ export default function Accordion({ title, onDelete, children, extraTitle }: Pro
     const onTouchMove = (e: React.TouchEvent) => {
         e.stopPropagation();
         e.preventDefault();
-        // Sadece yeterli hareket varsa moved olarak işaretle
+        // Only mark as moved if the pointer travelled far enough
         if (Math.abs(e.targetTouches[0].clientX - (startPos || 0)) > 5) {
             setIsMoved(true)
             setEndPos(e.targetTouches[0].clientX)
@@ -59,7 +59,7 @@ export default function Accordion({ title, onDelete, children, extraTitle }: Pro
     const onTouchEnd = (e: React.TouchEvent) => {
         e.stopPropagation();
         e.preventDefault();
-        // Kısa bir gecikme ile işle
+        // Handle after a short delay
         setTimeout(() => handleInteractionEnd(), 50);
     }
 
@@ -99,7 +99,7 @@ export default function Accordion({ title, onDelete, children, extraTitle }: Pro
             return;
         }
 
-        // Eğer endPos yoksa ve hareket olmadıysa, bu bir tap/click olayıdır
+        // No end position and no movement means this was a tap/click
         if (!endPos) {
             if (!isMoved) {
                 setTimeout(() => handleAccordionClick(), 100);

@@ -18,17 +18,17 @@ const ROUTES = [
     {
         path: '/cv/mtg',
         title: 'CV — MTG Card Set — Yaşar Anıl Sansak',
-        description: 'Career and education presented as a set of Magic: The Gathering-style trading cards.',
+        description: 'The Magic realm: career and education presented as a set of Magic: The Gathering-style trading cards.',
     },
     {
         path: '/cv/sheet',
         title: 'CV — Character Sheet — Yaşar Anıl Sansak',
-        description: 'Career and education translated into a full D&D 5e character sheet.',
+        description: 'The D&D realm: career and education translated into a full D&D 5e character sheet.',
     },
     {
         path: '/cv/json',
         title: 'CV — JSON Resume — Yaşar Anıl Sansak',
-        description: 'The CV as machine-readable JSON, following the open JSON Resume schema.',
+        description: 'The Software realm: the CV as machine-readable JSON, following the open JSON Resume schema.',
     },
     {
         path: '/projects',

@@ -1,32 +1,56 @@
 .NotFound {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
     max-width: var(--container-narrow);
+    min-height: 70svh;
+    align-content: center;
     margin-inline: auto;
-    padding: var(--space-24) var(--gutter);
+    padding: var(--space-16) var(--gutter);
     text-align: center;
 }
 
+.Die {
+    width: 7rem;
+    color: var(--ember);
+    transform: rotate(-12deg);
+    animation: wobble 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes wobble {
+    50% { transform: rotate(10deg) translateY(-6px); }
+}
+
 .Code {
-    font-family: var(--font-display);
-    font-size: var(--text-4xl);
-    color: var(--fg-subtle);
-    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--ember);
 }
 
-.NotFound h1 {
-    font-size: var(--text-2xl);
-    margin-bottom: var(--space-3);
+.Title {
+    font-size: var(--text-5xl);
+    font-weight: 800;
+    letter-spacing: -.05em;
 }
 
-.NotFound p {
-    max-width: none;
+.Text {
     color: var(--fg-muted);
-    margin-inline: auto;
+    max-width: 40ch;
 }
 
 .Link {
-    display: inline-block;
-    margin-top: var(--space-6);
-    color: var(--brand);
+    margin-top: var(--space-4);
+    padding: .9em 1.5em;
+    border-radius: var(--radius-full);
+    background: var(--bone);
+    color: var(--void);
     text-decoration: none;
-    font-weight: var(--weight-medium);
+    font-weight: 600;
+    transition: background var(--dur-base);
+}
+
+.Link:hover {
+    background: var(--ember);
 }

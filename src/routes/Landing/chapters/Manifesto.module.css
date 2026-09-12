@@ -1,0 +1,98 @@
+.Manifesto {
+    position: relative;
+    /* The tilted marquee strip is wider than the viewport on purpose. */
+    overflow-x: clip;
+    padding-block: var(--space-section) var(--space-16);
+}
+
+.Inner {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    gap: var(--space-8);
+}
+
+.Text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-4xl);
+    line-height: 1.12;
+    letter-spacing: -.03em;
+    max-width: 30ch;
+}
+
+.Text em {
+    font-style: normal;
+    color: var(--ember);
+}
+
+.Warm {
+    color: var(--arcane-soft);
+}
+
+.Stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+    margin: var(--space-8) 0 0;
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border);
+}
+
+.Stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-2);
+}
+
+.StatValue {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 1rem + 4.4vw, 5.5rem);
+    line-height: .9;
+    letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+}
+
+.StatLabel {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+}
+
+.Marquees {
+    margin-top: var(--space-section);
+    display: grid;
+    gap: var(--space-2);
+    width: 112%;
+    margin-left: -6%;
+    transform: rotate(-3deg);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 8vw, 7.5rem);
+    line-height: 1.1;
+    letter-spacing: -.04em;
+    text-transform: uppercase;
+}
+
+.MarqueeSolid {
+    --marquee-accent: var(--void);
+    background: var(--ember);
+    color: var(--void);
+    padding-block: .1em;
+}
+
+.MarqueeOutline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--bone);
+}
+
+@media (min-width: 768px) {
+    .Stats {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}

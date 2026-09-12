@@ -1,0 +1,428 @@
+.Chapter {
+    --realm-bg: radial-gradient(70% 55% at 50% 0%, rgb(138 15 15 / .45), transparent 70%),
+        radial-gradient(60% 40% at 50% 100%, rgb(201 162 39 / .12), transparent 70%),
+        var(--wh-bg);
+    --realm-fg: var(--wh-parchment);
+}
+
+.Wrap {
+    padding: var(--space-section) var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+    justify-items: center;
+}
+
+.Intro {
+    display: grid;
+    gap: var(--space-3);
+    text-align: center;
+    justify-items: center;
+}
+
+.Eyebrow {
+    font-family: var(--font-stencil);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--wh-gilt);
+}
+
+.Lede {
+    font-family: var(--font-gothic);
+    font-size: var(--text-3xl);
+    line-height: 1.1;
+    max-width: 24ch;
+}
+
+/* ── the parchment file ──────────────────────────── */
+.Sheet {
+    position: relative;
+    width: min(100%, 62rem);
+    padding: clamp(1.25rem, 4vw, 3.5rem);
+    color: var(--wh-ink);
+    background-color: var(--wh-parchment);
+    background-image:
+        radial-gradient(ellipse at 20% 10%, rgb(255 250 230 / .5), transparent 50%),
+        radial-gradient(ellipse at 85% 80%, rgb(120 80 30 / .22), transparent 55%),
+        repeating-linear-gradient(0deg, rgb(90 60 20 / .035) 0 1px, transparent 1px 4px),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.04' numOctaves='4'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .08 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    box-shadow: inset 0 0 70px rgb(90 50 10 / .55), inset 0 0 12px rgb(60 30 5 / .5), 0 40px 90px rgb(0 0 0 / .6);
+    border-radius: 3px 6px 4px 8px;
+    transform: rotate(-1deg);
+    transform-origin: 50% 0;
+}
+
+.Band {
+    padding: .5em 0;
+    border-block: 3px double var(--wh-blood);
+    text-align: center;
+    font-family: var(--font-stencil);
+    font-weight: 600;
+    font-size: clamp(.8rem, .6rem + .8vw, 1.15rem);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--wh-blood);
+}
+
+.Band span,
+.MetaRow span {
+    display: inline-block;
+}
+
+.MetaRow {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-top: var(--space-3);
+    font-family: var(--font-stencil);
+    font-size: var(--text-xs);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.Clearance {
+    padding: .15em .6em;
+    background: var(--wh-blood);
+    color: var(--wh-parchment);
+}
+
+.Name {
+    margin-block: var(--space-8) var(--space-6);
+    font-family: var(--font-gothic);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 1.4rem + 5.5vw, 5.5rem);
+    line-height: .95;
+    letter-spacing: 0;
+    text-align: center;
+    color: var(--wh-ink);
+}
+
+.NameGlyph {
+    display: block;
+    font-size: .45em;
+    color: var(--wh-blood);
+    margin-bottom: .1em;
+}
+
+.Subject {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+    border-block: 1px solid rgb(42 26 16 / .35);
+}
+
+.Pict {
+    position: relative;
+    margin: 0;
+    justify-self: center;
+    width: min(13rem, 60%);
+    padding: .6rem .6rem 0;
+    background: rgb(42 26 16 / .08);
+    border: 1px solid rgb(42 26 16 / .4);
+}
+
+.Pict::before,
+.Pict::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 3px solid var(--wh-blood);
+}
+
+.Pict::before { top: -6px; left: -6px; border-right: 0; border-bottom: 0; }
+.Pict::after { bottom: -6px; right: -6px; border-left: 0; border-top: 0; }
+
+.PictImg {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    filter: grayscale(1) sepia(.75) contrast(1.15) brightness(.92);
+    mix-blend-mode: multiply;
+}
+
+.Pict figcaption {
+    padding: .4rem 0;
+    font-family: var(--font-stencil);
+    font-size: .65rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.Fields {
+    margin: 0;
+    display: grid;
+    gap: .55rem;
+    align-content: center;
+}
+
+.Fields > div {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    gap: var(--space-3);
+    align-items: baseline;
+    padding-bottom: .45rem;
+    border-bottom: 1px dotted rgb(42 26 16 / .35);
+}
+
+.Fields dt {
+    font-family: var(--font-stencil);
+    font-size: var(--text-xs);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--wh-blood);
+}
+
+.Fields dd {
+    margin: 0;
+    font-family: var(--font-book);
+    font-size: var(--text-lg);
+    line-height: 1.3;
+}
+
+.Fields small {
+    font-size: .8em;
+    opacity: .75;
+}
+
+.Redactable {
+    position: relative;
+    justify-self: start;
+}
+
+.Redactable a {
+    color: var(--wh-ink);
+    text-decoration-color: var(--wh-blood);
+    text-underline-offset: 3px;
+}
+
+.Redaction {
+    position: absolute;
+    inset: -.1em -.3em;
+    background: #120c08;
+    transform-origin: 100% 50%;
+    transform: scaleX(0);
+    pointer-events: none;
+}
+
+.Blackout {
+    color: #120c08;
+    letter-spacing: -.1em;
+}
+
+.Section {
+    margin-block: var(--space-8) var(--space-4);
+    font-family: var(--font-gothic);
+    font-weight: 400;
+    font-size: var(--text-3xl);
+    letter-spacing: 0;
+    color: var(--wh-blood);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.Section::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgb(138 15 15 / .6), transparent);
+}
+
+.Record {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+}
+
+.Deployment {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.Range {
+    font-family: var(--font-stencil);
+    font-size: var(--text-xs);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgb(42 26 16 / .75);
+}
+
+.Rank {
+    font-family: var(--font-gothic);
+    font-size: var(--text-2xl);
+    line-height: 1.05;
+}
+
+.Real {
+    font-family: var(--font-stencil);
+    font-size: var(--text-sm);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-top: .2rem;
+}
+
+.Note {
+    font-family: var(--font-book);
+    font-style: italic;
+    font-size: var(--text-lg);
+    line-height: 1.35;
+    color: rgb(42 26 16 / .85);
+    margin-top: .25rem;
+}
+
+.Columns {
+    display: grid;
+    gap: 0 var(--space-10);
+}
+
+.Rites {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.Rites li {
+    padding: .3em .7em;
+    border: 1px solid rgb(42 26 16 / .5);
+    font-family: var(--font-stencil);
+    font-size: var(--text-xs);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: rgb(42 26 16 / .05);
+}
+
+.Scholam,
+.Lingua {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    font-family: var(--font-book);
+    font-size: var(--text-lg);
+    line-height: 1.3;
+}
+
+.Scholam li {
+    display: grid;
+}
+
+.Scholam strong {
+    font-weight: 400;
+    font-family: var(--font-gothic);
+    font-size: 1.15em;
+}
+
+.Scholam span {
+    font-family: var(--font-stencil);
+    font-size: var(--text-xs);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .75;
+}
+
+.Scholam em {
+    font-size: .95em;
+}
+
+.Verdict {
+    position: relative;
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+    padding-top: var(--space-6);
+    border-top: 3px double var(--wh-blood);
+    min-height: 12rem;
+}
+
+.Thought {
+    font-family: var(--font-book);
+    font-style: italic;
+    font-size: var(--text-xl);
+    max-width: 26ch;
+}
+
+.Thought span {
+    display: block;
+    font-family: var(--font-stencil);
+    font-style: normal;
+    font-size: var(--text-xs);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--wh-blood);
+}
+
+.SealWrap {
+    position: absolute;
+    top: -2.2rem;
+    right: clamp(.5rem, 4vw, 3rem);
+    width: clamp(4.5rem, 10vw, 7rem);
+    filter: drop-shadow(0 6px 8px rgb(40 10 0 / .45));
+}
+
+.Seal {
+    width: 100%;
+}
+
+.Stamp {
+    justify-self: start;
+    padding: .35em .8em;
+    border: 4px double var(--wh-blood);
+    color: var(--wh-blood);
+    font-family: var(--font-stencil);
+    font-weight: 700;
+    font-size: clamp(1.1rem, .8rem + 1.6vw, 2rem);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transform: rotate(-9deg);
+    opacity: .85;
+    mix-blend-mode: multiply;
+    max-width: none;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+}
+
+@media (min-width: 768px) {
+    .Subject {
+        grid-template-columns: 13rem 1fr;
+        align-items: center;
+    }
+
+    .Pict {
+        width: 100%;
+    }
+
+    .Deployment {
+        grid-template-columns: 11rem 1fr;
+        gap: var(--space-6);
+    }
+
+    .Range {
+        padding-top: .45rem;
+    }
+
+    .Columns {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .Stamp {
+        position: absolute;
+        right: clamp(6rem, 16vw, 12rem);
+        bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .Fields > div {
+        grid-template-columns: 1fr;
+        gap: .15rem;
+    }
+}

@@ -1,57 +1,83 @@
 :root {
-    color-scheme: light dark;
+    color-scheme: dark;
 
-    /* ── primitives: warm neutral ─────────────────────────── */
-    --gray-0: #fff;
-    --gray-25: #fbfbfa;
-    --gray-50: #f6f6f4;
-    --gray-100: #ecebe8;
-    --gray-200: #dedcd7;
-    --gray-300: #c4c1ba;
-    --gray-400: #9c988f;
-    --gray-500: #77736b;
-    --gray-600: #585550;
-    --gray-700: #403e3a;
-    --gray-800: #2a2926;
-    --gray-900: #1a1917;
-    --gray-950: #0f0e0d;
+    /* ── primitives: the void shell ───────────────────────── */
+    --void: #0a0a0c;
+    --void-2: #111114;
+    --void-3: #18181c;
+    --void-4: #222228;
+    --bone: #eee8dc;
+    --bone-dim: #c9c2b4;
+    --ash: #8a857c;
+    --ash-dark: #4a4741;
+    --ember: #ff4a1c;
+    --ember-hot: #ff7a3d;
+    --arcane: #8b6cff;
+    --arcane-soft: #b7a6ff;
 
-    /* ── primitives: ink blue accent ──────────────────────── */
-    --accent-50: #eef4fb;
-    --accent-100: #d6e4f5;
-    --accent-200: #adc8e9;
-    --accent-300: #7ba5d8;
-    --accent-400: #4a7fc1;
-    --accent-500: #2c5f9e;
-    --accent-600: #234c80;
-    --accent-700: #1c3c66;
-    --accent-800: #16304f;
-    --accent-900: #10233a;
+    /* ── realm palettes (one per CV chapter) ──────────────── */
+    --soft-bg: #0d1117;
+    --soft-panel: #161b22;
+    --soft-rule: #30363d;
+    --soft-cyan: #56d4ff;
+    --soft-lime: #b4ff4a;
+    --soft-pink: #ff6ac1;
+    --soft-amber: #ffc857;
 
-    /* ── semantic (LIGHT is the default) ──────────────────── */
-    --bg: var(--gray-25);
-    --bg-subtle: var(--gray-50);
-    --bg-raised: var(--gray-0);
-    --bg-inset: var(--gray-100);
-    --bg-overlay: rgb(26 25 23 / .55);
-    --fg: var(--gray-900);
-    --fg-muted: var(--gray-600);
-    --fg-subtle: var(--gray-500);
-    --fg-on-brand: var(--gray-0);
-    --border: var(--gray-200);
-    --border-strong: var(--gray-300);
-    --brand: var(--accent-600);
-    --brand-hover: var(--accent-700);
-    --brand-subtle: var(--accent-50);
+    --game-bg: #120a24;
+    --game-panel: #1d1238;
+    --game-magenta: #ff2e88;
+    --game-cyan: #00f0ff;
+    --game-yellow: #ffe14d;
 
-    --shadow-1: 0 1px 2px rgb(26 25 23 / .06), 0 1px 1px rgb(26 25 23 / .04);
-    --shadow-2: 0 4px 12px rgb(26 25 23 / .08), 0 1px 3px rgb(26 25 23 / .06);
-    --shadow-3: 0 12px 32px rgb(26 25 23 / .12), 0 4px 8px rgb(26 25 23 / .06);
+    --wh-bg: #140f0b;
+    --wh-parchment: #d9cba6;
+    --wh-parchment-dark: #b9a47a;
+    --wh-ink: #2a1a10;
+    --wh-blood: #8a0f0f;
+    --wh-gilt: #c9a227;
+
+    --mtg-bg-realm: #0b0b10;
+    --mana-w: #f8f1d8;
+    --mana-u: #3a8ee6;
+    --mana-b: #8c7a8f;
+    --mana-r: #e8533a;
+    --mana-g: #3fa56b;
+
+    --dnd-bg: #1a0f0a;
+    --dnd-red: #b3261e;
+    --dnd-gold: #e8c872;
+    --dnd-parch: #efe2c4;
+
+    /* ── semantic (single committed dark look) ────────────── */
+    --bg: var(--void);
+    --bg-subtle: var(--void-2);
+    --bg-raised: var(--void-3);
+    --bg-inset: #070708;
+    --bg-overlay: rgb(0 0 0 / .72);
+    --fg: var(--bone);
+    --fg-muted: var(--bone-dim);
+    --fg-subtle: var(--ash);
+    --fg-on-brand: var(--void);
+    --border: rgb(238 232 220 / .12);
+    --border-strong: rgb(238 232 220 / .24);
+    --brand: var(--ember);
+    --brand-hover: var(--ember-hot);
+    --brand-subtle: rgb(255 74 28 / .12);
+
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .04);
+    --shadow-2: 0 4px 14px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .05);
+    --shadow-3: 0 16px 40px rgb(0 0 0 / .6), inset 0 1px 0 rgb(255 255 255 / .06);
 
     /* ── type ─────────────────────────────────────────────── */
     --font-sans: 'Inter var', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --font-display: 'Fraunces var', Georgia, 'Times New Roman', serif;
+    --font-display: 'Syne var', 'Inter var', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono var', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-pixel: 'Press Start 2P', 'JetBrains Mono var', ui-monospace, monospace;
+    --font-gothic: 'Pirata One', 'Cinzel', Georgia, serif;
+    --font-stencil: 'Oswald var', 'Inter var', 'Arial Narrow', sans-serif;
+    --font-fantasy: 'Cinzel', Georgia, serif;
+    --font-book: 'EB Garamond', Georgia, serif;
 
     --text-xs: .75rem;
     --text-sm: .875rem;
@@ -61,15 +87,17 @@
     --text-2xl: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
     --text-3xl: clamp(1.875rem, 1.40rem + 2.0vw, 2.75rem);
     --text-4xl: clamp(2.25rem, 1.40rem + 3.6vw, 4rem);
-    --text-hero: clamp(2.75rem, 1.20rem + 6.0vw, 6rem);
+    --text-5xl: clamp(2.75rem, 1.2rem + 6vw, 6.5rem);
+    --text-hero: clamp(3.25rem, 0.8rem + 11.5vw, 13rem);
 
-    --leading-tight: 1.15;
-    --leading-snug: 1.35;
+    --leading-tight: 1.05;
+    --leading-snug: 1.3;
     --leading-normal: 1.6;
     --leading-relaxed: 1.75;
-    --tracking-tight: -0.02em;
+    --tracking-tight: -0.03em;
     --tracking-normal: 0;
-    --tracking-wide: 0.06em;
+    --tracking-wide: 0.08em;
+    --tracking-wider: 0.2em;
     --weight-regular: 400;
     --weight-medium: 500;
     --weight-semibold: 600;
@@ -88,11 +116,12 @@
     --space-16: 4rem;
     --space-20: 5rem;
     --space-24: 6rem;
-    --space-section: clamp(4rem, 10vw, 8rem);
-    --gutter: clamp(1rem, 4vw, 3rem);
-    --container: 72rem;
-    --container-narrow: 44rem;
+    --space-section: clamp(5rem, 12vw, 10rem);
+    --gutter: clamp(1.25rem, 4vw, 3.5rem);
+    --container: 84rem;
+    --container-narrow: 46rem;
     --measure: 68ch;
+    --header-h: 4.5rem;
 
     /* ── radii / shape ────────────────────────────────────── */
     --radius-xs: 4px;
@@ -107,10 +136,11 @@
     --dur-instant: 80ms;
     --dur-fast: 150ms;
     --dur-base: 250ms;
-    --dur-slow: 400ms;
-    --dur-slower: 700ms;
+    --dur-slow: 450ms;
+    --dur-slower: 800ms;
     --ease-out: cubic-bezier(.2, .8, .25, 1);
     --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+    --ease-expo: cubic-bezier(.16, 1, .3, 1);
     --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
 
     /* ── focus ────────────────────────────────────────────── */
@@ -126,61 +156,15 @@
     --z-overlay: 800;
     --z-modal: 900;
     --z-toast: 1000;
+    --z-grain: 1100;
+    --z-cursor: 1200;
+    --z-preloader: 1300;
 
     /* ── LEGACY: consumed by /dnd and /kt. Do not remove. ─── */
     --green: #45a049;
     --red: #e41313;
     --kt-orange: #ED5B20;
     --card-shadow: 0 6px 18px rgb(15 20 30 / .3);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        --bg: #141312;
-        --bg-subtle: #1a1917;
-        --bg-raised: #211f1d;
-        --bg-inset: #0f0e0d;
-        --bg-overlay: rgb(0 0 0 / .7);
-        --fg: #f2f0ec;
-        --fg-muted: #a8a49c;
-        --fg-subtle: #7a766e;
-        --border: #302e2b;
-        --border-strong: #454340;
-        --brand: var(--accent-300);
-        --brand-hover: var(--accent-200);
-        --brand-subtle: #16304f;
-        --shadow-1: 0 1px 2px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .04);
-        --shadow-2: 0 4px 14px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .05);
-        --shadow-3: 0 16px 40px rgb(0 0 0 / .6), inset 0 1px 0 rgb(255 255 255 / .06);
-        color-scheme: dark;
-    }
-}
-
-/*
- * Explicit override, deliberately placed AFTER the media query above.
- * Both selectors are specificity (0,2,0), so source order decides —
- * this is what makes the toggle win in both directions (explicit
- * light on a dark-preferring OS, explicit dark on a light-preferring
- * OS). Getting the order wrong is the classic hand-rolled-theme bug.
- */
-:root[data-theme="dark"] {
-    --bg: #141312;
-    --bg-subtle: #1a1917;
-    --bg-raised: #211f1d;
-    --bg-inset: #0f0e0d;
-    --bg-overlay: rgb(0 0 0 / .7);
-    --fg: #f2f0ec;
-    --fg-muted: #a8a49c;
-    --fg-subtle: #7a766e;
-    --border: #302e2b;
-    --border-strong: #454340;
-    --brand: var(--accent-300);
-    --brand-hover: var(--accent-200);
-    --brand-subtle: #16304f;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .04);
-    --shadow-2: 0 4px 14px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .05);
-    --shadow-3: 0 16px 40px rgb(0 0 0 / .6), inset 0 1px 0 rgb(255 255 255 / .06);
-    color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -210,7 +194,8 @@
 
 @media (prefers-contrast: more) {
     :root {
-        --border: var(--gray-500);
-        --fg-muted: var(--gray-800);
+        --border: rgb(238 232 220 / .4);
+        --fg-muted: var(--bone);
+        --fg-subtle: var(--bone-dim);
     }
 }

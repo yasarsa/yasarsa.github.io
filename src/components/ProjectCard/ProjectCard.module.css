@@ -3,15 +3,16 @@
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    border-radius: 22px;
     overflow: hidden;
     background: var(--bg-raised);
-    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+    transition: transform var(--dur-slow) var(--ease-expo), box-shadow var(--dur-slow) var(--ease-expo), border-color var(--dur-base);
 }
 
 .ProjectCard:has(.StretchedLink:hover) {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-3);
+    transform: translateY(-6px) rotate(-.6deg);
+    border-color: var(--ember);
+    box-shadow: var(--shadow-3), 0 0 50px rgb(255 74 28 / .18);
 }
 
 .ProjectCard[data-status="todo"] {
@@ -38,7 +39,8 @@
 }
 
 .Title {
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
+    letter-spacing: -.03em;
     margin: 0;
 }
 

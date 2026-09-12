@@ -14,7 +14,7 @@ export default function MTGCard({ card, onMoreInfo }: Props) {
         <div className={styles.MTGCard} data-rarity={rarity}>
             <div className={styles.CardContainer}>
                 <div className={styles.CardHeader}>
-                    <h1 className={styles.Name}>{name}</h1>
+                    <h3 className={styles.Name}>{name}</h3>
                 </div>
 
                 <div className={styles.ImageContainer}>

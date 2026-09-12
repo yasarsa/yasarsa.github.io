@@ -1,0 +1,31 @@
+.Marquee {
+    overflow: hidden;
+    width: 100%;
+    user-select: none;
+}
+
+.Track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+}
+
+.Group {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.Item {
+    display: inline-flex;
+    align-items: center;
+    gap: .5em;
+    padding-right: .5em;
+    white-space: nowrap;
+}
+
+.Star {
+    display: inline-block;
+    font-size: .5em;
+    color: var(--marquee-accent, var(--ember));
+    transform: translateY(-.1em);
+}

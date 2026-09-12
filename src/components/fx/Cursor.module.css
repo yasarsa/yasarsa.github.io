@@ -1,0 +1,71 @@
+.Cursor {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-cursor);
+    pointer-events: none;
+    mix-blend-mode: difference;
+}
+
+.Dot,
+.Ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 50%;
+    will-change: transform;
+}
+
+.Dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--bone);
+}
+
+.Ring {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 1px solid var(--bone);
+    transition: width var(--dur-slow) var(--ease-expo), height var(--dur-slow) var(--ease-expo),
+        margin var(--dur-slow) var(--ease-expo), background var(--dur-base) var(--ease-out);
+}
+
+.Ring[data-state="hover"] {
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    background: var(--bone);
+}
+
+.Ring[data-state="label"] {
+    width: 96px;
+    height: 96px;
+    margin: -48px 0 0 -48px;
+    background: var(--bone);
+}
+
+.Label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--void);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.Ring[data-state="label"] .Label {
+    opacity: 1;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .Cursor {
+        display: none;
+    }
+}

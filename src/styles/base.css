@@ -5,7 +5,27 @@
 }
 
 html {
+    background: var(--bg);
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Lenis owns scrolling while active — native smooth scroll would fight it. */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+html.lenis {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
 }
 
 body {
@@ -18,13 +38,20 @@ body {
     font-size: var(--text-base);
     line-height: var(--leading-normal);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: clip;
 }
 
 body.no-scroll {
     overflow: hidden;
     position: fixed;
     width: 100%;
+}
+
+::selection {
+    background: var(--ember);
+    color: var(--void);
 }
 
 h1,
@@ -34,6 +61,7 @@ h4,
 h5,
 h6 {
     font-family: var(--font-display);
+    font-weight: 700;
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-tight);
     text-wrap: balance;
@@ -63,14 +91,8 @@ button {
     -webkit-tap-highlight-color: transparent;
 }
 
-body a {
-    -webkit-tap-highlight-color: transparent;
-}
-
-img {
-    -webkit-tap-highlight-color: transparent;
-}
-
+body a,
+img,
 div {
     -webkit-tap-highlight-color: transparent;
 }
@@ -121,17 +143,26 @@ div {
     flex-direction: column;
 }
 
-/* Reveal-on-scroll: see src/hooks/useReveal.ts. The html:not([data-js])
-   fallback guarantees content stays visible if JS fails to load —
-   [data-js] is set synchronously by the inline script in index.html. */
-[data-reveal] {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+/* Small uppercase mono label used across the site ("01 / SOFTWARE"). */
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--fg-subtle);
 }
 
-[data-reveal][data-revealed="true"],
-html:not([data-js]) [data-reveal] {
-    opacity: 1;
-    transform: none;
+/* SplitText line masks (overflow: clip is set inline by SplitText):
+   extra room so descenders and diacritics (Ş, İ) aren't clipped. */
+.split-line-mask {
+    padding-block: .12em;
+    margin-block: -.12em;
+}
+
+/* Hide the native cursor only when the custom cursor is live. */
+html[data-cursor="on"],
+html[data-cursor="on"] a,
+html[data-cursor="on"] button {
+    cursor: none;
 }

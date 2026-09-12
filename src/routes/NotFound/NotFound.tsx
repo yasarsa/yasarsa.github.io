@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import D20 from '../../components/fx/D20';
 import styles from './NotFound.module.css';
 
 export default function NotFound() {
@@ -7,10 +8,11 @@ export default function NotFound() {
 
     return (
         <div className={styles.NotFound}>
-            <p className={styles.Code}>404</p>
-            <h1>This page doesn't exist.</h1>
-            <p>The route you followed has no destination.</p>
-            <Link to="/" className={styles.Link}>← Back to the homepage</Link>
+            <D20 className={styles.Die} face={1} strokeWidth={1.5} />
+            <p className={styles.Code}>404 · Critical fail</p>
+            <h1 className={styles.Title}>You rolled a 1.</h1>
+            <p className={styles.Text}>This page doesn't exist — the route you followed has no destination.</p>
+            <Link to="/" className={styles.Link}>← Return to the tavern</Link>
         </div>
     );
 }

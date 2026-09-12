@@ -1,0 +1,512 @@
+.Chapter {
+    --realm-bg: radial-gradient(80% 60% at 20% 10%, rgb(255 46 136 / .22), transparent 60%),
+        radial-gradient(70% 60% at 90% 90%, rgb(0 240 255 / .16), transparent 60%),
+        var(--game-bg);
+    --realm-fg: #f4eeff;
+}
+
+.Stage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-section) var(--gutter) var(--space-12);
+    max-width: var(--container);
+    margin-inline: auto;
+}
+
+.Header {
+    display: grid;
+    gap: var(--space-4);
+}
+
+.Eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--game-cyan);
+}
+
+.Title {
+    font-family: var(--font-pixel);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 1rem + 3.4vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+    color: var(--game-yellow);
+    text-shadow: 4px 4px 0 var(--game-magenta), 8px 8px 0 rgb(0 240 255 / .6);
+}
+
+.Lede {
+    color: #cbbfe6;
+    max-width: 52ch;
+}
+
+/* ── CRT ─────────────────────────────────────────── */
+.Crt {
+    padding: clamp(.6rem, 1.4vw, 1.2rem);
+    border-radius: 26px;
+    background: linear-gradient(160deg, #2b2140, #140c26);
+    box-shadow: 0 30px 80px rgb(0 0 0 / .5), inset 0 2px 0 rgb(255 255 255 / .08), 0 0 0 1px rgb(255 255 255 / .06);
+}
+
+.Screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    padding: clamp(.8rem, 1.6vw, 1.4rem);
+    background:
+        radial-gradient(120% 100% at 50% 50%, #1b0f38 0%, #09051a 100%);
+    box-shadow: inset 0 0 60px rgb(0 0 0 / .8), inset 0 0 12px rgb(0 240 255 / .15);
+    font-family: var(--font-pixel);
+    color: #e8e0ff;
+    transform-origin: 50% 50%;
+}
+
+/* scanlines + vignette flicker */
+.Screen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(0deg, rgb(0 0 0 / .28) 0 1px, transparent 1px 3px),
+        radial-gradient(ellipse at center, transparent 60%, rgb(0 0 0 / .45) 100%);
+    mix-blend-mode: multiply;
+    animation: flicker 4s steps(2) infinite;
+}
+
+@keyframes flicker {
+    50% { opacity: .85; }
+}
+
+.Hud {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .8rem 1.6rem;
+    font-size: clamp(.55rem, .45rem + .3vw, .75rem);
+    color: var(--game-cyan);
+    padding-bottom: .9rem;
+    border-bottom: 2px dashed rgb(0 240 255 / .25);
+}
+
+.Hud b {
+    color: var(--game-yellow);
+    font-weight: 400;
+}
+
+.HudRight {
+    margin-left: auto;
+    color: var(--game-yellow);
+}
+
+.XpWrap {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.XpTrack {
+    display: inline-block;
+    width: clamp(5rem, 14vw, 11rem);
+    height: .8rem;
+    padding: 2px;
+    border: 2px solid var(--game-cyan);
+}
+
+.XpFill {
+    display: block;
+    height: 100%;
+    background: repeating-linear-gradient(90deg, var(--game-magenta) 0 6px, #ff6fb0 6px 8px);
+    transform-origin: 0 50%;
+}
+
+/* ── map ─────────────────────────────────────────── */
+.Map {
+    position: relative;
+    margin-block: 1rem;
+}
+
+.MapSvg {
+    display: none;
+}
+
+.Nodes {
+    list-style: none;
+    /* Leave room for the pips, which straddle the dashed track. */
+    margin: 0 0 0 1.4rem;
+    padding: 0 0 0 1.2rem;
+    display: grid;
+    gap: 1.4rem;
+    border-left: 3px dashed rgb(255 46 136 / .5);
+}
+
+.Node {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+}
+
+.Pip {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-left: -2.45rem;
+    background: var(--game-bg);
+    border: 3px solid var(--game-magenta);
+    color: var(--game-yellow);
+    font-size: .6rem;
+    box-shadow: 3px 3px 0 var(--game-magenta);
+}
+
+.Current .Pip {
+    background: var(--game-yellow);
+    color: var(--game-bg);
+    border-color: var(--game-yellow);
+    box-shadow: 3px 3px 0 var(--game-cyan), 0 0 24px var(--game-yellow);
+    animation: bob 1s steps(2) infinite;
+}
+
+@keyframes bob {
+    50% { transform: translateY(-4px); }
+}
+
+.NodeLabel {
+    display: grid;
+    gap: .35rem;
+}
+
+.StageName {
+    display: grid;
+    gap: .3rem;
+    font-size: .62rem;
+    line-height: 1.5;
+    color: var(--game-yellow);
+}
+
+.Here {
+    color: var(--game-cyan);
+    font-size: .55rem;
+    animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.StageRole {
+    font-family: var(--font-mono);
+    font-size: .78rem;
+    color: #f4eeff;
+}
+
+.StageYears {
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    color: #a597c9;
+    letter-spacing: .05em;
+}
+
+.PressStart {
+    text-align: center;
+    font-size: clamp(.5rem, .4rem + .3vw, .7rem);
+    color: var(--game-magenta);
+    animation: blink 1.2s steps(1) infinite;
+    max-width: none;
+}
+
+/* ── achievements & releases ─────────────────────── */
+.Extras {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: var(--space-12) var(--gutter) var(--space-section);
+    display: grid;
+    gap: var(--space-6);
+}
+
+.AchHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.SubTitle {
+    font-family: var(--font-pixel);
+    font-weight: 400;
+    font-size: clamp(1rem, .8rem + 1vw, 1.6rem);
+    letter-spacing: 0;
+    color: #fff;
+}
+
+.AchCount {
+    font-family: var(--font-pixel);
+    font-size: .65rem;
+    color: var(--game-yellow);
+}
+
+.Achievements {
+    list-style: none;
+    margin: 0 0 var(--space-12);
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: var(--space-4);
+}
+
+.Achievement {
+    --rar: #9aa0b5;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: rgb(12 7 26 / .75);
+    border: 2px solid var(--rar);
+    box-shadow: 4px 4px 0 var(--rar);
+}
+
+.Achievement[data-rarity="rare"] { --rar: var(--game-cyan); }
+.Achievement[data-rarity="epic"] { --rar: var(--game-magenta); }
+.Achievement[data-rarity="legendary"] { --rar: var(--game-yellow); }
+
+.AchIcon {
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: .35rem;
+    color: var(--rar);
+    background: rgb(255 255 255 / .04);
+    border: 2px solid rgb(255 255 255 / .08);
+}
+
+.AchText {
+    display: grid;
+    gap: .3rem;
+    min-width: 0;
+}
+
+.AchUnlocked {
+    font-family: var(--font-pixel);
+    font-size: .48rem;
+    line-height: 1.5;
+    color: var(--rar);
+    text-transform: uppercase;
+}
+
+.AchTitle {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: #fff;
+    line-height: 1.1;
+}
+
+.AchDesc {
+    font-size: var(--text-sm);
+    color: #b8acd8;
+    line-height: var(--leading-snug);
+}
+
+.ReleasesLede {
+    color: #b8acd8;
+    margin-top: calc(var(--space-4) * -1);
+}
+
+.Carts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-6);
+}
+
+.Cart {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    padding: 1.4rem 1.4rem 1.2rem;
+    border-radius: 14px 14px 6px 6px;
+    background: linear-gradient(180deg, #3a2c5c, #231740);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 6px 0 #150c2a, 0 20px 40px rgb(0 0 0 / .4);
+    transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-base);
+}
+
+.Cart:hover {
+    transform: translateY(-6px) rotate(-1deg);
+    box-shadow: 0 12px 0 #150c2a, 0 30px 50px rgb(0 0 0 / .5), 0 0 40px rgb(255 46 136 / .25);
+}
+
+.CartNotch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 30%;
+    height: 10px;
+    transform: translateX(-50%);
+    background: #150c2a;
+    border-radius: 0 0 8px 8px;
+}
+
+.CartLabel {
+    display: grid;
+    gap: .5rem;
+    padding: 1.1rem;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--game-magenta), #7c2cff 60%, var(--game-cyan));
+    box-shadow: inset 0 0 0 3px rgb(255 255 255 / .2);
+}
+
+.CartNo {
+    font-family: var(--font-pixel);
+    font-size: .55rem;
+    opacity: .8;
+}
+
+.CartTitle {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-2xl);
+    line-height: 1;
+}
+
+.CartBlurb {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    opacity: .92;
+}
+
+.CartPlay {
+    font-family: var(--font-pixel);
+    font-size: .65rem;
+    color: var(--game-yellow);
+}
+
+/* ── desktop: real map ───────────────────────────── */
+@media (min-width: 768px) {
+    .Stage {
+        min-height: 100svh;
+        justify-content: center;
+        gap: var(--space-6);
+        padding-block: calc(var(--header-h) + var(--space-4)) var(--space-8);
+    }
+
+    .Header {
+        grid-template-columns: auto 1fr;
+        align-items: end;
+        column-gap: var(--space-10);
+    }
+
+    .Header .Eyebrow {
+        grid-column: 1 / -1;
+    }
+
+    .Lede {
+        justify-self: end;
+        max-width: 40ch;
+    }
+
+    /* Keep the whole pinned stage inside one viewport height. */
+    .Crt {
+        width: min(100%, calc((100svh - 30rem) * 2.5));
+        margin-inline: auto;
+    }
+
+    .Map {
+        aspect-ratio: 1000 / 400;
+    }
+
+    .MapSvg {
+        display: block;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    .PathGhost,
+    .Path {
+        fill: none;
+        stroke-linecap: round;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .PathGhost {
+        stroke: rgb(255 255 255 / .12);
+        stroke-width: 3;
+        stroke-dasharray: 2 10;
+    }
+
+    .Path {
+        stroke: var(--game-magenta);
+        stroke-width: 4;
+        filter: drop-shadow(0 0 6px var(--game-magenta));
+    }
+
+    .Nodes {
+        position: absolute;
+        inset: 0;
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .Node {
+        position: absolute;
+        left: var(--x);
+        top: var(--y);
+        display: block;
+        width: 0;
+        height: 0;
+    }
+
+    .Pip {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0;
+        transform: translate(-50%, -50%);
+    }
+
+    .Current .Pip {
+        animation: bobCentered 1s steps(2) infinite;
+    }
+
+    @keyframes bobCentered {
+        50% { transform: translate(-50%, calc(-50% - 4px)); }
+    }
+
+    .NodeLabel {
+        position: absolute;
+        top: 1.8rem;
+        left: 0;
+        width: 12.5rem;
+        transform: translateX(-50%);
+        text-align: center;
+        justify-items: center;
+    }
+
+    .LabelAbove .NodeLabel {
+        top: auto;
+        bottom: 1.8rem;
+    }
+
+    .StageName {
+        justify-items: center;
+    }
+
+    .Node:first-child .NodeLabel {
+        transform: translateX(-20%);
+    }
+
+    .Node:last-child .NodeLabel {
+        transform: translateX(-80%);
+    }
+}

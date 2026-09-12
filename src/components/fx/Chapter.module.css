@@ -1,0 +1,40 @@
+.Chapter {
+    --realm-bg: var(--void-2);
+    --realm-fg: var(--bone);
+    position: relative;
+    isolation: isolate;
+    /* clip (not hidden) keeps sticky children and pins working. */
+    overflow-x: clip;
+    color: var(--realm-fg);
+}
+
+.Bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* clip, not hidden: hidden would make this a scroll container and
+       break the sticky watermark. */
+    overflow: clip;
+    background: var(--realm-bg);
+    will-change: clip-path;
+}
+
+.Watermark {
+    position: sticky;
+    top: 30vh;
+    display: block;
+    padding-left: 30vw;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(8rem, 26vw, 30rem);
+    line-height: .8;
+    letter-spacing: -.05em;
+    white-space: nowrap;
+    color: var(--realm-fg);
+    opacity: .045;
+    user-select: none;
+}
+
+.Content {
+    position: relative;
+}

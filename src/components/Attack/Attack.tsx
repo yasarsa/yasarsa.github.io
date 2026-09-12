@@ -92,7 +92,7 @@ export default function Attack({ attack, index }: Props) {
         let totalDamage = 0;
         const allDamageDetails: React.ReactNode[] = [];
 
-        // Her bir hasar tipi için zar atışı yap
+        // Roll dice for each damage type
         damages.forEach((damage, damageIndex) => {
             let dieCount = damage.damageDieCount;
             if (isCrit) dieCount *= critMultiplier;
@@ -100,7 +100,7 @@ export default function Attack({ attack, index }: Props) {
             let currentDamage = 0;
             const dmgDieArray: number[] = [];
 
-            // Zar atışlarını yap
+            // Roll the dice
             for (let i = 0; i < dieCount; i++) {
                 let r = Math.floor(Math.random() * damage.damageDieType) + 1;
                 if (selectedFeats.includes('Elemental Adept') && r === 1) {
@@ -113,7 +113,7 @@ export default function Attack({ attack, index }: Props) {
                 currentDamage += r;
             }
 
-            // Savage Attacker özelliği için ikinci atış
+            // Second roll for the Savage Attacker feat
             if (damageIndex === 0 && selectedFeats.includes('Savage Attacker')) {
                 let totalDamage2 = 0;
                 const dmgDieArray2 = [];
@@ -133,11 +133,11 @@ export default function Attack({ attack, index }: Props) {
                 }
             }
 
-            // Hasar bonusunu ekle
+            // Add the damage bonus
             currentDamage += damage.damageBonus;
             totalDamage += currentDamage;
 
-            // Hasar detaylarını oluştur
+            // Build the damage breakdown
             const damageDetails = `${damage.damageDieCount}d${damage.damageDieType} (${damage.damageType}): [${dmgDieArray.join(", ")}] + ${damage.damageBonus}`;
             allDamageDetails.push(
                 <Tooltip key={damageIndex} content={damageDetails}>
@@ -148,7 +148,7 @@ export default function Attack({ attack, index }: Props) {
             );
         });
 
-        // Great Weapon Master özelliği için proficiency bonusunu ekle
+        // Add the proficiency bonus for the Great Weapon Master feat
         if (selectedFeats.includes('Great Weapon Master') && includeProficiencyBonus) {
             totalDamage += proficiencyBonus;
             allDamageDetails.push(
@@ -158,7 +158,7 @@ export default function Attack({ attack, index }: Props) {
             );
         }
 
-        // Feature'lardan gelen ekstra hasarları ekle
+        // Add extra damage granted by features
         selectedFeatures.forEach((feature, index) => {
             if (feature.extraDamageDieCount && feature.extraDamageDieType) {
                 let featureDieCount = feature.extraDamageDieCount;
