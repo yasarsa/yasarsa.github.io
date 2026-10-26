@@ -7,10 +7,18 @@ const NAV_LINKS = [
     { to: '/cv', label: 'cv' },
 ];
 
-// The footer (id="contact") is on every page, so a plain hash link works anywhere.
+// The footer (id="contact") is on every page. Scroll to it directly: letting the
+// hash change through makes the router treat it as a navigation, and
+// ScrollRestoration then snaps back to the page's saved position.
 function ContactLink({ onClick }: { onClick?: () => void }) {
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        onClick?.();
+        // Wait a frame so the mobile menu has collapsed before measuring.
+        requestAnimationFrame(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }));
+    };
     return (
-        <a href="#contact" className={styles.NavLink} onClick={onClick}>
+        <a href="#contact" className={styles.NavLink} onClick={handleClick}>
             <span className={styles.Cursor} aria-hidden="true">▸</span>
             contact
         </a>
