@@ -8,7 +8,7 @@ export default function SiteFooter() {
         <footer className={styles.SiteFooter} data-site-footer id="contact">
             <div className={styles.Inner}>
                 <p className={styles.Lead}>
-                    <span className={styles.Prompt} aria-hidden="true">&gt;</span> Want to build something, or talk games?
+                    <span className={styles.Prompt} aria-hidden="true">&gt;</span> Want to build something, or talk about games?
                 </p>
                 <div className={styles.Contact}>
                     <a href={`mailto:${cv.basics.email}`} className={styles.Link}>{cv.basics.email}</a>
