@@ -1,0 +1,153 @@
+/*
+ * Single dark palette: the site deliberately has no light theme.
+ * One accent (phosphor green); everything else is greyscale.
+ */
+:root {
+    color-scheme: dark;
+
+    /* ── primitives ───────────────────────────────────────── */
+    --ink-950: #0e0f11;
+    --ink-900: #15171a;
+    --ink-850: #1b1d21;
+    --ink-800: #24272c;
+    --ink-700: #33373e;
+    --ink-500: #5d626b;
+    --ink-400: #8b8f97;
+    --ink-200: #c4c6ca;
+    --ink-50: #e8e6e3;
+    --phosphor: #8ef0a8;
+    --phosphor-dim: #5fbf7a;
+
+    /* ── semantic ─────────────────────────────────────────── */
+    --bg: var(--ink-950);
+    --bg-subtle: var(--ink-900);
+    --bg-raised: var(--ink-900);
+    --bg-inset: #0a0b0c;
+    --bg-overlay: rgb(0 0 0 / .7);
+    --fg: var(--ink-50);
+    --fg-muted: var(--ink-400);
+    --fg-subtle: var(--ink-500);
+    --fg-on-brand: var(--ink-950);
+    --border: var(--ink-800);
+    --border-strong: var(--ink-700);
+    --brand: var(--phosphor);
+    --brand-hover: #b5f7c6;
+    --brand-subtle: rgb(142 240 168 / .08);
+
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .5);
+    --shadow-2: 0 4px 14px rgb(0 0 0 / .5);
+    --shadow-3: 0 16px 40px rgb(0 0 0 / .55);
+
+    /* ── type ─────────────────────────────────────────────── */
+    --font-sans: 'Inter var', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-display: 'JetBrains Mono var', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-mono: 'JetBrains Mono var', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --text-xs: .75rem;
+    --text-sm: .875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: clamp(1.25rem, 1.10rem + 0.5vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+    --text-3xl: clamp(1.875rem, 1.40rem + 2.0vw, 2.75rem);
+    --text-4xl: clamp(2.25rem, 1.40rem + 3.6vw, 4rem);
+    --text-hero: clamp(2.75rem, 1.20rem + 6.0vw, 6rem);
+
+    --leading-tight: 1.15;
+    --leading-snug: 1.35;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.75;
+    --tracking-tight: -0.02em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.06em;
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* ── space (4px base) ─────────────────────────────────── */
+    --space-1: .25rem;
+    --space-2: .5rem;
+    --space-3: .75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-section: clamp(4rem, 10vw, 8rem);
+    --gutter: clamp(1rem, 4vw, 3rem);
+    --container: 72rem;
+    --column: 46rem;
+    --container-narrow: 44rem;
+    --measure: 68ch;
+
+    /* ── radii / shape ────────────────────────────────────── */
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 999px;
+    --radius-card: 18px;
+
+    /* ── motion ───────────────────────────────────────────── */
+    --dur-instant: 80ms;
+    --dur-fast: 150ms;
+    --dur-base: 250ms;
+    --dur-slow: 400ms;
+    --dur-slower: 700ms;
+    --ease-out: cubic-bezier(.2, .8, .25, 1);
+    --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+    --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+
+    /* ── focus ────────────────────────────────────────────── */
+    --focus-ring-width: 2px;
+    --focus-ring: 0 0 0 var(--focus-ring-width) var(--bg),
+        0 0 0 calc(var(--focus-ring-width) * 2) var(--brand);
+
+    /* ── z ────────────────────────────────────────────────── */
+    --z-base: 0;
+    --z-raised: 10;
+    --z-sticky: 100;
+    --z-header: 200;
+    --z-overlay: 800;
+    --z-modal: 900;
+    --z-toast: 1000;
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --dur-instant: 1ms;
+        --dur-fast: 1ms;
+        --dur-base: 1ms;
+        --dur-slow: 1ms;
+        --dur-slower: 1ms;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --border: var(--ink-500);
+        --fg-muted: var(--ink-200);
+    }
+}

@@ -1,0 +1,94 @@
+.MenuList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.Row {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    grid-template-areas:
+        "cursor main"
+        ". meta";
+    column-gap: var(--space-2);
+    row-gap: var(--space-1);
+    padding: var(--space-4) var(--space-2) var(--space-4) 0;
+    min-height: 44px;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+}
+
+li:first-child > .Row {
+    border-top: 1px solid var(--border);
+}
+
+.Cursor {
+    grid-area: cursor;
+    color: var(--brand);
+    font-family: var(--font-mono);
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.Main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+}
+
+.Title {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--fg);
+    transition: color var(--dur-fast) var(--ease-out);
+}
+
+.Description {
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+    line-height: var(--leading-snug);
+}
+
+.Meta {
+    grid-area: meta;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--fg-subtle);
+    white-space: nowrap;
+}
+
+/* The game-menu selection: cursor appears, title lights up. */
+.Interactive:hover .Cursor,
+.Interactive:focus-visible .Cursor {
+    opacity: 1;
+    transform: none;
+}
+
+.Interactive:hover .Title,
+.Interactive:focus-visible .Title {
+    color: var(--brand);
+}
+
+.Interactive:focus-visible {
+    box-shadow: none;
+    outline: 1px dashed var(--brand);
+    outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+    .Row {
+        grid-template-columns: 1.25rem minmax(0, 1fr) auto;
+        grid-template-areas: "cursor main meta";
+        column-gap: var(--space-3);
+    }
+
+    .Meta {
+        padding-top: .2em;
+        text-align: right;
+    }
+}

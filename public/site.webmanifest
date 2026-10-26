@@ -1,0 +1,12 @@
+{
+  "name": "Yaşar Anıl Sansak | Software Architect",
+  "short_name": "Yaşar Sansak",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" }
+  ],
+  "theme_color": "#0e0f11",
+  "background_color": "#0e0f11",
+  "display": "standalone",
+  "start_url": "/"
+}

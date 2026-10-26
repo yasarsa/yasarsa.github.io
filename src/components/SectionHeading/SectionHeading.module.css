@@ -1,0 +1,23 @@
+.SectionHeading {
+    display: flex;
+    align-items: baseline;
+    gap: .6em;
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wide);
+    text-transform: lowercase;
+    color: var(--fg);
+}
+
+.SectionHeading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    transform: translateY(-.3em);
+}
+
+.Index {
+    color: var(--brand);
+}

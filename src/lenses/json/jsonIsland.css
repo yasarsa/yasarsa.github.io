@@ -1,0 +1,17 @@
+/* JSON / code-editor island: a single dark palette, matching the site. */
+.jsonIsland {
+    --code-bg: var(--bg);
+    --code-bg-alt: var(--bg-subtle);
+    --code-fg: var(--fg);
+    --code-gutter-fg: #5d626b;
+    --code-border: var(--border);
+    --code-key: #8ab4f8;
+    --code-string: var(--brand);
+    --code-number: #f8bd7f;
+    --code-bool: #c792ea;
+    --code-null: #8b8f97;
+    --code-punct: #6f737b;
+
+    background: var(--code-bg);
+    color: var(--code-fg);
+}

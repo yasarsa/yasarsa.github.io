@@ -4,16 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
+    "generate:cv": "node --experimental-strip-types scripts/generateCvJson.ts",
+    "dev": "npm run generate:cv && vite --host",
+    "build": "npm run generate:cv && tsc -b && vite build && node scripts/emitRoutes.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.9.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-redux": "^9.2.0",
     "react-router-dom": "^7.8.2"
   },
   "devDependencies": {
