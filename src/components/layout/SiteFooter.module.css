@@ -1,28 +1,41 @@
 .SiteFooter {
     border-top: 1px solid var(--border);
-    background: var(--bg-subtle);
     margin-top: var(--space-section);
+    scroll-margin-top: 4rem;
 }
 
 .Inner {
-    max-width: var(--container);
+    max-width: var(--column);
     margin-inline: auto;
-    padding: var(--space-10) var(--gutter);
+    padding: var(--space-10) max(var(--gutter), env(safe-area-inset-right)) calc(var(--space-10) + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
 }
 
+.Lead {
+    font-family: var(--font-mono);
+    color: var(--fg);
+}
+
+.Prompt {
+    color: var(--brand);
+}
+
 .Contact {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
+    gap: 0 var(--space-6);
 }
 
 .Link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
     color: var(--fg-muted);
     text-decoration: none;
-    font-size: var(--text-sm);
     transition: color var(--dur-fast) var(--ease-out);
 }
 

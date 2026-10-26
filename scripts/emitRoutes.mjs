@@ -1,5 +1,5 @@
 // Post-build step for GitHub Pages: copy dist/index.html to every known
-// route so a direct hit on e.g. /cv/mtg returns a real 200 with its own
+// route so a direct hit on e.g. /projects returns a real 200 with its own
 // <title>/description, instead of relying solely on the 404.html SPA
 // fallback (which crawlers read as "gone"). dist/404.html stays as the
 // catch-all for genuinely unknown paths.
@@ -16,34 +16,14 @@ const ORIGIN = 'https://yasarsa.github.io';
 /** @type {{ path: string, title: string, description: string }[]} */
 const ROUTES = [
     {
-        path: '/cv/mtg',
-        title: 'CV — MTG Card Set — Yaşar Anıl Sansak',
-        description: 'Career and education presented as a set of Magic: The Gathering-style trading cards.',
-    },
-    {
-        path: '/cv/sheet',
-        title: 'CV — Character Sheet — Yaşar Anıl Sansak',
-        description: 'Career and education translated into a full D&D 5e character sheet.',
-    },
-    {
-        path: '/cv/json',
-        title: 'CV — JSON Resume — Yaşar Anıl Sansak',
+        path: '/cv',
+        title: 'CV | JSON Resume | Yaşar Anıl Sansak',
         description: 'The CV as machine-readable JSON, following the open JSON Resume schema.',
     },
     {
         path: '/projects',
-        title: 'Projects — Yaşar Anıl Sansak',
-        description: "A curated list of projects, including two playable apps built into this site.",
-    },
-    {
-        path: '/dnd',
-        title: 'D&D Damage Calculator — Yaşar Anıl Sansak',
-        description: 'A character and attack manager for tabletop D&D sessions.',
-    },
-    {
-        path: '/kt',
-        title: 'Kill Team Operatives — Yaşar Anıl Sansak',
-        description: 'Stat cards and weapon tables for Warhammer 40k: Kill Team operatives.',
+        title: 'Projects | Yaşar Anıl Sansak',
+        description: 'Games in development and other things I have built.',
     },
 ];
 

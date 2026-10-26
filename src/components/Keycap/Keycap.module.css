@@ -1,0 +1,55 @@
+.Keycap {
+    display: inline-flex;
+    align-items: center;
+    gap: .6em;
+    min-height: 44px;
+    padding: .35rem .9rem .35rem .4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.Key {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.9em;
+    height: 1.9em;
+    padding: 0 .35em;
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 3px;
+    border-radius: 4px;
+    background: var(--bg-raised);
+    color: var(--fg-muted);
+    font-family: inherit;
+    font-size: .8em;
+    line-height: 1;
+    transition: transform var(--dur-instant) var(--ease-out), border-bottom-width var(--dur-instant);
+}
+
+.Keycap:hover {
+    border-color: var(--border-strong);
+    color: var(--brand);
+}
+
+.Keycap:hover .Key {
+    color: var(--brand);
+}
+
+/* The key "presses down" when clicked. */
+.Keycap:active .Key {
+    transform: translateY(2px);
+    border-bottom-width: 1px;
+}
+
+.Primary {
+    border-color: var(--brand);
+}
+
+.Primary .Key {
+    border-color: var(--brand);
+    color: var(--brand);
+}

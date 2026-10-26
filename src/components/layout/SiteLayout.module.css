@@ -8,6 +8,10 @@
     flex: 1;
 }
 
-.Main:focus {
+.Main:focus,
+.Main:focus-visible {
     outline: none;
+    /* Focus moves here programmatically on route change (useRouteFocus);
+       it's not an interactive target, so no ring. */
+    box-shadow: none;
 }

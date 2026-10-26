@@ -1,56 +1,46 @@
+/*
+ * Single dark palette: the site deliberately has no light theme.
+ * One accent (phosphor green); everything else is greyscale.
+ */
 :root {
-    color-scheme: light dark;
+    color-scheme: dark;
 
-    /* ── primitives: warm neutral ─────────────────────────── */
-    --gray-0: #fff;
-    --gray-25: #fbfbfa;
-    --gray-50: #f6f6f4;
-    --gray-100: #ecebe8;
-    --gray-200: #dedcd7;
-    --gray-300: #c4c1ba;
-    --gray-400: #9c988f;
-    --gray-500: #77736b;
-    --gray-600: #585550;
-    --gray-700: #403e3a;
-    --gray-800: #2a2926;
-    --gray-900: #1a1917;
-    --gray-950: #0f0e0d;
+    /* ── primitives ───────────────────────────────────────── */
+    --ink-950: #0e0f11;
+    --ink-900: #15171a;
+    --ink-850: #1b1d21;
+    --ink-800: #24272c;
+    --ink-700: #33373e;
+    --ink-500: #5d626b;
+    --ink-400: #8b8f97;
+    --ink-200: #c4c6ca;
+    --ink-50: #e8e6e3;
+    --phosphor: #8ef0a8;
+    --phosphor-dim: #5fbf7a;
 
-    /* ── primitives: ink blue accent ──────────────────────── */
-    --accent-50: #eef4fb;
-    --accent-100: #d6e4f5;
-    --accent-200: #adc8e9;
-    --accent-300: #7ba5d8;
-    --accent-400: #4a7fc1;
-    --accent-500: #2c5f9e;
-    --accent-600: #234c80;
-    --accent-700: #1c3c66;
-    --accent-800: #16304f;
-    --accent-900: #10233a;
+    /* ── semantic ─────────────────────────────────────────── */
+    --bg: var(--ink-950);
+    --bg-subtle: var(--ink-900);
+    --bg-raised: var(--ink-900);
+    --bg-inset: #0a0b0c;
+    --bg-overlay: rgb(0 0 0 / .7);
+    --fg: var(--ink-50);
+    --fg-muted: var(--ink-400);
+    --fg-subtle: var(--ink-500);
+    --fg-on-brand: var(--ink-950);
+    --border: var(--ink-800);
+    --border-strong: var(--ink-700);
+    --brand: var(--phosphor);
+    --brand-hover: #b5f7c6;
+    --brand-subtle: rgb(142 240 168 / .08);
 
-    /* ── semantic (LIGHT is the default) ──────────────────── */
-    --bg: var(--gray-25);
-    --bg-subtle: var(--gray-50);
-    --bg-raised: var(--gray-0);
-    --bg-inset: var(--gray-100);
-    --bg-overlay: rgb(26 25 23 / .55);
-    --fg: var(--gray-900);
-    --fg-muted: var(--gray-600);
-    --fg-subtle: var(--gray-500);
-    --fg-on-brand: var(--gray-0);
-    --border: var(--gray-200);
-    --border-strong: var(--gray-300);
-    --brand: var(--accent-600);
-    --brand-hover: var(--accent-700);
-    --brand-subtle: var(--accent-50);
-
-    --shadow-1: 0 1px 2px rgb(26 25 23 / .06), 0 1px 1px rgb(26 25 23 / .04);
-    --shadow-2: 0 4px 12px rgb(26 25 23 / .08), 0 1px 3px rgb(26 25 23 / .06);
-    --shadow-3: 0 12px 32px rgb(26 25 23 / .12), 0 4px 8px rgb(26 25 23 / .06);
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .5);
+    --shadow-2: 0 4px 14px rgb(0 0 0 / .5);
+    --shadow-3: 0 16px 40px rgb(0 0 0 / .55);
 
     /* ── type ─────────────────────────────────────────────── */
     --font-sans: 'Inter var', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --font-display: 'Fraunces var', Georgia, 'Times New Roman', serif;
+    --font-display: 'JetBrains Mono var', ui-monospace, SFMono-Regular, Menlo, monospace;
     --font-mono: 'JetBrains Mono var', ui-monospace, SFMono-Regular, Menlo, monospace;
 
     --text-xs: .75rem;
@@ -91,6 +81,7 @@
     --space-section: clamp(4rem, 10vw, 8rem);
     --gutter: clamp(1rem, 4vw, 3rem);
     --container: 72rem;
+    --column: 46rem;
     --container-narrow: 44rem;
     --measure: 68ch;
 
@@ -127,60 +118,6 @@
     --z-modal: 900;
     --z-toast: 1000;
 
-    /* ── LEGACY: consumed by /dnd and /kt. Do not remove. ─── */
-    --green: #45a049;
-    --red: #e41313;
-    --kt-orange: #ED5B20;
-    --card-shadow: 0 6px 18px rgb(15 20 30 / .3);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        --bg: #141312;
-        --bg-subtle: #1a1917;
-        --bg-raised: #211f1d;
-        --bg-inset: #0f0e0d;
-        --bg-overlay: rgb(0 0 0 / .7);
-        --fg: #f2f0ec;
-        --fg-muted: #a8a49c;
-        --fg-subtle: #7a766e;
-        --border: #302e2b;
-        --border-strong: #454340;
-        --brand: var(--accent-300);
-        --brand-hover: var(--accent-200);
-        --brand-subtle: #16304f;
-        --shadow-1: 0 1px 2px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .04);
-        --shadow-2: 0 4px 14px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .05);
-        --shadow-3: 0 16px 40px rgb(0 0 0 / .6), inset 0 1px 0 rgb(255 255 255 / .06);
-        color-scheme: dark;
-    }
-}
-
-/*
- * Explicit override, deliberately placed AFTER the media query above.
- * Both selectors are specificity (0,2,0), so source order decides —
- * this is what makes the toggle win in both directions (explicit
- * light on a dark-preferring OS, explicit dark on a light-preferring
- * OS). Getting the order wrong is the classic hand-rolled-theme bug.
- */
-:root[data-theme="dark"] {
-    --bg: #141312;
-    --bg-subtle: #1a1917;
-    --bg-raised: #211f1d;
-    --bg-inset: #0f0e0d;
-    --bg-overlay: rgb(0 0 0 / .7);
-    --fg: #f2f0ec;
-    --fg-muted: #a8a49c;
-    --fg-subtle: #7a766e;
-    --border: #302e2b;
-    --border-strong: #454340;
-    --brand: var(--accent-300);
-    --brand-hover: var(--accent-200);
-    --brand-subtle: #16304f;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .04);
-    --shadow-2: 0 4px 14px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .05);
-    --shadow-3: 0 16px 40px rgb(0 0 0 / .6), inset 0 1px 0 rgb(255 255 255 / .06);
-    color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -210,7 +147,7 @@
 
 @media (prefers-contrast: more) {
     :root {
-        --border: var(--gray-500);
-        --fg-muted: var(--gray-800);
+        --border: var(--ink-500);
+        --fg-muted: var(--ink-200);
     }
 }

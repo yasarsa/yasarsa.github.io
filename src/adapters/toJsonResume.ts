@@ -4,7 +4,7 @@ import type { JsonResume } from './jsonResume.types';
 
 /**
  * Pure Cv -> JSON Resume (jsonresume.org) mapping.
- * `phone` is deliberately omitted — see the JSON lens privacy note.
+ * `phone` is deliberately omitted; see the JSON lens privacy note.
  */
 export function toJsonResume(cv: Cv): JsonResume {
     return {
@@ -41,7 +41,7 @@ export function toJsonResume(cv: Cv): JsonResume {
         })),
         languages: cv.languages.map((lang) => ({
             language: lang.language,
-            fluency: [lang.fluency, ...(lang.certifications ?? [])].join(' — '),
+            fluency: [lang.fluency, ...(lang.certifications ?? [])].join(', '),
         })),
         interests: cv.interests.map((name) => ({ name })),
     };

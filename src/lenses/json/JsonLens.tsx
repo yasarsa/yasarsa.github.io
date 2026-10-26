@@ -10,7 +10,7 @@ import './jsonIsland.css';
 const resume = toJsonResume(cv);
 
 export default function JsonLens() {
-    useDocumentTitle('CV — JSON Resume — Yaşar Anıl Sansak', 'The CV as machine-readable JSON, following the open JSON Resume schema.');
+    useDocumentTitle('CV | JSON Resume | Yaşar Anıl Sansak', 'The CV as machine-readable JSON, following the open JSON Resume schema.');
     const tree = useJsonTree();
 
     return (

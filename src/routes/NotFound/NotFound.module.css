@@ -1,32 +1,21 @@
 .NotFound {
-    max-width: var(--container-narrow);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    max-width: var(--column);
     margin-inline: auto;
     padding: var(--space-24) var(--gutter);
-    text-align: center;
 }
 
-.Code {
-    font-family: var(--font-display);
-    font-size: var(--text-4xl);
-    color: var(--fg-subtle);
-    margin: 0 0 var(--space-2);
+.Title {
+    font-size: clamp(2.2rem, 1.2rem + 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
 }
 
-.NotFound h1 {
-    font-size: var(--text-2xl);
-    margin-bottom: var(--space-3);
-}
-
-.NotFound p {
-    max-width: none;
+.Text {
     color: var(--fg-muted);
-    margin-inline: auto;
-}
-
-.Link {
-    display: inline-block;
-    margin-top: var(--space-6);
-    color: var(--brand);
-    text-decoration: none;
-    font-weight: var(--weight-medium);
+    margin-bottom: var(--space-4);
 }

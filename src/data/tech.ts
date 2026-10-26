@@ -25,6 +25,8 @@ export const TECH_REGISTRY: Record<TechId, Tech> = {
     detox: { id: 'detox', label: 'Detox', kind: 'tool' },
     mailchimp: { id: 'mailchimp', label: 'MailChimp', kind: 'tool' },
     kissmetrics: { id: 'kissmetrics', label: 'Kissmetrics', kind: 'tool' },
+    godot: { id: 'godot', label: 'Godot', kind: 'framework' },
+    gdscript: { id: 'gdscript', label: 'GDScript', kind: 'language' },
 };
 
 export function techLabel(id: TechId): string {

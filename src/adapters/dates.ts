@@ -18,7 +18,7 @@ export function formatMonthYear(ym: YearMonth): string {
 export function formatRange(start: YearMonth, end: YearMonth | null): string {
     const startLabel = formatMonthYear(start);
     const endLabel = end ? formatMonthYear(end) : 'Present';
-    return `${startLabel} — ${endLabel}`;
+    return `${startLabel} – ${endLabel}`;
 }
 
 export function monthsBetween(start: YearMonth, end?: YearMonth | null): number {

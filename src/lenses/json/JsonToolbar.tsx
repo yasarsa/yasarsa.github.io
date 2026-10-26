@@ -43,7 +43,7 @@ export default function JsonToolbar({ tree, json, filename }: Props) {
             <button type="button" className={styles.Button} onClick={tree.expandAll}>Expand all</button>
             <button type="button" className={styles.Button} onClick={() => tree.collapseToDepth(2)}>Collapse to depth 2</button>
             <span aria-live="polite" className="visually-hidden">
-                {copyState === 'copied' ? 'Copied to clipboard' : copyState === 'error' ? 'Copy failed — clipboard permission denied' : ''}
+                {copyState === 'copied' ? 'Copied to clipboard' : copyState === 'error' ? 'Copy failed: clipboard permission denied' : ''}
             </span>
         </div>
     );

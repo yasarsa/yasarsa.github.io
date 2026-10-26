@@ -186,6 +186,8 @@ export const cv: Cv = {
             keywords: ['javascript', 'typescript', 'react', 'react-native', 'css', 'html'],
         },
         { name: 'Cloud & Platform', keywords: ['aws', 'nodejs'] },
+        { name: 'Back-End', keywords: ['dotnet', 'csharp', 'python'] },
+        { name: 'Game Development', keywords: ['godot', 'gdscript'] },
         { name: 'Tools', keywords: ['git', 'figma'] },
     ],
 
