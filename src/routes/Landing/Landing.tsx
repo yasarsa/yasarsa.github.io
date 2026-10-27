@@ -50,7 +50,10 @@ const STACK: TechId[] = [
 const stack = STACK.map(techLabel);
 
 export default function Landing() {
-    useDocumentTitle('Yaşar Anıl Sansak | Software Architect & Game Developer', cv.basics.summary);
+    useDocumentTitle(
+        'Yaşar Anıl Sansak | Software Architect & Game Developer',
+        'Software Architect & Team Lead at Vestel. Front-end engineer by day, Godot game developer by night.',
+    );
     const gamesRef = useReveal<HTMLElement>();
     const projectsRef = useReveal<HTMLElement>();
     const experienceRef = useReveal<HTMLElement>();

@@ -23,7 +23,7 @@ const ROUTES = [
     {
         path: '/projects',
         title: 'Projects | Yaşar Anıl Sansak',
-        description: 'Games in development and other things I have built.',
+        description: 'Mobile games made with Godot, plus other things I have built.',
     },
 ];
 

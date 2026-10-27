@@ -25,7 +25,7 @@ const projectItems: MenuItem[] = PROJECTS.filter((p) => p.status !== 'todo').map
 export default function ProjectsIndex() {
     useDocumentTitle(
         'Projects | Yaşar Anıl Sansak',
-        'Games in development and other things I have built.'
+        'Mobile games made with Godot, plus other things I have built.'
     );
 
     return (
