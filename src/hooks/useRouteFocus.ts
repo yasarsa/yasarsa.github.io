@@ -5,13 +5,13 @@ export function useRouteFocus() {
     const location = useLocation();
     const mainRef = useRef<HTMLElement | null>(null);
     const [announcement, setAnnouncement] = useState('');
-    const isFirstRender = useRef(true);
+    // Compare against the previous path rather than a "first render" flag:
+    // StrictMode runs effects twice, which would steal focus on page load.
+    const previousPath = useRef(location.pathname);
 
     useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
+        if (previousPath.current === location.pathname) return;
+        previousPath.current = location.pathname;
         mainRef.current?.focus();
         setAnnouncement(document.title);
     }, [location.pathname]);

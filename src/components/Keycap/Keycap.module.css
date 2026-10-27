@@ -30,12 +30,14 @@
     transition: transform var(--dur-instant) var(--ease-out), border-bottom-width var(--dur-instant);
 }
 
-.Keycap:hover {
+.Keycap:hover,
+.Keycap:focus-visible {
     border-color: var(--border-strong);
     color: var(--brand);
 }
 
-.Keycap:hover .Key {
+.Keycap:hover .Key,
+.Keycap:focus-visible .Key {
     color: var(--brand);
 }
 

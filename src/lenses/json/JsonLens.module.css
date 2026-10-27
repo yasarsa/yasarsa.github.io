@@ -23,6 +23,7 @@
 
 .Subtitle a {
     color: var(--code-key);
+    text-underline-offset: 3px;
 }
 
 .Viewer {

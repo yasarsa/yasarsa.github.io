@@ -45,10 +45,6 @@
 
 
 /* ── sections ─────────────────────────────────────── */
-.Section {
-    scroll-margin-top: calc(var(--header-h, 4rem) + var(--space-4));
-}
-
 .Muted {
     color: var(--fg-muted);
     font-size: var(--text-sm);
@@ -65,7 +61,8 @@
     text-decoration: none;
 }
 
-.TextLink:hover {
+.TextLink:hover,
+.TextLink:focus-visible {
     text-decoration: underline;
     text-underline-offset: 4px;
 }

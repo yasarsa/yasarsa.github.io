@@ -4,6 +4,7 @@ import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import RouteSkeleton from './RouteSkeleton';
 import { useRouteFocus } from '../../hooks/useRouteFocus';
+import { jumpTo } from './jumpTo';
 import styles from './SiteLayout.module.css';
 
 export default function SiteLayout() {
@@ -11,7 +12,7 @@ export default function SiteLayout() {
 
     return (
         <div className={styles.SiteLayout}>
-            <a href="#main" className="skip-link">Skip to content</a>
+            <a href="#main" className="skip-link" onClick={jumpTo('main')}>Skip to content</a>
             <SiteHeader />
             <main id="main" tabIndex={-1} ref={mainRef} className={styles.Main}>
                 <Suspense fallback={<RouteSkeleton />}>

@@ -3,14 +3,14 @@
     --code-bg: var(--bg);
     --code-bg-alt: var(--bg-subtle);
     --code-fg: var(--fg);
-    --code-gutter-fg: #5d626b;
+    --code-gutter-fg: var(--fg-subtle);
     --code-border: var(--border);
     --code-key: #8ab4f8;
     --code-string: var(--brand);
     --code-number: #f8bd7f;
     --code-bool: #c792ea;
     --code-null: #8b8f97;
-    --code-punct: #6f737b;
+    --code-punct: var(--fg-subtle);
 
     background: var(--code-bg);
     color: var(--code-fg);

@@ -30,7 +30,7 @@ export default function JsonLens() {
 
             <JsonToolbar tree={tree} json={resume} filename="yasar-anil-sansak.resume.json" />
 
-            <div className={styles.Viewer} role="tree" aria-label="CV JSON tree">
+            <div className={styles.Viewer} role="region" aria-label="CV as JSON">
                 <JsonNode value={resume} depth={0} path="$" isLast tree={tree} />
             </div>
         </div>
