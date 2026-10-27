@@ -57,7 +57,7 @@ export default function JsonNode({ value, keyName, depth, path, isLast, tree }: 
                         className={styles.Toggle}
                         onClick={() => tree.toggle(path, depth)}
                         aria-expanded={expanded}
-                        aria-label={expanded ? 'Collapse' : 'Expand'}
+                        aria-label={`${expanded ? 'Collapse' : 'Expand'} ${keyName ?? (depth === 0 ? 'resume' : `item ${Number(path.slice(path.lastIndexOf('.') + 1)) + 1}`)}`}
                     >
                         {expanded ? '▾' : '▸'}
                     </button>

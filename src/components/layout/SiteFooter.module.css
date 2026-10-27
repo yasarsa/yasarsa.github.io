@@ -1,7 +1,6 @@
 .SiteFooter {
     border-top: 1px solid var(--border);
     margin-top: var(--space-section);
-    scroll-margin-top: 4rem;
 }
 
 .Inner {
@@ -36,10 +35,13 @@
     font-size: var(--text-sm);
     color: var(--fg-muted);
     text-decoration: none;
+    /* The email address must wrap at large text sizes on narrow screens. */
+    overflow-wrap: anywhere;
     transition: color var(--dur-fast) var(--ease-out);
 }
 
-.Link:hover {
+.Link:hover,
+.Link:focus-visible {
     color: var(--brand);
 }
 
@@ -47,4 +49,12 @@
     font-size: var(--text-xs);
     color: var(--fg-subtle);
     max-width: none;
+}
+
+/* Focus lands here programmatically from the "contact" link; the landmark
+   itself needs no ring, its links have their own. */
+.SiteFooter:focus,
+.SiteFooter:focus-visible {
+    outline: none;
+    box-shadow: none;
 }

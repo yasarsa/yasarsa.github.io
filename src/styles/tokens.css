@@ -11,7 +11,7 @@
     --ink-850: #1b1d21;
     --ink-800: #24272c;
     --ink-700: #33373e;
-    --ink-500: #5d626b;
+    --ink-500: #80858e; /* 4.5:1+ on --bg and --bg-raised (WCAG AA text) */
     --ink-400: #8b8f97;
     --ink-200: #c4c6ca;
     --ink-50: #e8e6e3;
@@ -149,5 +149,6 @@
     :root {
         --border: var(--ink-500);
         --fg-muted: var(--ink-200);
+        --fg-subtle: var(--ink-400);
     }
 }

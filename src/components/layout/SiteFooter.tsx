@@ -5,7 +5,7 @@ export default function SiteFooter() {
     const year = new Date().getFullYear();
 
     return (
-        <footer className={styles.SiteFooter} data-site-footer id="contact">
+        <footer className={styles.SiteFooter} data-site-footer id="contact" tabIndex={-1} aria-label="Contact">
             <div className={styles.Inner}>
                 <p className={styles.Lead}>
                     <span className={styles.Prompt} aria-hidden="true">&gt;</span> Want to build something, or talk about games?
@@ -18,10 +18,12 @@ export default function SiteFooter() {
                             <span className="visually-hidden"> (opens in a new tab)</span>
                         </a>
                     ))}
-                    <a href="/cv.json" download className={styles.Link}>cv.json</a>
+                    <a href="/cv.json" download className={styles.Link}>
+                        cv.json<span className="visually-hidden"> (download the CV as JSON)</span>
+                    </a>
                 </div>
                 <p className={styles.Meta}>
-                    © {year} {cv.basics.name}.
+                    © {year} <span lang="tr">{cv.basics.name}</span>.
                 </p>
             </div>
         </footer>

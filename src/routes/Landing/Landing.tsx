@@ -64,9 +64,9 @@ export default function Landing() {
             <JsonLd />
 
             <section className={styles.Hero} aria-labelledby="hero-title">
-                <p className="label">İZMİR, TR</p>
+                <p className="label" lang="tr">İZMİR, TR</p>
                 <h1 id="hero-title" className={styles.Name}>
-                    {cv.basics.name.toLocaleLowerCase('tr')}
+                    <span lang="tr">{cv.basics.name.toLocaleLowerCase('tr')}</span>
                     <span className="cursor" aria-hidden="true" />
                 </h1>
                 <p className={styles.Role}>

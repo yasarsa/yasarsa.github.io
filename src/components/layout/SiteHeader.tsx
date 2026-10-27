@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { jumpTo } from './jumpTo';
 import styles from './SiteHeader.module.css';
 
 const NAV_LINKS = [
@@ -7,18 +8,10 @@ const NAV_LINKS = [
     { to: '/cv', label: 'cv' },
 ];
 
-// The footer (id="contact") is on every page. Scroll to it directly: letting the
-// hash change through makes the router treat it as a navigation, and
-// ScrollRestoration then snaps back to the page's saved position.
+// The footer (id="contact") is on every page.
 function ContactLink({ onClick }: { onClick?: () => void }) {
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        onClick?.();
-        // Wait a frame so the mobile menu has collapsed before measuring.
-        requestAnimationFrame(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }));
-    };
     return (
-        <a href="#contact" className={styles.NavLink} onClick={handleClick}>
+        <a href="#contact" className={styles.NavLink} onClick={jumpTo('contact', onClick)}>
             <span className={styles.Cursor} aria-hidden="true">▸</span>
             contact
         </a>
@@ -28,12 +21,17 @@ function ContactLink({ onClick }: { onClick?: () => void }) {
 export default function SiteHeader() {
     const [menuOpen, setMenuOpen] = useState(false);
     const { pathname, hash } = useLocation();
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => setMenuOpen(false), [pathname, hash]);
 
     useEffect(() => {
         if (!menuOpen) return;
-        const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key !== 'Escape') return;
+            setMenuOpen(false);
+            menuButtonRef.current?.focus();
+        };
         document.addEventListener('keydown', onKey);
         return () => document.removeEventListener('keydown', onKey);
     }, [menuOpen]);
@@ -43,8 +41,9 @@ export default function SiteHeader() {
     return (
         <header className={styles.SiteHeader} data-site-header>
             <div className={styles.Inner}>
-                <NavLink to="/" className={styles.Brand} aria-label="Yaşar Anıl Sansak, home">
+                <NavLink to="/" className={styles.Brand}>
                     <span className={styles.Prompt} aria-hidden="true">~/</span>yasar
+                    <span className="visually-hidden">, home</span>
                 </NavLink>
 
                 <nav className={styles.DesktopNav} aria-label="Site">
@@ -58,6 +57,7 @@ export default function SiteHeader() {
                 </nav>
 
                 <button
+                    ref={menuButtonRef}
                     type="button"
                     className={styles.MenuButton}
                     aria-expanded={menuOpen}

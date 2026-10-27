@@ -8,6 +8,8 @@
 
 .Line::before {
     content: counter(line);
+    /* Decorative line numbers: empty alt text keeps screen readers quiet. */
+    content: counter(line) / "";
     position: absolute;
     left: 0;
     width: 2.5em;
@@ -19,10 +21,26 @@
 .Toggle {
     all: unset;
     cursor: pointer;
-    display: inline-block;
-    width: 1em;
+    display: inline-grid;
+    place-items: center;
+    /* WCAG 2.5.8 minimum target size. */
+    width: 24px;
+    height: 24px;
+    margin-left: -4px;
+    vertical-align: middle;
+    border-radius: var(--radius-xs);
     color: var(--code-punct, #6f6a62);
     font-size: 0.8em;
+}
+
+.Toggle:hover {
+    color: var(--brand);
+}
+
+/* `all: unset` above also wipes the global focus ring. */
+.Toggle:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 0;
 }
 
 .Key {

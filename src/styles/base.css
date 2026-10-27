@@ -6,6 +6,8 @@
 
 html {
     scroll-behavior: smooth;
+    /* Keep anchor targets and focused elements clear of the sticky header. */
+    scroll-padding-top: calc(3.5rem + env(safe-area-inset-top) + var(--space-4));
     background: var(--bg);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -81,25 +83,29 @@ div {
 }
 
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-    outline: none;
+    /* Transparent rather than none: forced-colors mode drops box-shadow
+       but paints this outline, so the focus indicator survives. */
+    outline: 2px solid transparent;
     box-shadow: var(--focus-ring);
     border-radius: var(--radius-sm);
 }
 
 .skip-link {
-    position: absolute;
-    top: -100%;
+    /* Fixed, so it appears in view wherever the page is scrolled. */
+    position: fixed;
+    top: calc(var(--space-4) + env(safe-area-inset-top));
     left: var(--space-4);
     z-index: var(--z-toast);
     padding: var(--space-2) var(--space-4);
     background: var(--brand);
     color: var(--fg-on-brand);
     border-radius: var(--radius-sm);
-    transition: top var(--dur-fast) var(--ease-out);
+    transform: translateY(calc(-100% - var(--space-8)));
+    transition: transform var(--dur-fast) var(--ease-out);
 }
 
 .skip-link:focus {
-    top: var(--space-4);
+    transform: none;
 }
 
 .visually-hidden {
@@ -154,7 +160,9 @@ html:not([data-js]) [data-reveal] {
     margin-left: .08em;
     vertical-align: -.1em;
     background: var(--brand);
-    animation: cursor-blink 1.1s steps(1, end) infinite;
+    /* Stops after ~4.4s, ending visible: WCAG 2.2.2 allows auto-blinking
+       only for up to five seconds without a pause control. */
+    animation: cursor-blink 1.1s steps(1, end) 4;
 }
 
 @keyframes cursor-blink {
