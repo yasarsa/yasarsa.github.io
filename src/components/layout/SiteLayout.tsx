@@ -20,7 +20,7 @@ export default function SiteLayout() {
                 </Suspense>
             </main>
             <SiteFooter />
-            <ScrollRestoration getKey={(location) => location.pathname} />
+            <ScrollRestoration />
             <div aria-live="polite" className="visually-hidden">{announcement}</div>
         </div>
     );

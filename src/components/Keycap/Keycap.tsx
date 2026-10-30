@@ -19,7 +19,8 @@ export default function Keycap({ keyLabel, href, children, primary, className, .
             <span>{children}</span>
         </>
     );
-    if (href.startsWith('/') && !href.startsWith('//')) {
+    // A download has to stay a plain link, or the router would swallow the click.
+    if (href.startsWith('/') && !href.startsWith('//') && rest.download === undefined) {
         return <Link to={href} className={cls} {...rest}>{content}</Link>;
     }
     return <a href={href} className={cls} {...rest}>{content}</a>;

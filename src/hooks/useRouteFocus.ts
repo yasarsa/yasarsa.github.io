@@ -12,7 +12,8 @@ export function useRouteFocus() {
     useEffect(() => {
         if (previousPath.current === location.pathname) return;
         previousPath.current = location.pathname;
-        mainRef.current?.focus();
+        // ScrollRestoration owns the scroll position.
+        mainRef.current?.focus({ preventScroll: true });
         setAnnouncement(document.title);
     }, [location.pathname]);
 

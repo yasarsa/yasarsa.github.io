@@ -64,4 +64,14 @@ export const GAMES: GameProject[] = [
         year: '2026',
         href: 'https://anilsansak.itch.io/sea-legs',
     },
+    {
+        id: 'gym-rush',
+        title: 'Gym Rush',
+        status: 'in-development',
+        engine: 'Godot',
+        platforms: ['Mobile', 'Web'],
+        blurb: 'A real-time time-management game about finishing your workout in a crowded gym. Hit your targets, play each rep, and keep your machine from the regulars.',
+        year: '2026',
+        href: 'https://anilsansak.itch.io/gym-rush',
+    },
 ];
