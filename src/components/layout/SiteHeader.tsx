@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { jumpTo } from './jumpTo';
 import styles from './SiteHeader.module.css';
@@ -38,10 +38,20 @@ export default function SiteHeader() {
 
     const linkClass = ({ isActive }: { isActive: boolean }) => `${styles.NavLink} ${isActive ? styles.NavLinkActive : ''}`;
 
+    // Already home, so the router has nothing to do: go back to the top instead.
+    const onBrandClick = (e: MouseEvent<HTMLAnchorElement>) => {
+        if (pathname !== '/') return;
+        e.preventDefault();
+        setMenuOpen(false);
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.getElementById('main')?.focus({ preventScroll: true });
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    };
+
     return (
         <header className={styles.SiteHeader} data-site-header>
             <div className={styles.Inner}>
-                <NavLink to="/" className={styles.Brand}>
+                <NavLink to="/" className={styles.Brand} onClick={onBrandClick}>
                     <span className={styles.Prompt} aria-hidden="true">~/</span>yasar
                     <span className="visually-hidden">, home</span>
                 </NavLink>

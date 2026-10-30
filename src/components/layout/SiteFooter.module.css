@@ -1,51 +1,87 @@
 .SiteFooter {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--brand);
     margin-top: var(--space-section);
+    background: radial-gradient(ellipse 80% 100% at 50% 0%, var(--brand-subtle), transparent), var(--bg-subtle);
 }
 
 .Inner {
     max-width: var(--column);
     margin-inline: auto;
-    padding: var(--space-10) max(var(--gutter), env(safe-area-inset-right)) calc(var(--space-10) + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+    padding: var(--space-section) max(var(--gutter), env(safe-area-inset-right)) calc(var(--space-10) + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-}
-
-.Lead {
-    font-family: var(--font-mono);
-    color: var(--fg);
 }
 
 .Prompt {
     color: var(--brand);
 }
 
-.Contact {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 var(--space-6);
+.Lead {
+    font-size: var(--text-2xl);
+    color: var(--fg);
 }
 
-.Link {
-    display: inline-flex;
+.EmailRow {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    min-height: 44px;
+    gap: var(--space-3) var(--space-5);
+    margin-top: var(--space-6);
+}
+
+.Email {
+    /* Sized so the whole address fits on one line down to a 320px screen. */
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--fg-muted);
+    font-size: clamp(1.25rem, 6.4vw, 2.5rem);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--brand);
     text-decoration: none;
     /* The email address must wrap at large text sizes on narrow screens. */
     overflow-wrap: anywhere;
     transition: color var(--dur-fast) var(--ease-out);
 }
 
-.Link:hover,
-.Link:focus-visible {
+.Email:hover,
+.Email:focus-visible {
+    color: var(--brand-hover);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+}
+
+.Copy {
+    min-width: 5rem;
+    min-height: 44px;
+    padding: .35rem .9rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.Copy:hover,
+.Copy:focus-visible,
+.Copy[data-state="copied"] {
+    border-color: var(--brand);
     color: var(--brand);
 }
 
+.Actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+}
+
 .Meta {
+    margin-top: var(--space-16);
     font-size: var(--text-xs);
     color: var(--fg-subtle);
     max-width: none;
